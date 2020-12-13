@@ -12,12 +12,12 @@ struct Date_t
     int year;
 };
 
-long long dateToDays (Date date)//returns the total days in a specific date.
+int dateToDays (Date date)//returns the total days in a specific date.
 {
-    int* day, *month, *year;
-    long long total_days = 0;
-    dateGet(date, day, month, year);
-    total_days += *day;
+    int* day = &date->day, *month = &date->month, *year = &date->year;
+    int total_days = 0;
+
+    total_days += (*day);
     total_days += (*month * 30);
     total_days += (*year * 365);
 
@@ -65,7 +65,7 @@ Date dateCopy(Date date)//Copies the given date into another one and returns it.
 
 bool dateGet(Date date, int* day, int* month, int* year)//Gets the day, month and year from the given date and puts them into a pointer for each one
 {
-    if (date == NULL || day == NULL || month == NULL || year == NULL)
+    if (date == NULL)
     {
         return false;
     }
@@ -73,6 +73,11 @@ bool dateGet(Date date, int* day, int* month, int* year)//Gets the day, month an
     day = &(date->day);
     month = &(date->month);
     year = &(date->year);
+
+    if(day == NULL || month == NULL || year == NULL)
+    {
+        return false;
+    }
 
     return true;
 }
@@ -83,14 +88,14 @@ int dateCompare(Date date1, Date date2)//Compares between two dates and returns 
     {
         return 0;
     }
-    long long date1_total_days, date2_total_days;
+    int date1_total_days, date2_total_days;
 
     date1_total_days = dateToDays (date1);
     date2_total_days = dateToDays (date2);
 
-    if(date1 < date2){
+    if(date1_total_days < date2_total_days){
         return -1;
-    }else if (date2 > date1){
+    }else if (date2_total_days > date1_total_days){
         return 1;
     }else{
         return 0;
