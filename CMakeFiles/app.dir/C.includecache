@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/main.c
+stdio.h
+-
+
