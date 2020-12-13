@@ -14,19 +14,20 @@ struct Date_t
 
 int dateToDays (Date date)//returns the total days in a specific date.
 {
-    int* day = &date->day, *month = &date->month, *year = &date->year;
+    //int* day = &date->day, *month = &date->month, *year = &date->year;
     int total_days = 0;
-
-    total_days += (*day);
-    total_days += (*month * 30);
-    total_days += (*year * 365);
+    total_days = total_days + date->day;
+    //total_days += (*day);
+    total_days = total_days + (date->month * 30);
+    //total_days += (*month * 30);
+    total_days = total_days + (date->year * 365);
 
     return total_days;
 }
 
 Date dateCreate(int day, int month, int year)//creates a new Date.
 {
-    if(DATE_VALIDATION){
+    if(!DATE_VALIDATION){
         return NULL;
     }
 
@@ -50,6 +51,11 @@ void dateDestroy(Date date)//Destroys a Date.
 
 Date dateCopy(Date date)//Copies the given date into another one and returns it.
 {
+    if(date == NULL)
+    {
+        return NULL;
+    }
+
     Date copied_date = malloc(sizeof(*copied_date));
     if(copied_date == NULL)
     {
@@ -65,19 +71,14 @@ Date dateCopy(Date date)//Copies the given date into another one and returns it.
 
 bool dateGet(Date date, int* day, int* month, int* year)//Gets the day, month and year from the given date and puts them into a pointer for each one
 {
-    if (date == NULL)
+    if (date == NULL || day == NULL || month == NULL || year == NULL)
     {
         return false;
     }
 
-    day = &(date->day);
-    month = &(date->month);
-    year = &(date->year);
-
-    if(day == NULL || month == NULL || year == NULL)
-    {
-        return false;
-    }
+    *day = date->day;
+    *month = date->month;
+    *year = date->year;
 
     return true;
 }
@@ -95,7 +96,7 @@ int dateCompare(Date date1, Date date2)//Compares between two dates and returns 
 
     if(date1_total_days < date2_total_days){
         return -1;
-    }else if (date2_total_days > date1_total_days){
+    }else if (date1_total_days > date2_total_days){
         return 1;
     }else{
         return 0;
