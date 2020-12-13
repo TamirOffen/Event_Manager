@@ -14,12 +14,9 @@ struct Date_t
 
 int dateToDays (Date date)//returns the total days in a specific date.
 {
-    //int* day = &date->day, *month = &date->month, *year = &date->year;
     int total_days = 0;
     total_days = total_days + date->day;
-    //total_days += (*day);
     total_days = total_days + (date->month * 30);
-    //total_days += (*month * 30);
     total_days = total_days + (date->year * 365);
 
     return total_days;
