@@ -5,17 +5,19 @@
 
 int main() {
 
-    Date date = dateCreate(1, 3, 2020);
-    EventManager em = createEventManager(date);
+    // Date date = dateCreate(1, 3, 2020);
+    // EventManager em = createEventManager(date);
 
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
-    Event event = eventCreate("event 18", 123);
+    Event event = eventCreate("event 1", 1);
     printEvent(event);
 
-    Event eventCopy = copy_event(event);
-    printEvent(eventCopy);
+    free_event(event);
+
+    // Event eventCopy = copy_event(event);
+    // printEvent(eventCopy);
 
 
     return 0;
