@@ -17,6 +17,8 @@ int main() {
     Event eventCopy = copy_event(event);
     printEvent(eventCopy);
 
+    destroyEventManager(em);//Should check Valgrind
+
 
     return 0;
 }

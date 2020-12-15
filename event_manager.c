@@ -78,14 +78,13 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
         return EM_OUT_OF_MEMORY;
     }
 
-    for (int i = 0 ; i < days ; i++){
+    for (int i = 0 ; i < days ; i++){ // Increase the current time by (date) days using Tick function
         dateTick(date);
     }
 
-    emAddEventByDate(em, event_name, date, event_id);
+    emAddEventByDate(em, event_name, date, event_id); // Used the previous function.
     return EM_SUCCESS;
 }
-
 
 EventManagerResult emRemoveEvent(EventManager em, int event_id){
 
@@ -95,50 +94,50 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
 }
 
 EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
-    Event event = malloc(sizeof(Event));//????
-    event = eventSearchByID(em->events, event_id);//TODO
+    //Event event = malloc(sizeof(event));//????
+    //event = eventSearchByID(em->events, event_id);//TODO
     //TODO
 
     return EM_SUCCESS;
 }
 
 EventManagerResult emAddMember(EventManager em, char* member_name, int member_id){
-    Member member = memberCreate (member_name, member_id);//TODO in member.c and member.h
+    //Member member = memberCreate (member_name, member_id);//TODO in member.c and member.h
     //Check if a member is in the total_members ... TODO
-    pqInsert(em->total_members, member, 0);
+    //pqInsert(em->total_members, member, 0);
 
     return EM_SUCCESS;
 }
 
 EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id){
-    Member member = malloc (sizeof(Member));
-    if(member == NULL){
-        return NULL;
-    }
-    Event event = malloc (sizeof(Event));
-    if(event == NULL){
-        return NULL;
-    }
+    // Member member = malloc (sizeof(member));
+    // if(member == NULL){
+    //     return EM_OUT_OF_MEMORY;
+    // }
+    // Event event = malloc (sizeof(event));
+    // if(event == NULL){
+    //     return EM_OUT_OF_MEMORY;
+    // }
 
-    member = memberSearchByID(em->total_members, member_id);
-    event = eventSearchByID(em->events, event_id);
+    //member = memberSearchByID(em->total_members, member_id);
+    //event = eventSearchByID(em->events, event_id);
     //How to access members pq in event.... TODO.
 
     return EM_SUCCESS;
 }
 
 EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id){
-        Member member = malloc (sizeof(Member));
-    if(member == NULL){
-        return NULL;
-    }
-    Event event = malloc (sizeof(Event));
-    if(event == NULL){
-        return NULL;
-    }
+    //     Member member = malloc (sizeof(member));
+    // if(member == NULL){
+    //     return EM_OUT_OF_MEMORY;
+    // }
+    // Event event = malloc (sizeof(event));
+    // if(event == NULL){
+    //     return EM_OUT_OF_MEMORY;
+    // }
 
-    member = memberSearchByID(em->total_members, member_id);
-    event = eventSearchByID(em->events, event_id);
+    // member = memberSearchByID(em->total_members, member_id);
+    // event = eventSearchByID(em->events, event_id);
         // We need to use pqRemoveElement, how to access the members pq in event? TODO.
 
         return EM_SUCCESS;
@@ -149,21 +148,15 @@ EventManagerResult emTick(EventManager em, int days){
         dateTick(em->current_date);
     }
 
-    EMRemoveOutDatedEvents (em);//TODO
+    //EMRemoveOutDatedEvents (em);//TODO
 
     return EM_SUCCESS;
 }
 
-int emGetEventsAmount(EventManager em){
-    //TODO
-
-    return -1;
-}
-
 char* emGetNextEvent(EventManager em){
-    Event event = malloc (sizeof(Event));
-    event = pqGetNext(em->events);//We need to 
-    return (eventGetName(event));//TODO in event
+    //Event event = malloc (sizeof(event));
+    //event = pqGetNext(em->events); 
+    //return (eventGetName(event));//TODO in event
 }
 
 int emGetEventsAmount(EventManager em) {
