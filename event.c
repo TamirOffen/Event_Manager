@@ -13,14 +13,11 @@ struct Event_t {
 };
 
 Event eventCreate(char* event_name, int event_id) {
-    if(event_name == NULL) {
-        return NULL;
-    }
-    if(event_id <= 0) {
+    if(event_name == NULL || event_id <= 0) {
         return NULL;
     }
 
-    Event event = malloc(sizeof(event));
+    Event event = malloc(sizeof(Event));
     if(event == NULL) {
         return NULL;
     }
@@ -78,7 +75,15 @@ PQElement copy_event(PQElement event) {
 }
 
 void free_event(PQElement event) {
-    return;
+    if(event == NULL) {
+        return;
+    }
+
+    free(((Event)event)->event_name);
+    pqDestroy(((Event)event)->members_queue); //Problem here!
+    free((Event)event);
+
+    event = NULL;
 }
 
 // return true if the event have the same id //TODO: maybe wrong
