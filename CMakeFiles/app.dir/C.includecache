@@ -6,7 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/main.c
+/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/date.c
 stdio.h
+-
+assert.h
+-
+stdlib.h
+-
+date.h
+/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/date.h
+
+/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/date.h
+stdbool.h
 -
 

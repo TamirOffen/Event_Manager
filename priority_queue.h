@@ -266,3 +266,5 @@ PriorityQueueResult pqClear(PriorityQueue queue);
         iterator = pqGetNext(queue))
 
 #endif /* PRIORITY_QUEUE_H_ */
+
+

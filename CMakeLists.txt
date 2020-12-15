@@ -12,6 +12,10 @@ add_executable(
     # add source c files here
     app
     main.c
+    member.c
+    event.c
+    date.c
+    event_manager.c
 )
 
 #target_link_libraries(app libpriority_queue.a) //we can only use this on the technion servers

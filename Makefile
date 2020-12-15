@@ -142,6 +142,87 @@ app/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/build
 .PHONY : app/fast
 
+date.o: date.c.o
+
+.PHONY : date.o
+
+# target to build an object file
+date.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/date.c.o
+.PHONY : date.c.o
+
+date.i: date.c.i
+
+.PHONY : date.i
+
+# target to preprocess a source file
+date.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/date.c.i
+.PHONY : date.c.i
+
+date.s: date.c.s
+
+.PHONY : date.s
+
+# target to generate assembly for a file
+date.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/date.c.s
+.PHONY : date.c.s
+
+event.o: event.c.o
+
+.PHONY : event.o
+
+# target to build an object file
+event.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event.c.o
+.PHONY : event.c.o
+
+event.i: event.c.i
+
+.PHONY : event.i
+
+# target to preprocess a source file
+event.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event.c.i
+.PHONY : event.c.i
+
+event.s: event.c.s
+
+.PHONY : event.s
+
+# target to generate assembly for a file
+event.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event.c.s
+.PHONY : event.c.s
+
+event_manager.o: event_manager.c.o
+
+.PHONY : event_manager.o
+
+# target to build an object file
+event_manager.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event_manager.c.o
+.PHONY : event_manager.c.o
+
+event_manager.i: event_manager.c.i
+
+.PHONY : event_manager.i
+
+# target to preprocess a source file
+event_manager.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event_manager.c.i
+.PHONY : event_manager.c.i
+
+event_manager.s: event_manager.c.s
+
+.PHONY : event_manager.s
+
+# target to generate assembly for a file
+event_manager.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event_manager.c.s
+.PHONY : event_manager.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -169,6 +250,33 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.s
 .PHONY : main.c.s
 
+member.o: member.c.o
+
+.PHONY : member.o
+
+# target to build an object file
+member.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.o
+.PHONY : member.c.o
+
+member.i: member.c.i
+
+.PHONY : member.i
+
+# target to preprocess a source file
+member.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.i
+.PHONY : member.c.i
+
+member.s: member.c.s
+
+.PHONY : member.s
+
+# target to generate assembly for a file
+member.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.s
+.PHONY : member.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -178,9 +286,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... app"
+	@echo "... date.o"
+	@echo "... date.i"
+	@echo "... date.s"
+	@echo "... event.o"
+	@echo "... event.i"
+	@echo "... event.s"
+	@echo "... event_manager.o"
+	@echo "... event_manager.i"
+	@echo "... event_manager.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... member.o"
+	@echo "... member.i"
+	@echo "... member.s"
 .PHONY : help
 
 

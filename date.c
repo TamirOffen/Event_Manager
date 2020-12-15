@@ -22,6 +22,7 @@ int dateToDays (Date date)//returns the total days in a specific date.
     return total_days;
 }
 
+
 Date dateCreate(int day, int month, int year)//creates a new Date.
 {
     if(!DATE_VALIDATION){
