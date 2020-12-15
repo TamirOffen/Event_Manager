@@ -34,7 +34,29 @@ Member createMember(char* member_name, int member_id) {
 }
 
 PQElement copy_member(PQElement member) {
-    return NULL;
+    if(member == NULL) {
+        return NULL;
+    }
+    
+    Member member_copy = malloc(sizeof(*member_copy));
+    if(member_copy == NULL) {
+        return NULL;
+    }
+
+    Member member_parameter = (Member)member;
+    
+    member_copy->member_name = malloc(sizeof(char) * strlen(member_parameter->member_name) + 1);
+    if(member_copy->member_name == NULL) {
+        free(member_copy);
+        return NULL;
+    }
+    strcpy(member_copy->member_name, member_parameter->member_name);
+
+    member_copy->member_id = member_parameter->member_id;
+    member_copy->num_of_events = member_parameter->num_of_events;
+
+    return member_copy;
+
 }
 
 void free_member(PQElement member) {
@@ -44,19 +66,39 @@ void free_member(PQElement member) {
 
     free(((Member)member)->member_name);
     free(((Member)member));
+
+    member = NULL; //TODO: CHECK THIS!
 }
 
 // return true if the members have the same id //TODO: maybe wrong
 bool equal_members(PQElement member1, PQElement member2) {
+    if(((Member)member1)->member_id == ((Member)member2)->member_id) {
+        return true;
+    }
     return false;
 }
 
+
 /*     Priority funcs for the id of the member     */
 PQElementPriority copy_member_id(PQElementPriority member_priority){
-    return NULL;
+    if(member_priority == NULL) {
+        return NULL;
+    }
+
+    int* member_priority_copy = malloc(sizeof(member_priority_copy));
+    if(member_priority_copy == NULL) {
+        return NULL;
+    }
+    *member_priority_copy = *(int*)member_priority;
+    return member_priority_copy;
 }
+
+//TODO: code duplication with bottom funcs
 void free_member_id(PQElementPriority member_priority) {
-    return;
+    if(member_priority != NULL) {
+        free(member_priority);
+    }
+    member_priority = NULL;
 }
 
 // compares the members' ids
@@ -64,7 +106,15 @@ void free_member_id(PQElementPriority member_priority) {
 // returns 1 if member1.id < member2.id
 // return -1 if member1.id > member2.id
 int compare_members_id(PQElementPriority member_priority1, PQElementPriority member_priority2) {
-    return -10;
+    int priority1 = *(int *)member_priority1;
+    int priority2 = *(int *)member_priority2;
+    if(priority1 < priority2) {
+        return 1;
+    } else if(priority1 > priority2) {
+        return -1;
+    } else {
+        return 0;
+    }
 }
 
 
