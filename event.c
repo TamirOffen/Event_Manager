@@ -80,7 +80,7 @@ void free_event(PQElement event) {
     }
 
     free(((Event)event)->event_name);
-    pqDestroy(((Event)event)->members_queue); //Problem here!
+    pqDestroy(((Event)event)->members_queue);
     free((Event)event);
 
     event = NULL;

@@ -58,18 +58,21 @@ void destroyEventManager(EventManager em){
 }
 
 EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
-    //We should make functions for name and id validations and use them here.
-    Event new_event = eventCreate(event_name, event_id);
-    if(new_event == NULL){
-        return EM_OUT_OF_MEMORY;
-    }
-
-    Date copied_date = dateCopy(date);
-
-    pqInsert(em->events, new_event, date);
-
-    return EM_SUCCESS;
+    return EM_ERROR;
 }
+// EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
+//     //We should make functions for name and id validations and use them here.
+//     Event new_event = eventCreate(event_name, event_id);
+//     if(new_event == NULL){
+//         return EM_OUT_OF_MEMORY;
+//     }
+
+//     Date copied_date = dateCopy(date);
+
+//     pqInsert(em->events, new_event, date);
+
+//     return EM_SUCCESS;
+// }
 
 EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id){
 
@@ -157,6 +160,7 @@ char* emGetNextEvent(EventManager em){
     //Event event = malloc (sizeof(event));
     //event = pqGetNext(em->events); 
     //return (eventGetName(event));//TODO in event
+    return NULL;
 }
 
 int emGetEventsAmount(EventManager em) {
