@@ -36,18 +36,6 @@ event.h
 member.h
 /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
 
-/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.c
-stdio.h
--
-assert.h
--
-stdlib.h
--
-member.h
-/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
-strings.h
-/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/strings.h
-
 /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
 stdbool.h
 -

@@ -18,7 +18,7 @@ struct EventManager_t {
 
 EventManager createEventManager(Date date) {
 
-    EventManager em = malloc(sizeof(em)); //TODO if doesnt work, check this
+    EventManager em = malloc(sizeof(*em)); //TODO if doesnt work, check this
     if(em == NULL) {
         return NULL;
     }

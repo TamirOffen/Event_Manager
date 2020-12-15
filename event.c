@@ -42,6 +42,7 @@ Event eventCreate(char* event_name, int event_id) {
     return event;
 }
 
+
 PQElement copy_event(PQElement event) {
     if(event == NULL) {
         return NULL; //event that was passed in is NULL
@@ -88,12 +89,15 @@ void free_event(PQElement event) {
 
 // return true if the event have the same id //TODO: maybe wrong
 bool equal_events(PQElement event1, PQElement event2){
+    if(((Event)event1)->event_id == ((Event)event2)->event_id) {
+        return true;
+    }
     return false;
 }
 
 /*      priority funcs for date     */
 PQElementPriority copyDate(PQElementPriority n){
-    return NULL;
+    
 }
 void freeDate(PQElementPriority n) {
     return;

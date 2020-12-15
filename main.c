@@ -6,20 +6,20 @@
 
 int main() {
 
-    // Date date = dateCreate(1, 3, 2020);
-    // EventManager em = createEventManager(date);
+    Date date = dateCreate(1, 3, 2020);
+    EventManager em = createEventManager(date);
 
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
-    // Event event = eventCreate("event 1", 1);
-    // printEvent(event);
+    Event event = eventCreate("event 1", 1);
+    printEvent(event);
 
-    // Event eventCopy = copy_event(event);
-    // printEvent(eventCopy);
+    Event eventCopy = copy_event(event);
+    printEvent(eventCopy);
 
-    // free_event(event);
-    // free_event(eventCopy);
+    free_event(event);
+    free_event(eventCopy);
 
     Member member1 = createMember("Tamir Offen", 1);
     printMember(member1);
@@ -34,7 +34,7 @@ int main() {
     free_member(member1Copy);
     
 
-    // destroyEventManager(em);//Should check Valgrind
+    destroyEventManager(em);//Should check Valgrind
 
 
     return 0;
