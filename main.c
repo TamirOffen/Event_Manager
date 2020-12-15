@@ -27,6 +27,8 @@ int main() {
     free_member(member1);
     
 
+    destroyEventManager(em);//Should check Valgrind
+
 
     return 0;
 }
