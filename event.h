@@ -10,11 +10,16 @@ typedef struct Event_t *Event;
 
 typedef enum EventResult_t {
     EVENT_SUCCESS,
-    //add more
+    EVENT_INVALID_ID,
+    EVENT_NULL_ARGUMENT,
+    EVENT_OUT_OF_MEMORY
 } EventResult;
 
+// returns the event if succesful, NULL otherwise
+Event eventCreate(char* event_name, int event_id);
+
 //returns a pointer to an event struct
-//*(Event*)event
+//(Event)event
 PQElement copy_event(PQElement event);
 void free_event(PQElement event);
 
@@ -35,9 +40,7 @@ pqGetName("E1").priority = 1.1.2020
 */
 
 
-
-
-
+void printEvent(Event event);
 
 
 
