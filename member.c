@@ -36,7 +36,7 @@ void free_member_id(PQElementPriority member_priority) {
 // returns 0 if the members have the same id
 // returns 1 if member1.id < member2.id
 // return -1 if member1.id > member2.id
-int compareMembersPriority(Member member1, Member member2) {
+int compare_members_id(PQElementPriority member_priority1, PQElementPriority member_priority2) {
     return -10;
 }
 

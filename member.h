@@ -22,11 +22,11 @@ bool equal_members(PQElement member1, PQElement member2);
 PQElementPriority copy_member_id(PQElementPriority member_priority);
 void free_member_id(PQElementPriority member_priority);
 
-// compares the members' ids
+// compares the members' ids, which is their priority
 // returns 0 if the members have the same id
 // returns 1 if member1.id < member2.id
 // return -1 if member1.id > member2.id
-int compareMembersPriority(Member member1, Member member2);
+int compare_members_id(PQElementPriority member_priority1, PQElementPriority member_priority2);
 
 
 /*      priority funcs to compare the order of ints, used in total_member PQ        */

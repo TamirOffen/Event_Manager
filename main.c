@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "priority_queue.h"
 #include "event_manager.h"
+#include "event.h"
 
 int main() {
 
@@ -8,6 +9,13 @@ int main() {
     EventManager em = createEventManager(date);
 
     printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+
+    Event event = eventCreate("event 18", 123);
+    printEvent(event);
+
+    Event eventCopy = copy_event(event);
+    printEvent(eventCopy);
 
 
     return 0;
