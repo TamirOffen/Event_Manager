@@ -2,6 +2,7 @@
 #include "priority_queue.h"
 #include "event_manager.h"
 #include "event.h"
+#include "member.h"
 
 int main() {
 
@@ -14,10 +15,17 @@ int main() {
     Event event = eventCreate("event 1", 1);
     printEvent(event);
 
-    free_event(event);
+    Event eventCopy = copy_event(event);
+    printEvent(eventCopy);
 
-    // Event eventCopy = copy_event(event);
-    // printEvent(eventCopy);
+    free_event(event);
+    free_event(eventCopy);
+
+    Member member1 = createMember("Tamir Offen", 1);
+    printMember(member1);
+
+    free_member(member1);
+    
 
 
     return 0;

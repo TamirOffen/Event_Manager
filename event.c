@@ -13,11 +13,11 @@ struct Event_t {
 };
 
 Event eventCreate(char* event_name, int event_id) {
-    if(event_name == NULL || event_id <= 0) {
+    if(event_name == NULL || event_id < 0) {
         return NULL;
     }
 
-    Event event = malloc(sizeof(Event));
+    Event event = malloc(sizeof(*event));
     if(event == NULL) {
         return NULL;
     }
@@ -47,7 +47,7 @@ PQElement copy_event(PQElement event) {
         return NULL; //event that was passed in is NULL
     }
 
-    Event copy_of_event = malloc(sizeof(copy_of_event));
+    Event copy_of_event = malloc(sizeof(*copy_of_event));
     if(copy_of_event == NULL) {
         return NULL; //memory allocation of copy_of_event failed
     }

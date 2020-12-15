@@ -2,8 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "member.h"
-
-
+#include "strings.h"
 
 struct Member_t {
     char* member_name;
@@ -11,12 +10,40 @@ struct Member_t {
     int num_of_events;
 };
 
+Member createMember(char* member_name, int member_id) {
+    if(member_name == NULL || member_id < 0) {
+        return NULL;
+    }
+
+    Member member = malloc(sizeof(*member));
+    if(member == NULL) {
+        return NULL; //out of memory
+    }
+
+    member->member_name = malloc(sizeof(char) * strlen(member_name) + 1);
+    if(member->member_name == NULL) {
+        free(member);
+        return NULL; //out of memory
+    }
+    strcpy(member->member_name, member_name);
+
+    member->member_id = member_id;
+    member->num_of_events = 0; //each member starts off managing 0 events
+
+    return member;
+}
 
 PQElement copy_member(PQElement member) {
     return NULL;
 }
+
 void free_member(PQElement member) {
-    return;
+    if(member == NULL) {
+        return;
+    }
+
+    free(((Member)member)->member_name);
+    free(((Member)member));
 }
 
 // return true if the members have the same id //TODO: maybe wrong
@@ -68,6 +95,10 @@ int compareInts(PQElementPriority n1, PQElementPriority n2) {
 
 
 
+
+void printMember(Member member) {
+    printf("Member Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
+}
 
 
 

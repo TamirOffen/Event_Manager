@@ -11,6 +11,7 @@ typedef enum MemberResult_t {
     //add more
 } MemberResult;
 
+Member createMember(char* member_name, int member_id);
 
 PQElement copy_member(PQElement member);
 void free_member(PQElement member);
@@ -40,7 +41,7 @@ int compareInts(PQElementPriority n1, PQElementPriority n2);
 
 
 
-
+void printMember(Member member);
 
 
 
