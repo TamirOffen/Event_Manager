@@ -16,7 +16,7 @@ typedef enum EventResult_t {
 } EventResult;
 
 // returns the event if succesful, NULL otherwise
-Event eventCreate(char* event_name, int event_id);
+Event eventCreate(char* event_name, int event_id, Date date);
 
 //returns a pointer to an event struct
 //(Event)event
