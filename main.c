@@ -10,38 +10,46 @@ int main() {
     
     Date date = dateCreate(1, 3, 2020);
     EventManager em = createEventManager(date);
-
-
     printf("Number of Events: %d\n", emGetEventsAmount(em));
+
     emAddEventByDate(em, "event 1", date, 1);
     printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    //should not work
-    if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
-        printf("works1\n");
-    }
-
-    //should not work
-    if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
-        printf("works2\n");
-    }
+    emAddEventByDate(em, "event 2", date, 2);
     printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    //should work
-    if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
-        printf("works3\n");
-    }
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    Date dateChange = dateCreate(10, 6, 2025);
+    emChangeEventDate(em, 2, dateChange);
 
-    emAddEventByDiff(em, "event 3", 2, 3);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emRemoveEvent(em, 2);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // //should not work
+    // if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
+    //     printf("works1\n");
+    // }
+
+    // //should not work
+    // if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
+    //     printf("works2\n");
+    // }
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // //should work
+    // if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
+    //     printf("works3\n");
+    // }
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // emAddEventByDiff(em, "event 3", 2, 3);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // emRemoveEvent(em, 2);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
     destroyEventManager(em);
     dateDestroy(date);
+    dateDestroy(dateChange);
     
     
 

@@ -154,10 +154,46 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     if(dateCompare(em->current_date, new_date) > 0) {
         return EM_INVALID_DATE;
     }
-    
 
+    // get the event with event_id
+    Date temp_date = dateCreate(1,1,1); //TODO add NULL check
+    Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
+    // Event event = eventCreate(NULL, event_id, NULL); //TODO: NULL might case problems here
+    bool found_event = false;
+    PQ_FOREACH(Event, current_event, em->events) {
+        if(equal_events(current_event, event) == true) {
+            setEventName(event, getEventName(current_event)); //TODO: probably doesn't work
+            setEventDate(event, getEventDate(current_event)); //^^ same thing here
+            found_event = true;
+        }
+    }
+    if(found_event == false) {
+        free_event(event);
+        dateDestroy(temp_date);
+        return EM_EVENT_ID_NOT_EXISTS;
+    }
 
-    return EM_ERROR;
+    // checking that there isn't another event_name on the same date 
+    PQ_FOREACH(Event, current_event, em->events) {
+        if(strcmp(getEventName(current_event), getEventName(event)) == 0) {
+            if(dateCompare(getEventDate(current_event), getEventDate(event)) == 0) {
+                free_event(event);
+                dateDestroy(temp_date);
+                return EM_EVENT_ALREADY_EXISTS; //same event_name on the same date
+            }
+        }
+    }
+
+    if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
+        free_event(event);
+        dateDestroy(temp_date);
+        return EM_OUT_OF_MEMORY;
+    }
+
+    free_event(event);
+    dateDestroy(temp_date);
+
+    return EM_SUCCESS;
 
 }
 

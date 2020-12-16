@@ -42,8 +42,14 @@ pqGetName("E1").priority = 1.1.2020
 // returns a pointer to the event_name
 char* getEventName(Event event);
 
+// sets the event's name
+void setEventName(Event event, char* event_name);
+
 // returns a pointer to the date of the "event"
 Date getEventDate(Event event);
+
+// set the event's date
+void setEventDate(Event event, Date date);
 
 void printEvent(Event event);
 

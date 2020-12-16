@@ -153,11 +153,34 @@ char* getEventName(Event event) {
     return event->event_name;
 }
 
+void setEventName(Event event, char* event_name) {
+    if(event == NULL || event_name == NULL) {
+        return;
+    }
+    if(event->event_name != NULL) {
+        free(event->event_name);
+    }
+    
+    //TODO: might case memory issues here
+    event->event_name = malloc(strlen(event_name) + 1);
+    strcpy(event->event_name, event_name);
+}
+
 Date getEventDate(Event event) {
     if(event == NULL) {
         return NULL;
     }
     return event->date;
+}
+
+void setEventDate(Event event, Date date) {
+    if(event == NULL || date == NULL) {
+        return;
+    }
+    if(event->date != NULL) {
+        dateDestroy(event->date);
+    }
+    event->date = dateCopy(date); //TODO: maybe doesn't work
 }
 
 
