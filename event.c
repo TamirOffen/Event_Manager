@@ -4,6 +4,7 @@
 #include "event.h"
 #include "priority_queue.h"
 #include "strings.h"
+#include "date.h"
 
 
 struct Event_t {
@@ -96,15 +97,29 @@ bool equal_events(PQElement event1, PQElement event2){
 }
 
 /*      priority funcs for date     */
-PQElementPriority copyDate(PQElementPriority n){
-    
-}
-void freeDate(PQElementPriority n) {
-    return;
+PQElementPriority copyDate(PQElementPriority date){
+    Date copy_of_date = dateCopy((Date)date);
+    if(copy_of_date == NULL) {
+        return NULL;
+    }
+    return copy_of_date;
 }
 
-int compareDate(PQElementPriority n1, PQElementPriority n2) {
-    return 0;
+void freeDate(PQElementPriority date) {
+    dateDestroy((Date)date);
+    date = NULL; //TODO: might be an error
+}
+
+/**
+* compareDate: compares to dates and return which comes first
+* TODO: this might be code duplication
+* @return
+* 		A negative integer if date1 occurs first;
+* 		0 if they're equal or one of the given dates is NULL;
+*		A positive integer if date1 arrives after date2.
+*/
+int compareDate(PQElementPriority date1, PQElementPriority date2) {
+    return dateCompare((Date)date1, (Date)date2);
 }
 
 

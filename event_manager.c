@@ -18,7 +18,7 @@ struct EventManager_t {
 
 EventManager createEventManager(Date date) {
 
-    EventManager em = malloc(sizeof(*em)); //TODO if doesnt work, check this
+    EventManager em = malloc(sizeof(*em));
     if(em == NULL) {
         return NULL;
     }
@@ -55,6 +55,7 @@ void destroyEventManager(EventManager em){
     dateDestroy(em->current_date);
 
     free(em);
+    em = NULL;
 }
 
 EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
@@ -100,9 +101,10 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     //Event event = malloc(sizeof(event));//????
     //event = eventSearchByID(em->events, event_id);//TODO
     //TODO
+    return EM_ERROR;
 
-    return EM_SUCCESS;
 }
+
 
 EventManagerResult emAddMember(EventManager em, char* member_name, int member_id){
     //Member member = memberCreate (member_name, member_id);//TODO in member.c and member.h
