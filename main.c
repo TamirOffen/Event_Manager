@@ -15,11 +15,13 @@ int main() {
     emAddEventByDate(em, "event 1", date, 1);
     printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emAddEventByDate(em, "event 2", date, 2);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    emAddMember(em, "Tamir", 1);
 
-    Date dateChange = dateCreate(10, 6, 2025);
-    emChangeEventDate(em, 2, dateChange);
+    // emAddEventByDate(em, "event 2", date, 2);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // Date dateChange = dateCreate(10, 6, 2025);
+    // emChangeEventDate(em, 2, dateChange);
 
 
 
@@ -40,16 +42,15 @@ int main() {
     // }
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emAddEventByDiff(em, "event 3", 2, 1);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // emAddEventByDiff(em, "event 3", 2, 1);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emRemoveEvent(em, 2);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // emRemoveEvent(em, 2);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
     destroyEventManager(em);
     dateDestroy(date);
-    dateDestroy(dateChange);
     
     
 

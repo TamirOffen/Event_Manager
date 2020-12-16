@@ -199,9 +199,28 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
 
 
 EventManagerResult emAddMember(EventManager em, char* member_name, int member_id){
-    //Member member = memberCreate (member_name, member_id);//TODO in member.c and member.h
-    //Check if a member is in the total_members ... TODO
-    //pqInsert(em->total_members, member, 0);
+    if(em == NULL || member_name == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(member_id < 0) {
+        return EM_INVALID_MEMBER_ID;
+    }
+
+    Member new_member = createMember(member_name, member_id);
+    if(new_member == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
+
+    // checking for if the id already exists in the em
+    if(pqContains(em->total_members, new_member) == true) {
+        free_member(new_member);
+        return EM_MEMBER_ID_ALREADY_EXISTS;
+    }
+
+    int starting_priority_of_member = 0; //i.e. how many events the member is in charge of
+    pqInsert(em->total_members, new_member, &starting_priority_of_member);
+    
+    free_member(new_member);
 
     return EM_SUCCESS;
 }
