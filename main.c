@@ -40,11 +40,11 @@ int main() {
     // }
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    // emAddEventByDiff(em, "event 3", 2, 3);
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+    emAddEventByDiff(em, "event 3", 2, 1);
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    // emRemoveEvent(em, 2);
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+    emRemoveEvent(em, 2);
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
     destroyEventManager(em);

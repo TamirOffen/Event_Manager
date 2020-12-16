@@ -117,6 +117,7 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
     }
 
     emAddEventByDate(em, event_name, date, event_id); // Used the previous function.
+    dateDestroy(date);
     return EM_SUCCESS;
 }
 
@@ -158,12 +159,11 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     // get the event with event_id
     Date temp_date = dateCreate(1,1,1); //TODO add NULL check
     Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
-    // Event event = eventCreate(NULL, event_id, NULL); //TODO: NULL might case problems here
     bool found_event = false;
     PQ_FOREACH(Event, current_event, em->events) {
         if(equal_events(current_event, event) == true) {
-            setEventName(event, getEventName(current_event)); //TODO: probably doesn't work
-            setEventDate(event, getEventDate(current_event)); //^^ same thing here
+            setEventName(event, getEventName(current_event)); 
+            setEventDate(event, getEventDate(current_event)); 
             found_event = true;
         }
     }
