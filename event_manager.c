@@ -30,7 +30,7 @@ EventManager createEventManager(Date date) {
     }
     em->events = events;
 
-    em->current_date = dateCopy(date); //TODO if doesnt work, check this
+    em->current_date = dateCopy(date); 
 
     // the priority represents how many events the member manages
     PriorityQueue total_members = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
@@ -50,6 +50,10 @@ void destroyEventManager(EventManager em){
         return;
     }
 
+    // PQ_FOREACH(Event, current_event, em->events) {
+    //     free_event(current_event);
+    // }
+
     pqDestroy(em->events);
     pqDestroy(em->total_members);
     dateDestroy(em->current_date);
@@ -58,6 +62,8 @@ void destroyEventManager(EventManager em){
     em = NULL;
 }
 
+//TODO: Memory issues here
+//NOTE: pqInsert seems to be the problem, the free funcs for event work
 EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
     if(em == NULL || event_name == NULL || date == NULL) {
         return EM_NULL_ARGUMENT;
@@ -78,6 +84,7 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
 
     // the comparison func of PQ events is comparing the ids of the events
     if(pqContains(em->events, new_event) == true) {
+        free_event(new_event);
         return EM_EVENT_ID_ALREADY_EXISTS;
     }
 
@@ -85,13 +92,13 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     PQ_FOREACH(Event, current_event, em->events) {
         if(strcmp(getEventName(current_event), event_name) == 0) {
             if(dateCompare(getEventDate(current_event), date) == 0) {
+                free_event(new_event);
                 return EM_EVENT_ALREADY_EXISTS;
             }
         }
     }
 
     pqInsert(em->events, new_event, date);
-
 
     return EM_SUCCESS;
 

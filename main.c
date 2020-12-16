@@ -8,9 +8,10 @@
 int main() {
 
     Date date = dateCreate(1, 3, 2020);
-    EventManager em = createEventManager(date);
+    freeDate(date);
+    // EventManager em = createEventManager(date);
 
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
     // Event event = eventCreate("event 1", 1, date);
@@ -18,25 +19,28 @@ int main() {
     // Event eventCopy = copy_event(event);
     // printEvent(eventCopy);
 
-    emAddEventByDate(em, "event 1", date, 1);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // emAddEventByDate(em, "event 1", date, 1);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    //should not work
-    if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
-        printf("works1\n");
-    }
+    // //should not work
+    // if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
+    //     printf("works1\n");
+    // }
 
-    //should not work
-    if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
-        printf("works2\n");
-    }
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // //should not work
+    // if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
+    //     printf("works2\n");
+    // }
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
     //should work
-    if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
-        printf("works3\n");
-    }
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
+    //     printf("works3\n");
+    // }
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    // emAddEventByDiff(em, "event 3", 2, 3);
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
     
 
@@ -53,8 +57,8 @@ int main() {
     // free_member(member1Copy);
     
 
-    destroyEventManager(em);//Should check Valgrind
-    dateDestroy(date);
+    // destroyEventManager(em);//Should check Valgrind
+    // dateDestroy(date);
     // free_event(event);
     // free_event(eventCopy);
 
