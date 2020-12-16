@@ -8,11 +8,12 @@
 int main() {
 
     Date date = dateCreate(1, 3, 2020);
-    freeDate(date);
-    // EventManager em = createEventManager(date);
-
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
-
+    EventManager em = createEventManager(date);
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    emAddEventByDate(em, "event 1", date, 1);
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    destroyEventManager(em);
+    dateDestroy(date);
 
     // Event event = eventCreate("event 1", 1, date);
     // printEvent(event);
