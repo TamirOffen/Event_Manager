@@ -120,8 +120,25 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
 }
 
 EventManagerResult emRemoveEvent(EventManager em, int event_id){
+    if(em == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
+    }
+    
+    Date temp_date = dateCreate(1,1,1);
+    Event temp_event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming 
+    if(pqContains(em->events, temp_event) == false) {
+        free_event(temp_event);
+        dateDestroy(temp_date);
+        return EM_EVENT_NOT_EXISTS;
+    }
 
-    //TODO
+    pqRemoveElement(em->events, temp_event);
+    
+    free_event(temp_event);
+    dateDestroy(temp_date);
 
     return EM_SUCCESS;
 }
