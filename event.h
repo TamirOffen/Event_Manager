@@ -39,6 +39,11 @@ to get the date of E1:
 pqGetName("E1").priority = 1.1.2020
 */
 
+// returns a pointer to the event_name
+char* getEventName(Event event);
+
+// returns a pointer to the date of the "event"
+Date getEventDate(Event event);
 
 void printEvent(Event event);
 

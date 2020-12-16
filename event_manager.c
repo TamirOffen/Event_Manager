@@ -5,6 +5,7 @@
 #include "member.h"
 #include "priority_queue.h"
 #include "event_manager.h"
+#include "string.h"
 
 
 struct EventManager_t {
@@ -17,7 +18,6 @@ struct EventManager_t {
 
 
 EventManager createEventManager(Date date) {
-
     EventManager em = malloc(sizeof(*em));
     if(em == NULL) {
         return NULL;
@@ -59,21 +59,43 @@ void destroyEventManager(EventManager em){
 }
 
 EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
-    return EM_ERROR;
+    if(em == NULL || event_name == NULL || date == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
+    }
+
+    // if dateCompare returns a pos num, that means that current date comes after date.
+    if(dateCompare(em->current_date, date) > 0) {
+        return EM_INVALID_DATE;
+    }
+
+    Event new_event = eventCreate(event_name, event_id, date);
+    if(new_event == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
+
+    // the comparison func of PQ events is comparing the ids of the events
+    if(pqContains(em->events, new_event) == true) {
+        return EM_EVENT_ID_ALREADY_EXISTS;
+    }
+
+    // checking that there isn't another event_name on the same date 
+    PQ_FOREACH(Event, current_event, em->events) {
+        if(strcmp(getEventName(current_event), event_name) == 0) {
+            if(dateCompare(getEventDate(current_event), date) == 0) {
+                return EM_EVENT_ALREADY_EXISTS;
+            }
+        }
+    }
+
+    pqInsert(em->events, new_event, date);
+
+
+    return EM_SUCCESS;
+
 }
-// EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
-//     //We should make functions for name and id validations and use them here.
-//     Event new_event = eventCreate(event_name, event_id);
-//     if(new_event == NULL){
-//         return EM_OUT_OF_MEMORY;
-//     }
-
-//     Date copied_date = dateCopy(date);
-
-//     pqInsert(em->events, new_event, date);
-
-//     return EM_SUCCESS;
-// }
 
 EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id){
 

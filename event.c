@@ -146,6 +146,21 @@ int compareDate(PQElementPriority date1, PQElementPriority date2) {
 
 
 
+char* getEventName(Event event) {
+    if(event == NULL) {
+        return NULL;
+    }
+    return event->event_name;
+}
+
+Date getEventDate(Event event) {
+    if(event == NULL) {
+        return NULL;
+    }
+    return event->date;
+}
+
+
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);

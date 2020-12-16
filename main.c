@@ -3,23 +3,42 @@
 #include "event_manager.h"
 #include "event.h"
 #include "member.h"
+#include "string.h"
 
 int main() {
 
     Date date = dateCreate(1, 3, 2020);
-    // EventManager em = createEventManager(date);
+    EventManager em = createEventManager(date);
 
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
 
-    Event event = eventCreate("event 1", 1, date);
-    printEvent(event);
+    // Event event = eventCreate("event 1", 1, date);
+    // printEvent(event);
+    // Event eventCopy = copy_event(event);
+    // printEvent(eventCopy);
 
-    Event eventCopy = copy_event(event);
-    printEvent(eventCopy);
+    emAddEventByDate(em, "event 1", date, 1);
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    free_event(event);
-    free_event(eventCopy);
+    //should not work
+    if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
+        printf("works1\n");
+    }
+
+    //should not work
+    if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
+        printf("works2\n");
+    }
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    //should work
+    if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
+        printf("works3\n");
+    }
+    printf("Number of Events: %d\n", emGetEventsAmount(em));
+
+    
 
     // Member member1 = createMember("Tamir Offen", 1);
     // printMember(member1);
@@ -34,8 +53,10 @@ int main() {
     // free_member(member1Copy);
     
 
-    // destroyEventManager(em);//Should check Valgrind
+    destroyEventManager(em);//Should check Valgrind
     dateDestroy(date);
+    // free_event(event);
+    // free_event(eventCopy);
 
     return 0;
 }
