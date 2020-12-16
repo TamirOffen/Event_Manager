@@ -92,7 +92,7 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
  *      EM_NULL_ARGUMENT - one of the arguments are NULL
  *      EM_INVALID_EVENT_ID - if the event_id is a negative number
  *      EM_EVENT_NOT_EXISTS - the event doesn't exist in em
- *      EM_OUT_OF_MEMORY - out of memory, TODO: the user needs to fix it or the programmer?
+ *      EM_OUT_OF_MEMORY - out of memory, TODO: This will never happen?
  *      EM_SUCCESS - if everything ran fine
  */
 EventManagerResult emRemoveEvent(EventManager em, int event_id);

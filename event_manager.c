@@ -99,6 +99,7 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     }
 
     pqInsert(em->events, new_event, date);
+    free_event(new_event);
 
     return EM_SUCCESS;
 
@@ -128,7 +129,7 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     }
     
     Date temp_date = dateCreate(1,1,1);
-    Event temp_event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming 
+    Event temp_event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL
     if(pqContains(em->events, temp_event) == false) {
         free_event(temp_event);
         dateDestroy(temp_date);
@@ -136,7 +137,7 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     }
 
     pqRemoveElement(em->events, temp_event);
-    
+
     free_event(temp_event);
     dateDestroy(temp_date);
 
@@ -144,9 +145,18 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
 }
 
 EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
-    //Event event = malloc(sizeof(event));//????
-    //event = eventSearchByID(em->events, event_id);//TODO
-    //TODO
+    if(em == NULL || new_date == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
+    }
+    if(dateCompare(em->current_date, new_date) > 0) {
+        return EM_INVALID_DATE;
+    }
+    
+
+
     return EM_ERROR;
 
 }
