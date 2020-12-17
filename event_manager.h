@@ -59,7 +59,7 @@ void destroyEventManager(EventManager em);
  *      EM_INVALID_DATE - the new event's date is before the current date of the em
  *      EM_INVALID_EVENT_ID - the id number of the event is negative
  *      EM_EVENT_ID_ALREADY_EXISTS - the id number of the event already exists in em on that "date"
- *      EM_EVENT_ALREADY_EXISTS - an event with name "event_name" already exists in the em
+ *      EM_EVENT_ALREADY_EXISTS - an event with name "event_name" already exists in the em on the same date
  *      EM_OUT_OF_MEMORY - out of memory, TODO: ask on piazza because instructions are not clear
  *      EM_SUCCESS - if everything ran fine
  */

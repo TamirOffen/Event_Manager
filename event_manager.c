@@ -119,9 +119,9 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
         dateTick(date);
     }
 
-    emAddEventByDate(em, event_name, date, event_id); // Used the previous function.
+    EventManagerResult result = emAddEventByDate(em, event_name, date, event_id); // Used the previous function.
     dateDestroy(date);
-    return EM_SUCCESS;
+    return result;
 }
 
 EventManagerResult emRemoveEvent(EventManager em, int event_id){
