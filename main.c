@@ -32,14 +32,42 @@ int main() {
     if(emAddEventByDate(em, "event 2", date3, 3) == EM_EVENT_ALREADY_EXISTS) {
         printf("Test6\n");
     }
-
-    //emAddEventByDiff() Tests:
-    if(emAddEventByDiff(em, "event 3", 5, 3) == EM_SUCCESS) {
+    if(emAddEventByDate(em, "event 4", date4, 4) == EM_SUCCESS) {
         printf("Test7\n");
     }
-    if(emAddEventByDiff(em, "event 2", 4, 5) == EM_EVENT_ALREADY_EXISTS) {
+
+    //emAddEventByDiff() Tests: More testing needed
+    if(emAddEventByDiff(em, "event 3", 5, 3) == EM_SUCCESS) {
         printf("Test8\n");
     }
+    if(emAddEventByDiff(em, "event 2", 4, 5) == EM_EVENT_ALREADY_EXISTS) {
+        printf("Test9\n");
+    }
+
+    //emRemoveEvent() Tests:
+    if(emRemoveEvent(em, 3) == EM_SUCCESS) {
+        printf("Test10\n");
+    }
+    if(emRemoveEvent(em, 3) == EM_EVENT_NOT_EXISTS) {
+        printf("Test11\n");
+    }
+    if(emRemoveEvent(em, -1) == EM_INVALID_EVENT_ID) {
+        printf("Test12\n");
+    }
+
+    //emChangeEventDate() Tests: TODO: more tests
+    if(emChangeEventDate(em, 1, date2) == EM_INVALID_DATE) {
+        printf("Test13\n");
+    }
+    if(emChangeEventDate(em, 3, date1) == EM_EVENT_ID_NOT_EXISTS) {
+        printf("Test14\n");
+    }
+    emAddEventByDate(em, "event 10", date1, 5);
+    //DOESN"T WORK
+    if(emChangeEventDate(em, 5, date3) == EM_SUCCESS) {
+        printf("Test15\n");
+    }
+
 
     printEM(em);
     printf("%d\n", emGetEventsAmount(em));

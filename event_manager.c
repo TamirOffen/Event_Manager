@@ -148,6 +148,7 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     return EM_SUCCESS;
 }
 
+//DOESN"T WORK
 EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
     if(em == NULL || new_date == NULL) {
         return EM_NULL_ARGUMENT;
@@ -158,19 +159,18 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     if(dateCompare(em->current_date, new_date) > 0) {
         return EM_INVALID_DATE;
     }
-
+    
     // get the event with event_id
     Date temp_date = dateCreate(1,1,1); //TODO add NULL check
     Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
     bool found_event = false;
     PriorityQueue eventsCopy = pqCopy(em->events);
-    PQ_FOREACH(Event, current_event, eventsCopy) {
+    PQ_FOREACH(Event, current_event, em->events) {
         if(equal_events(current_event, event) == true) {
             free_event(event);
             dateDestroy(temp_date); 
-            event = copy_event(current_event);
-            // setEventName(event, getEventName(current_event)); 
-            // setEventDate(event, getEventDate(current_event)); 
+            // event = copy_event(current_event);
+            event = current_event;
             found_event = true;
         }
     }
@@ -181,14 +181,15 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         return EM_EVENT_ID_NOT_EXISTS;
     }
     
-
     // checking that there isn't another event_name on the same date 
     PriorityQueue copy_of_events = pqCopy(em->events);
     PQ_FOREACH(Event, current_event, copy_of_events) {
         if(strcmp(getEventName(current_event), getEventName(event)) == 0) {
-            if(dateCompare(getEventDate(current_event), getEventDate(event)) == 0) {
-                free_event(event);
-                dateDestroy(temp_date);
+            if(dateCompare(getEventDate(current_event), new_date) == 0) {
+                printf("same\n");
+                printEvent(event);
+                // free_event(event);
+                // dateDestroy(temp_date);
                 pqDestroy(copy_of_events);
                 return EM_EVENT_ALREADY_EXISTS; //same event_name on the same date
             }
@@ -196,14 +197,31 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     }
     pqDestroy(copy_of_events);
 
-    if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
-        free_event(event);
-        dateDestroy(temp_date);
+    Event copy_of_event = copy_event(event);
+    setEventDate(event, new_date);
+
+
+    //change the date of the event in pq events
+    // PriorityQueue copy_of_events = pqCopy(em->events);
+    
+    // pqDestroy(copy_of_events);
+
+    if(pqChangePriority(em->events, copy_of_event, getEventDate(copy_of_event), new_date) == PQ_OUT_OF_MEMORY) {
+        // free_event(event);
+        // dateDestroy(temp_date);
+        free_event(copy_of_event);
         return EM_OUT_OF_MEMORY;
     }
+    free_event(copy_of_event);
+    
+    PQ_FOREACH(Event, current_event, em->events) {
+        if(equal_events(current_event, event) == true) {
+            setEventDate(current_event, new_date);
+        }
+    }
 
-    free_event(event);
-    dateDestroy(temp_date);
+    // free_event(event);
+    // dateDestroy(temp_date);
 
     return EM_SUCCESS;
 
