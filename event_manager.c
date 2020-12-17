@@ -369,16 +369,16 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
         free_member(member);
         return EM_EVENT_ID_NOT_EXISTS;
     }
-    printEvent(event);
+    // printEvent(event);
 
     if(isMemberLinkedToEvent(event, member) == false) {
-        printf("not linked\n");
+        // printf("not linked\n");
         // free_event(event);
         free_member(member);
         return EM_EVENT_AND_MEMBER_NOT_LINKED;
     }
 
-    printf("linked\n");
+    // printf("linked\n");
 
     removeMemberFromEvent(event, member);
 
@@ -388,6 +388,14 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
 }
 
 EventManagerResult emTick(EventManager em, int days){
+    if(em == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+
+    if(days <= 0) {
+        return EM_INVALID_DATE;
+    }
+
     for (int i = 0 ; i < days ; i++){
         dateTick(em->current_date);
     }
