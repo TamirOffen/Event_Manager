@@ -415,10 +415,12 @@ EventManagerResult emTick(EventManager em, int days){
 }
 
 char* emGetNextEvent(EventManager em){
-    //Event event = malloc (sizeof(event));
-    //event = pqGetNext(em->events); 
-    //return (eventGetName(event));//TODO in event
-    return NULL;
+    if(em == NULL) {
+        return NULL;
+    }
+
+    //TODO: might need to create a copy of pq events
+    return getEventName(pqGetFirst(em->events));
 }
 
 int emGetEventsAmount(EventManager em) {

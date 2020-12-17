@@ -9,7 +9,7 @@ int main() {
 
     
     Date date = dateCreate(1, 3, 2020);
-    Date dateChange = dateCreate(2,3,2020);
+    Date dateChange = dateCreate(1,3,2020);
     EventManager em = createEventManager(date);
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
@@ -36,9 +36,9 @@ int main() {
 
     emRemoveEvent(em, 30);
 
-    emTick(em, 1);
+    // emTick(em, 1);
 
-    printf("\n");
+    printf("%s\n", emGetNextEvent(em));
     printEM(em);
 
 
