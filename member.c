@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "member.h"
-#include "strings.h"
+#include "string.h"
 
 struct Member_t {
     char* member_name;
@@ -54,7 +54,7 @@ PQElement copy_member(PQElement member) {
 
     member_copy->member_id = member_parameter->member_id;
     member_copy->num_of_events = member_parameter->num_of_events;
-
+    
     return member_copy;
 
 }
@@ -185,6 +185,3 @@ int* getMemberIdPointer(Member member) {
 void printMember(Member member) {
     printf("\tMember Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
 }
-
-
-

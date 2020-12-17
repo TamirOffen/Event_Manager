@@ -44,6 +44,9 @@ PriorityQueueResult linkMemberToEvent(Event event, Member member);
 
 bool isMemberLinkedToEvent(Event event, Member member);
 
+PriorityQueueResult removeMemberFromEvent(Event event, Member member);
+
+
 // returns a pointer to the event_name
 char* getEventName(Event event);
 
@@ -56,12 +59,13 @@ Date getEventDate(Event event);
 // set the event's date
 void setEventDate(Event event, Date date);
 
+int getEventID(Event event);
+
 void printEvent(Event event);
 void printEventMembers(Event event);
 
 
-
-
+char* getEventMembersName (Event event);
 
 
 

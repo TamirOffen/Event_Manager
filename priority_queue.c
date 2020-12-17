@@ -525,6 +525,7 @@ static bool iteratorIsDefined(PriorityQueue queue) {
 PQElement pqGetNext(PriorityQueue queue) {
     
     if(queue == NULL || !iteratorIsDefined(queue)) {
+        printf("NULL\n");
         return NULL;
     }
 
@@ -541,6 +542,7 @@ PQElement pqGetNext(PriorityQueue queue) {
     queue->list_of_elements[next_highest_priority_element_index].used = true;
     // queue->iterator = &next_highest_priority_element; // not needed!
     
+
     return next_highest_priority_element.element;
 }
 
@@ -558,7 +560,3 @@ PriorityQueueResult pqClear(PriorityQueue queue) {
 
     return PQ_SUCCESS;
 }
-
-
-
-

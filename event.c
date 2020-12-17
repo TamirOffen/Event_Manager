@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "event.h"
 #include "priority_queue.h"
-#include "strings.h"
+#include "string.h"
 #include "date.h"
 
 
@@ -168,6 +168,14 @@ bool isMemberLinkedToEvent(Event event, Member member) {
     return pqContains(event->members_queue, member);
 }
 
+PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
+    if(event == NULL || member == NULL) {
+        return PQ_NULL_ARGUMENT;
+    }
+
+    return pqRemoveElement(event->members_queue, member);
+}
+
 // TODO: useless, should delete
 char* getEventName(Event event) {
     if(event == NULL) {
@@ -200,23 +208,28 @@ void setEventDate(Event event, Date date) {
     if(event == NULL || date == NULL) {
         return;
     }
-    if(event->date != NULL) {
-        dateDestroy(event->date);
-    }
+    // if(event->date != NULL) {
+    //     dateDestroy(event->date);
+    // }
     event->date = dateCopy(date); //TODO: maybe doesn't work
 }
 
-
+int getEventID(Event event) {
+    if(event == NULL) {
+        return -1;
+    }
+    return event->event_id;
+}
 
 
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);
     printf("Event Name: %s\tEvent ID: %d\tDate: %d.%d.%d\n", event->event_name, event->event_id, day, month, year);
-    printf("Members: \n");
-    PQ_FOREACH(Member, m, event->members_queue) {
-        printMember(m);
-    }
+    // printf("Members: \n");
+    // PQ_FOREACH(Member, m, event->members_queue) {
+    //     printMember(m);
+    // }
 }
 void printEventMembers(Event event) {
     if(event == NULL) {
@@ -226,4 +239,23 @@ void printEventMembers(Event event) {
     PQ_FOREACH(Member, m, event->members_queue) {
         printMember(m);
     }
+}
+
+
+
+char* getEventMembersName (Event event){
+    if(pqGetSize(event->members_queue) == 0){
+        return "";
+    }
+    PriorityQueue copied_members = pqCopy(event->members_queue);
+    
+    char* members_string = malloc(sizeof(20));//Need to know the size, or just allocate a big number and don't care about complexity.
+    
+    
+    PQ_FOREACH(Member, current_member, copied_members){
+        strcat(members_string, ",");
+        strcat(members_string, getMemberName(current_member));
+    }
+
+    return members_string;
 }
