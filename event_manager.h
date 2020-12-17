@@ -233,4 +233,9 @@ void emPrintAllEvents(EventManager em, const char* file_name);
 void emPrintAllResponsibleMembers(EventManager em, const char* file_name);
 
 
+//FOR TESTING:
+void printAllEventsAndTheirMembers(EventManager em);
+void printAllMembers(EventManager em);
+
+
 #endif //EVENT_MANAGER_H

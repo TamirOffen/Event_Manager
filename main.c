@@ -9,13 +9,27 @@ int main() {
 
     
     Date date = dateCreate(1, 3, 2020);
+    Date dateChange = dateCreate(2,3,2022);
     EventManager em = createEventManager(date);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emAddEventByDate(em, "event 1", date, 1);
-    printf("Number of Events: %d\n", emGetEventsAmount(em));
+    emAddEventByDate(em, "event 1", date, 1);   
+
+
+    // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
     emAddMember(em, "Tamir", 1);
+    emAddMember(em, "Nabeeh", 2);
+    emAddMember(em, "Bob", 3);
+    printAllMembers(em);
+
+    // // emChangeEventDate(em, 1, dateChange);
+
+    emAddMemberToEvent(em, 1, 1);
+    emAddMemberToEvent(em, 2, 1);
+    // emAddMemberToEvent(em, 3, 1);
+
+    printAllEventsAndTheirMembers(em);
 
     // emAddEventByDate(em, "event 2", date, 2);
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
@@ -25,32 +39,12 @@ int main() {
 
 
 
-    // //should not work
-    // if(emAddEventByDate(em, "event 1", date, 2) == EM_EVENT_ALREADY_EXISTS) {
-    //     printf("works1\n");
-    // }
-
-    // //should not work
-    // if(emAddEventByDate(em, "event 2", date, 1) == EM_EVENT_ID_ALREADY_EXISTS) {
-    //     printf("works2\n");
-    // }
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
-
-    // //should work
-    // if(emAddEventByDate(em, "event 2", date, 2) == EM_SUCCESS) {
-    //     printf("works3\n");
-    // }
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
-
-    // emAddEventByDiff(em, "event 3", 2, 1);
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
-
-    // emRemoveEvent(em, 2);
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
+    
 
 
     destroyEventManager(em);
     dateDestroy(date);
+    dateDestroy(dateChange);
     
     
 

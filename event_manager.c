@@ -162,8 +162,11 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     bool found_event = false;
     PQ_FOREACH(Event, current_event, em->events) {
         if(equal_events(current_event, event) == true) {
-            setEventName(event, getEventName(current_event)); 
-            setEventDate(event, getEventDate(current_event)); 
+            free_event(event);
+            dateDestroy(temp_date); 
+            event = copy_event(current_event);
+            // setEventName(event, getEventName(current_event)); 
+            // setEventDate(event, getEventDate(current_event)); 
             found_event = true;
         }
     }
@@ -172,6 +175,7 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         dateDestroy(temp_date);
         return EM_EVENT_ID_NOT_EXISTS;
     }
+    
 
     // checking that there isn't another event_name on the same date 
     PQ_FOREACH(Event, current_event, em->events) {
@@ -217,27 +221,86 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
         return EM_MEMBER_ID_ALREADY_EXISTS;
     }
 
-    int starting_priority_of_member = 0; //i.e. how many events the member is in charge of
+    int starting_priority_of_member = 0; //i.e. how many events the member is in charge of at first
     pqInsert(em->total_members, new_member, &starting_priority_of_member);
-    
+
     free_member(new_member);
+
+    // PQ_FOREACH(Member, m, em->total_members) {
+    //     printMember(m);
+    // }
 
     return EM_SUCCESS;
 }
 
 EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id){
-    // Member member = malloc (sizeof(member));
-    // if(member == NULL){
-    //     return EM_OUT_OF_MEMORY;
-    // }
-    // Event event = malloc (sizeof(event));
-    // if(event == NULL){
+    if(em == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(member_id < 0) {
+        return EM_INVALID_MEMBER_ID;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
+    }
+
+    //TODO: Code Duplication! here and getDateID bellow
+    // get the event with event_id
+    Date temp_date = dateCreate(1,1,1); //TODO add NULL check
+    Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
+    bool found_event = false;
+    PQ_FOREACH(Event, current_event, em->events) {
+        if(equal_events(current_event, event) == true) {
+            free_event(event);
+            dateDestroy(temp_date);
+            event = copy_event(current_event);
+            found_event = true;
+            // break;
+        }
+    }
+    if(found_event == false) {
+        free_event(event);
+        dateDestroy(temp_date);
+        return EM_EVENT_ID_NOT_EXISTS;
+    }
+
+
+    // get the member with member_id
+    Member member = createMember("temp member", member_id);
+    bool found_member = false;
+    PQ_FOREACH(Member, current_member, em->total_members) {
+        if(equal_members(current_member, member) == true) {
+            free_member(member);
+            member = copy_member(current_member);
+            found_member = true;
+            break;
+        }
+    }
+    if(found_member == false) {
+        free_member(member);
+        free_event(event);
+        return EM_MEMBER_ID_NOT_EXISTS;
+    }
+    //tests get member and get event here:
+    // printEvent(event);
+    // printMember(member);
+
+    // check if member_id is already linked with event_id
+    if(isMemberLinkedToEvent(event, member) == true) {
+        printf("linked\n");
+        return EM_EVENT_AND_MEMBER_ALREADY_LINKED;
+    }
+    
+    printf("%d\n", linkMemberToEvent(event, member));
+    // if(linkMemberToEvent(event, member) == PQ_OUT_OF_MEMORY) {
     //     return EM_OUT_OF_MEMORY;
     // }
 
-    //member = memberSearchByID(em->total_members, member_id);
-    //event = eventSearchByID(em->events, event_id);
-    //How to access members pq in event.... TODO.
+    // printEvent(event);
+
+
+    free_event(event);
+    free_member(member);
 
     return EM_SUCCESS;
 }
@@ -282,6 +345,22 @@ int emGetEventsAmount(EventManager em) {
     }
 
     return pqGetSize(em->events);
+}
+
+
+
+
+
+//FOR TESTING:
+void printAllEventsAndTheirMembers(EventManager em) {
+    PQ_FOREACH(Event, e, em->events) {
+        printEvent(e);
+    }
+}
+void printAllMembers(EventManager em) {
+    PQ_FOREACH(Member, m, em->total_members) {
+        printMember(m);
+    }
 }
 
 

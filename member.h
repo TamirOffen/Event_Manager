@@ -36,9 +36,18 @@ void freeInt(PQElementPriority n);
 int compareInts(PQElementPriority n1, PQElementPriority n2);
 
 
+// returns a pointer to the event_name
+char* getMemberName(Member member);
+
+// sets the event's name
+void setMemberName(Member member, char* member_name);
+
+int getMemberNumOfEvents(Member member);
+
+void setMemberNumOfEvents(Member member, int new_num_of_events);
 
 
-
+int* getMemberIdPointer(Member member);
 
 
 void printMember(Member member);
@@ -47,5 +56,6 @@ void printMember(Member member);
 
 
 
-#endif
+#endif //TODO: add the /* ...
+
 

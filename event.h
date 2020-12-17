@@ -39,6 +39,11 @@ to get the date of E1:
 pqGetName("E1").priority = 1.1.2020
 */
 
+// basically just pqInserts member into event->members_queue
+PriorityQueueResult linkMemberToEvent(Event event, Member member);
+
+bool isMemberLinkedToEvent(Event event, Member member);
+
 // returns a pointer to the event_name
 char* getEventName(Event event);
 
@@ -52,6 +57,7 @@ Date getEventDate(Event event);
 void setEventDate(Event event, Date date);
 
 void printEvent(Event event);
+void printEventMembers(Event event);
 
 
 

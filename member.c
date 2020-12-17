@@ -145,9 +145,45 @@ int compareInts(PQElementPriority n1, PQElementPriority n2) {
 
 
 
+// GETTERS AND SETTES:
+char* getMemberName(Member member) {
+    if(member == NULL) {
+        return NULL;
+    }
+    return member->member_name;
+}
+
+void setMemberName(Member member, char* member_name) {
+    if(member == NULL || member_name == NULL) {
+        return;
+    }
+    if(member->member_name != NULL) {
+        free(member->member_name);
+    }
+
+    //TODO: might case memory issues here
+    member->member_name = malloc(strlen(member_name) + 1);
+    strcpy(member->member_name, member_name);
+}
+
+
+int getMemberNumOfEvents(Member member);
+
+void setMemberNumOfEvents(Member member, int new_num_of_events);
+
+
+int* getMemberIdPointer(Member member) {
+    if(member == NULL) {
+        return NULL;
+    }
+
+    return &(member->member_id);
+}
+
+
 
 void printMember(Member member) {
-    printf("Member Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
+    printf("\tMember Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
 }
 
 
