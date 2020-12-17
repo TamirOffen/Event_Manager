@@ -238,5 +238,6 @@ void printAllEventsAndTheirMembers(EventManager em);
 void printAllMembers(EventManager em);
 void getFirstMember(EventManager em);
 void getNextMember(EventManager em);
+void printEM(EventManager em);
 
 #endif //EVENT_MANAGER_H

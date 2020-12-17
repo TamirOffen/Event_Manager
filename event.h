@@ -59,6 +59,8 @@ Date getEventDate(Event event);
 // set the event's date
 void setEventDate(Event event, Date date);
 
+int getEventID(Event event);
+
 void printEvent(Event event);
 void printEventMembers(Event event);
 

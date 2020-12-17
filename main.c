@@ -9,7 +9,7 @@ int main() {
 
     
     Date date = dateCreate(1, 3, 2020);
-    Date dateChange = dateCreate(2,3,2022);
+    Date dateChange = dateCreate(2,3,2020);
     EventManager em = createEventManager(date);
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
@@ -24,20 +24,22 @@ int main() {
     emAddMember(em, "Bob", 3);
 
 
-    printf("%d\n", emAddMemberToEvent(em, 1, 1));
-    printf("%d\n", emAddMemberToEvent(em, 2, 1));
-    printf("%d\n", emAddMemberToEvent(em, 3, 2));
+    emAddMemberToEvent(em, 1, 1);
+    emAddMemberToEvent(em, 2, 1);
+    emAddMemberToEvent(em, 3, 2);
 
-    printf("%d\n", emRemoveMemberFromEvent(em, 1, 1));
-    printf("%d\n", emRemoveMemberFromEvent(em, 3, 2));
+    emRemoveMemberFromEvent(em, 1, 1);
+    emRemoveMemberFromEvent(em, 3, 2);
     // printf("%d\n", emRemoveMemberFromEvent(em, 2, 1));
     // printf("%d\n", emRemoveMemberFromEvent(em, 2, 1));
     // printf("%d\n", emRemoveMemberFromEvent(em, 3, 2));
 
-    emRemoveEvent(em, 1);
+    emRemoveEvent(em, 30);
+
+    emTick(em, 1);
 
     printf("\n");
-    printAllEventsAndTheirMembers(em);
+    printEM(em);
 
 
     // printf("%d\n", emRemoveEvent(em, 1));

@@ -397,10 +397,19 @@ EventManagerResult emTick(EventManager em, int days){
     }
 
     for (int i = 0 ; i < days ; i++){
-        dateTick(em->current_date);
+        dateTick(em->current_date); //TODO: doesn't take into account different #days in each month
     }
 
-    //EMRemoveOutDatedEvents (em);//TODO
+    PriorityQueue pq_events = pqCopy(em->events);
+    PQ_FOREACH(Event, e, pq_events) {
+        if(dateCompare(getEventDate(e), em->current_date) < 0) {
+            if(emRemoveEvent(em, getEventID(e)) == EM_OUT_OF_MEMORY) {
+                pqDestroy(pq_events);
+                return EM_OUT_OF_MEMORY;
+            }
+        }
+    }
+    pqDestroy(pq_events);
 
     return EM_SUCCESS;
 }
@@ -425,6 +434,16 @@ int emGetEventsAmount(EventManager em) {
 
 
 //FOR TESTING:
+void printEM(EventManager em) {
+    int day = -1, month = -1, year = -1;
+    dateGet(em->current_date, &day, &month, &year);
+    printf("Current Day of the EM:\t%d.%d.%d\n", day, month, year);
+    PriorityQueue copyPQ = pqCopy(em->events);
+    PQ_FOREACH(Event, e, copyPQ) {
+        printEvent(e);
+    }
+    pqDestroy(copyPQ);
+}
 void printAllEventsAndTheirMembers(EventManager em) {
     PriorityQueue copyPQ = pqCopy(em->events);
     PQ_FOREACH(Event, e, copyPQ) {
@@ -441,8 +460,6 @@ void getNextMember(EventManager em) {
     printMember(m);
 }
 void printAllMembers(EventManager em) {
-
-
     PriorityQueue copyPQ = pqCopy(em->total_members);
     PQ_FOREACH(Member, m, copyPQ) {
         printMember(m);

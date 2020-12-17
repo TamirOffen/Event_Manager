@@ -214,17 +214,22 @@ void setEventDate(Event event, Date date) {
     event->date = dateCopy(date); //TODO: maybe doesn't work
 }
 
-
+int getEventID(Event event) {
+    if(event == NULL) {
+        return -1;
+    }
+    return event->event_id;
+}
 
 
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);
     printf("Event Name: %s\tEvent ID: %d\tDate: %d.%d.%d\n", event->event_name, event->event_id, day, month, year);
-    printf("Members: \n");
-    PQ_FOREACH(Member, m, event->members_queue) {
-        printMember(m);
-    }
+    // printf("Members: \n");
+    // PQ_FOREACH(Member, m, event->members_queue) {
+    //     printMember(m);
+    // }
 }
 void printEventMembers(Event event) {
     if(event == NULL) {
