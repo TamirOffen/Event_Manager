@@ -28,3 +28,6 @@ CMakeFiles/app.dir/member.c.o: member.c
 CMakeFiles/app.dir/member.c.o: member.h
 CMakeFiles/app.dir/member.c.o: priority_queue.h
 
+CMakeFiles/app.dir/priority_queue.c.o: priority_queue.c
+CMakeFiles/app.dir/priority_queue.c.o: priority_queue.h
+

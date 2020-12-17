@@ -277,6 +277,33 @@ member.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.s
 .PHONY : member.c.s
 
+priority_queue.o: priority_queue.c.o
+
+.PHONY : priority_queue.o
+
+# target to build an object file
+priority_queue.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/priority_queue.c.o
+.PHONY : priority_queue.c.o
+
+priority_queue.i: priority_queue.c.i
+
+.PHONY : priority_queue.i
+
+# target to preprocess a source file
+priority_queue.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/priority_queue.c.i
+.PHONY : priority_queue.c.i
+
+priority_queue.s: priority_queue.c.s
+
+.PHONY : priority_queue.s
+
+# target to generate assembly for a file
+priority_queue.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/priority_queue.c.s
+.PHONY : priority_queue.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -301,6 +328,9 @@ help:
 	@echo "... member.o"
 	@echo "... member.i"
 	@echo "... member.s"
+	@echo "... priority_queue.o"
+	@echo "... priority_queue.i"
+	@echo "... priority_queue.s"
 .PHONY : help
 
 

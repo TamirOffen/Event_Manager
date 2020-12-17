@@ -54,7 +54,7 @@ PQElement copy_member(PQElement member) {
 
     member_copy->member_id = member_parameter->member_id;
     member_copy->num_of_events = member_parameter->num_of_events;
-
+    
     return member_copy;
 
 }

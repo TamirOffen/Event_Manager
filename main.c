@@ -23,9 +23,18 @@ int main() {
     emAddMember(em, "Nabeeh", 2);
     emAddMember(em, "Bob", 3);
 
-    emAddMemberToEvent(em, 1, 1);
-    emAddMemberToEvent(em, 2, 1);
-    printf("%d\n",emAddMemberToEvent(em, 3, 2));
+
+    printf("%d\n", emAddMemberToEvent(em, 1, 1));
+    printf("%d\n", emAddMemberToEvent(em, 2, 10));
+    printf("%d\n", emAddMemberToEvent(em, 2, 10));
+    printf("%d\n", emAddMemberToEvent(em, 3, 2));
+    printf("%d\n", emAddMemberToEvent(em, 2, 10));
+    printf("%d\n", emAddMemberToEvent(em, 3, 2));
+    printf("%d\n", emAddMemberToEvent(em, 2, 10));
+    printf("%d\n", emAddMemberToEvent(em, 3, 2));
+
+    // printf("%d\n", emAddMemberToEvent(em, 1, 2));
+
 
     // printf("%d\n", emRemoveEvent(em, 1));
     printAllEventsAndTheirMembers(em);

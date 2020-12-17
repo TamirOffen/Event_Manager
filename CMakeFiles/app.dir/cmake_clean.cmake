@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/app.dir/event_manager.c.o"
   "CMakeFiles/app.dir/main.c.o"
   "CMakeFiles/app.dir/member.c.o"
+  "CMakeFiles/app.dir/priority_queue.c.o"
   "app"
   "app.pdb"
 )

@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event_manager.c" "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles/app.dir/event_manager.c.o"
   "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/main.c" "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles/app.dir/main.c.o"
   "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.c" "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles/app.dir/member.c.o"
+  "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.c" "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles/app.dir/priority_queue.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
