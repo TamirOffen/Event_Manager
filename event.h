@@ -44,6 +44,9 @@ PriorityQueueResult linkMemberToEvent(Event event, Member member);
 
 bool isMemberLinkedToEvent(Event event, Member member);
 
+PriorityQueueResult removeMemberFromEvent(Event event, Member member);
+
+
 // returns a pointer to the event_name
 char* getEventName(Event event);
 

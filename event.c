@@ -168,6 +168,14 @@ bool isMemberLinkedToEvent(Event event, Member member) {
     return pqContains(event->members_queue, member);
 }
 
+PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
+    if(event == NULL || member == NULL) {
+        return PQ_NULL_ARGUMENT;
+    }
+
+    return pqRemoveElement(event->members_queue, member);
+}
+
 // TODO: useless, should delete
 char* getEventName(Event event) {
     if(event == NULL) {

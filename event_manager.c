@@ -319,10 +319,71 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     return EM_SUCCESS;
 }
 
-EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id){
-    
+EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id){  
+    if(em == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+    if(member_id < 0) {
+        return EM_INVALID_MEMBER_ID;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
+    }
 
+    PriorityQueue em_members_queue = pqCopy(em->total_members); //TODO: add NULL check
+    Member member = createMember("temp member", member_id); //TODO: add NULL check
+    bool member_found = false;
+    PQ_FOREACH(Member, m, em_members_queue) {
+        if(equal_members(m, member) == true) {
+            free_member(member);
+            member = copy_member(m);
+            member_found = true;
+            break;
+        }
+    }
+    pqDestroy(em_members_queue);
+    if(member_found == false) {
+        free_member(member);
+        return EM_MEMBER_ID_NOT_EXISTS;
+    }
+    // printMember(member);
 
+    PriorityQueue em_events = pqCopy(em->events);
+    Date temp_date = dateCreate(1,1,1); //TODO bad programming
+    Event event = eventCreate("temp event", event_id, temp_date); //TODO bad programming
+    bool event_found = false;
+    PQ_FOREACH(Event, e, em->events) {
+        if(equal_events(e, event) == true) {
+            free_event(event);
+            dateDestroy(temp_date);
+            // event = copy_event(e);
+            event = e;
+            event_found = true;
+            break;
+        }
+    }
+    pqDestroy(em_events);
+    if(event_found == false) {
+        free_event(event);
+        dateDestroy(temp_date);
+        free_member(member);
+        return EM_EVENT_ID_NOT_EXISTS;
+    }
+    printEvent(event);
+
+    if(isMemberLinkedToEvent(event, member) == false) {
+        printf("not linked\n");
+        // free_event(event);
+        free_member(member);
+        return EM_EVENT_AND_MEMBER_NOT_LINKED;
+    }
+
+    printf("linked\n");
+
+    removeMemberFromEvent(event, member);
+
+    // free_event(event);
+    free_member(member);
     return EM_SUCCESS;
 }
 

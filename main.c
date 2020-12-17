@@ -25,29 +25,20 @@ int main() {
 
 
     printf("%d\n", emAddMemberToEvent(em, 1, 1));
-    printf("%d\n", emAddMemberToEvent(em, 2, 10));
-    printf("%d\n", emAddMemberToEvent(em, 2, 10));
-    printf("%d\n", emAddMemberToEvent(em, 3, 2));
-    printf("%d\n", emAddMemberToEvent(em, 2, 10));
-    printf("%d\n", emAddMemberToEvent(em, 3, 2));
-    printf("%d\n", emAddMemberToEvent(em, 2, 10));
+    printf("%d\n", emAddMemberToEvent(em, 2, 1));
     printf("%d\n", emAddMemberToEvent(em, 3, 2));
 
-    // printf("%d\n", emAddMemberToEvent(em, 1, 2));
+    printf("%d\n", emRemoveMemberFromEvent(em, 1, 1));
+    // printf("%d\n", emRemoveMemberFromEvent(em, 2, 1));
+    // printf("%d\n", emRemoveMemberFromEvent(em, 2, 1));
+    // printf("%d\n", emRemoveMemberFromEvent(em, 3, 2));
+
+    printf("\n");
+    printAllEventsAndTheirMembers(em);
 
 
     // printf("%d\n", emRemoveEvent(em, 1));
-    printAllEventsAndTheirMembers(em);
-    
-
-    // emAddEventByDate(em, "event 2", date, 2);
-    // printf("Number of Events: %d\n", emGetEventsAmount(em));
-
-    // Date dateChange = dateCreate(10, 6, 2025);
-    // emChangeEventDate(em, 2, dateChange);
-
-
-
+    // printAllEventsAndTheirMembers(em);
     
 
 
