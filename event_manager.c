@@ -293,13 +293,12 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
         return EM_EVENT_AND_MEMBER_ALREADY_LINKED;
     }
     
-    printf("%d\n", linkMemberToEvent(event, member));
-    // if(linkMemberToEvent(event, member) == PQ_OUT_OF_MEMORY) {
-    //     return EM_OUT_OF_MEMORY;
-    // }
+    // printf("%d\n", linkMemberToEvent(event, member));
+    if(linkMemberToEvent(event, member) == PQ_OUT_OF_MEMORY) {
+        return EM_OUT_OF_MEMORY;
+    }
 
     // printEvent(event);
-
 
     // free_event(event);
     free_member(member);
@@ -308,20 +307,10 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
 }
 
 EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id){
-    //     Member member = malloc (sizeof(member));
-    // if(member == NULL){
-    //     return EM_OUT_OF_MEMORY;
-    // }
-    // Event event = malloc (sizeof(event));
-    // if(event == NULL){
-    //     return EM_OUT_OF_MEMORY;
-    // }
+    
+    
 
-    // member = memberSearchByID(em->total_members, member_id);
-    // event = eventSearchByID(em->events, event_id);
-        // We need to use pqRemoveElement, how to access the members pq in event? TODO.
-
-        return EM_SUCCESS;
+    return EM_SUCCESS;
 }
 
 EventManagerResult emTick(EventManager em, int days){
@@ -355,6 +344,7 @@ int emGetEventsAmount(EventManager em) {
 
 //FOR TESTING:
 void printAllEventsAndTheirMembers(EventManager em) {
+    pqGetFirst(em->events);
     PQ_FOREACH(Event, e, em->events) {
         printEvent(e);
     }

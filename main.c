@@ -13,7 +13,8 @@ int main() {
     EventManager em = createEventManager(date);
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
 
-    emAddEventByDate(em, "event 1", date, 1);   
+    emAddEventByDate(em, "event 2", dateChange, 2);   
+    emAddEventByDate(em, "event 1", date, 1);  
 
 
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
@@ -21,15 +22,14 @@ int main() {
     emAddMember(em, "Tamir", 1);
     emAddMember(em, "Nabeeh", 2);
     emAddMember(em, "Bob", 3);
-    // printAllMembers(em);
-
-    // // emChangeEventDate(em, 1, dateChange);
 
     emAddMemberToEvent(em, 1, 1);
     emAddMemberToEvent(em, 2, 1);
-    // emAddMemberToEvent(em, 3, 1);
+    printf("%d\n",emAddMemberToEvent(em, 3, 2));
 
+    // printf("%d\n", emRemoveEvent(em, 1));
     printAllEventsAndTheirMembers(em);
+    
 
     // emAddEventByDate(em, "event 2", date, 2);
     // printf("Number of Events: %d\n", emGetEventsAmount(em));
