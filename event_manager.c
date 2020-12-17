@@ -253,9 +253,11 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
         if(equal_events(current_event, event) == true) {
             free_event(event);
             dateDestroy(temp_date);
-            event = copy_event(current_event);
+            // event = copy_event(current_event);
+            // printEvent(current_event);
+            event = current_event;
             found_event = true;
-            // break;
+            break;
         }
     }
     if(found_event == false) {
@@ -299,7 +301,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     // printEvent(event);
 
 
-    free_event(event);
+    // free_event(event);
     free_member(member);
 
     return EM_SUCCESS;

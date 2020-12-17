@@ -21,7 +21,7 @@ int main() {
     emAddMember(em, "Tamir", 1);
     emAddMember(em, "Nabeeh", 2);
     emAddMember(em, "Bob", 3);
-    printAllMembers(em);
+    // printAllMembers(em);
 
     // // emChangeEventDate(em, 1, dateChange);
 
