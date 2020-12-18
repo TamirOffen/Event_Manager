@@ -521,10 +521,14 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
-        
-            printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, getEventMembersName(current_event));
-            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year,getEventMembersName(current_event)); 
+
+            char* names = getEventMembersName(current_event);
+            printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names);
+            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names); 
+            free(names);
     }
+
+
 
     fclose(output_file);
     pqDestroy(events_copy);
@@ -542,6 +546,9 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
         return;
     }
     PQ_FOREACH(Member, current_member, total_members_copy){
+        if(getMemberNumOfEvents(current_member) == 0) {
+            continue;
+        }
         fprintf(output_file, "%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));
         printf("%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));    
     }

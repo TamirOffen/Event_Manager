@@ -1,3 +1,4 @@
-Nabeeh,0
-Tamir,0
-Censor,0
+Tamir,1
+Nabeeh,2
+Julie,3
+Mark,1

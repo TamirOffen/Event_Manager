@@ -259,6 +259,8 @@ char* getEventMembersName (Event event){
         strcat(members_string, ",");
         strcat(members_string, getMemberName(current_member));
     }
+
+    pqDestroy(copied_members);
     
     return members_string;
 }

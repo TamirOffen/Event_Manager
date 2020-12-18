@@ -32,8 +32,9 @@ int main() {
     emAddMemberToEvent(em, 6, 4);
     emAddMemberToEvent(em, 5, 4);
     emAddMemberToEvent(em, 5, 2);
+    emAddMemberToEvent(em, 5, 3);
 
-    emRemoveMemberFromEvent(em, 2, 1);
+    // emRemoveMemberFromEvent(em, 2, 1); //todo --
 
 
 
@@ -59,6 +60,7 @@ int main() {
     // emAddMemberToEvent(em,666,4);
     
     emPrintAllEvents(em, "emPrintAllEvents.txt");
+    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
     
     /*
 
