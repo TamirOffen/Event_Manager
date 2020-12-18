@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "member.h"
-#include "strings.h"
+#include "string.h"
 
 struct Member_t {
     char* member_name;

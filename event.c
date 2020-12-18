@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "event.h"
 #include "priority_queue.h"
-#include "strings.h"
+#include "string.h"
 #include "date.h"
 
 

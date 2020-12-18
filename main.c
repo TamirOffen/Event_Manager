@@ -63,10 +63,20 @@ int main() {
         printf("Test14\n");
     }
     emAddEventByDate(em, "event 10", date1, 5);
-    //DOESN"T WORK
     if(emChangeEventDate(em, 2, date4) == EM_SUCCESS) {
         printf("Test15\n");
     }
+    if(emChangeEventDate(em, 2, date3) == EM_SUCCESS) {
+        printf("Test16\n");
+    }
+    if(emChangeEventDate(em, 2, date2) == EM_INVALID_DATE) {
+        printf("Test17\n");
+    }
+    if(emChangeEventDate(em, 5, date4) == EM_SUCCESS) {
+        printf("Test18\n");
+    }
+    emRemoveEvent(em, 5);
+
 
     printEM(em);
 

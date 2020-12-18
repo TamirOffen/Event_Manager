@@ -222,7 +222,7 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         }
     }
 
-    // free_event(event);
+    free_event(event);
     // dateDestroy(temp_date);
 
     return EM_SUCCESS;
@@ -452,7 +452,12 @@ int emGetEventsAmount(EventManager em) {
 }
 
 
-
+void emPrintAllEvents(EventManager em, const char* file_name) {
+    //TODO
+}
+void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
+    //TODO
+}
 
 
 //FOR TESTING:
