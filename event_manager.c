@@ -268,6 +268,7 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
     return EM_SUCCESS;
 }
 
+//might be memory issues here
 //Maybe causing problems because the is no copy in FOREACH.
 EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id){
     if(em == NULL) {
@@ -279,7 +280,6 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     if(event_id < 0) {
         return EM_INVALID_EVENT_ID;
     }
-
 
     //TODO: Code Duplication! here and getDateID bellow
     // get the event with event_id
@@ -308,19 +308,19 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     PriorityQueue membersPQ = pqCopy(em->total_members);
     Member member = createMember("temp member", member_id);
     bool found_member = false;
-    PQ_FOREACH(Member, current_member, membersPQ) {
+    PQ_FOREACH(Member, current_member, em->total_members) {
         if(equal_members(current_member, member) == true) {
             free_member(member);
-            member = copy_member(current_member);
-            tickMemberNumOfEvents(current_member);           ////////////////
+            // member = copy_member(current_member); change
+            member = current_member;
             found_member = true;
-            pqGetFirst(em->total_members);//To reset the pointer to the first element 
+            // pqGetFirst(em->total_members);//To reset the pointer to the first element 
             break;
         }
     }
     pqDestroy(membersPQ);
     if(found_member == false) {
-        free_member(member);
+        // free_member(member); change
         // free_event(event);
         return EM_MEMBER_ID_NOT_EXISTS;
     }
@@ -330,7 +330,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
 
     // check if member_id is already linked with event_id
     if(isMemberLinkedToEvent(event, member) == true) {
-        free_member(member);
+        // free_member(member); changed
         return EM_EVENT_AND_MEMBER_ALREADY_LINKED;
     }
     
@@ -344,7 +344,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     // printEvent(event);
 
     // free_event(event);
-    free_member(member);
+    // free_member(member);
 
     return EM_SUCCESS;
 }
@@ -488,6 +488,7 @@ void getNextMember(EventManager em) {
     Member m = (Member)pqGetNext(em->total_members);
     printMember(m);
 }
+
 void printAllMembers(EventManager em) {
     PriorityQueue copyPQ = pqCopy(em->total_members);
     PQ_FOREACH(Member, m, copyPQ) {

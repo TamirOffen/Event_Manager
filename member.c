@@ -189,7 +189,7 @@ int* getMemberIdPointer(Member member) {
 
 
 void printMember(Member member) {
-    printf("\tMember Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
+    printf("\tMember Name: %s,\tMember ID: %d\t#Events: %d\n", member->member_name, member->member_id, member->num_of_events);
 }
 
 

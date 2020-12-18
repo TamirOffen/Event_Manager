@@ -13,21 +13,50 @@ int main() {
     Date date4 = dateCreate(9, 2, 2011);
     EventManager em = createEventManager(date1);
 
+    emAddEventByDate(em, "event 1", date1, 1);
+    emAddEventByDate(em, "event 2", date1, 2);
+    emAddEventByDate(em, "event 3", date3, 3);
+    emAddEventByDate(em, "event 4", date4, 4);
 
-    emAddEventByDate(em, "event1", date1, 1);
-    emAddEventByDate(em, "event2", date3, 2);
-    emAddEventByDate(em, "event4", date4, 4);
+    emAddMember(em, "Tamir", 1);
+    emAddMember(em, "Nabeeh", 2);
+    emAddMember(em, "Bob", 3);
+    emAddMember(em, "Jon", 4);
+    emAddMember(em, "Julie", 5);
+    emAddMember(em, "Mark", 6);
+    emAddMember(em, "Ophelia", 7);
 
-    emAddMember(em,"Nabeeh",123);
-    emAddMember(em,"Tamir",345);
-    emAddMember(em,"Censor",666);
+    emAddMemberToEvent(em, 1, 1);
+    emAddMemberToEvent(em, 2, 1);
+    emAddMemberToEvent(em, 2, 2);
+    emAddMemberToEvent(em, 6, 4);
+    emAddMemberToEvent(em, 5, 4);
+    emAddMemberToEvent(em, 5, 2);
 
-    emAddMemberToEvent(em,123,1);
-    emAddMemberToEvent(em,345,1);
-    emAddMemberToEvent(em,666,2);
-    emAddMemberToEvent(em,345,2);
-    emAddMemberToEvent(em,345,4);
-    emAddMemberToEvent(em,666,4);
+    emRemoveMemberFromEvent(em, 2, 1);
+
+
+
+    // printEM(em);
+
+    printAllMembers(em);
+
+
+
+    // emAddEventByDate(em, "event1", date1, 1);
+    // emAddEventByDate(em, "event2", date3, 2);
+    // emAddEventByDate(em, "event4", date4, 4);
+
+    // emAddMember(em,"Nabeeh",123);
+    // emAddMember(em,"Tamir",345);
+    // emAddMember(em,"Censor",666);
+
+    // emAddMemberToEvent(em,123,1);
+    // emAddMemberToEvent(em,345,1);
+    // emAddMemberToEvent(em,666,2);
+    // emAddMemberToEvent(em,345,2);
+    // emAddMemberToEvent(em,345,4);
+    // emAddMemberToEvent(em,666,4);
     
     
     /*
@@ -94,7 +123,7 @@ int main() {
 
     //emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
 
-    emPrintAllEvents(em, "emPrintAllEvents.txt");
+    // emPrintAllEvents(em, "emPrintAllEvents.txt");
 
     destroyEventManager(em);
     dateDestroy(date1);
