@@ -58,6 +58,7 @@ int main() {
     // emAddMemberToEvent(em,345,4);
     // emAddMemberToEvent(em,666,4);
     
+    emPrintAllEvents(em, "emPrintAllEvents.txt");
     
     /*
 
