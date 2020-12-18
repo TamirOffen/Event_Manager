@@ -90,7 +90,7 @@ int main() {
     printEM(em);
     printf("%d\n", emGetEventsAmount(em));
 
-    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
+    //emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
 
     emPrintAllEvents(em, "emPrintAllEvents.txt");
 

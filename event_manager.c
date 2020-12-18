@@ -462,14 +462,6 @@ int emGetEventsAmount(EventManager em) {
 }
 
 
-void emPrintAllEvents(EventManager em, const char* file_name) {
-    //TODO
-}
-void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
-    //TODO
-}
-
-
 //FOR TESTING:
 void printEM(EventManager em) {
     int day = -1, month = -1, year = -1;
