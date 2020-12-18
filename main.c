@@ -30,6 +30,7 @@ int main() {
     emAddMemberToEvent(em,666,4);
     emAddMemberToEvent(em,123,4);
     
+    emPrintAllEvents(em, "emPrintAllEvents.txt");
     
     /*
 
@@ -95,7 +96,7 @@ int main() {
 
     //emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
 
-    emPrintAllEvents(em, "emPrintAllEvents.txt");
+    
 
     destroyEventManager(em);
     dateDestroy(date1);

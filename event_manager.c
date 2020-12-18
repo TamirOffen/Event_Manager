@@ -499,7 +499,7 @@ void printAllMembers(EventManager em) {
 
 
 void emPrintAllEvents(EventManager em, const char* file_name){
-    if(em == NULL || file_name) {
+    if(em == NULL || file_name == NULL) {
         return;
     }
     FILE* output_file = fopen(file_name, "w");
@@ -521,8 +521,8 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
         
-            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year,getEventMembersName(current_event)); 
             printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, getEventMembersName(current_event));
+            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year,getEventMembersName(current_event)); 
     }
 
     fclose(output_file);

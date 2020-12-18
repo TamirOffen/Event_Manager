@@ -258,6 +258,6 @@ char* getEventMembersName (Event event){
         strcat(members_string, ",");
         strcat(members_string, getMemberName(current_member));
     }
-
+    
     return members_string;
 }
