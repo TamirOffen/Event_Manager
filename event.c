@@ -222,6 +222,10 @@ int getEventID(Event event) {
     return event->event_id;
 }
 
+int getMemberQueueSize(Event event) {
+    return pqGetSize(event->members_queue);
+}
+
 
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;

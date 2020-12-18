@@ -140,6 +140,7 @@ void freeInt(PQElementPriority n) {
 }
 
 int compareInts(PQElementPriority n1, PQElementPriority n2) {
+    // printf("%d, %d\n", *(int *) n1 ,*(int *) n2 );
     return (*(int *) n1 - *(int *) n2);
 }
 
@@ -169,6 +170,10 @@ void setMemberName(Member member, char* member_name) {
 
 int getMemberNumOfEvents(Member member){
     return member->num_of_events;
+}
+
+int* getMemberNumOfEventsPointer(Member member) {
+    return &(member->num_of_events);
 }
 
 void setMemberNumOfEvents(Member member, int new_num_of_events);

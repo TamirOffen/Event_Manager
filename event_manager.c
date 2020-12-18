@@ -155,7 +155,6 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     return EM_SUCCESS;
 }
 
-//DOESN"T WORK
 EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
     if(em == NULL || new_date == NULL) {
         return EM_NULL_ARGUMENT;
@@ -333,11 +332,21 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
         // free_member(member); changed
         return EM_EVENT_AND_MEMBER_ALREADY_LINKED;
     }
+
+    // int* old_num_of_events = getMemberNumOfEventsPointer(member);
+    int old_num_of_events = getMemberNumOfEvents(member) ;
     
     // printf("%d\n", linkMemberToEvent(event, member));
     if(linkMemberToEvent(event, member) == PQ_OUT_OF_MEMORY) {
         return EM_OUT_OF_MEMORY;
     }
+
+    // printf("#num: %d\n", *getMemberNumOfEventsPointer(member));
+
+    int new_num_of_events = getMemberNumOfEvents(member);
+    Member mC = copy_member(member);
+    pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
+    free_member(mC);
 
     //TODO: in total_members pq, increase by one the number of events managed by the member
 
@@ -411,7 +420,14 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
 
     // printf("linked\n");
 
+    int old_num_of_events = getMemberNumOfEvents(member) ;
+
     removeMemberFromEvent(event, member);
+
+    int new_num_of_events = getMemberNumOfEvents(member);
+    Member mC = copy_member(member);
+    pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
+    free_member(mC);
 
     // free_event(event);
     // free_member(member);
@@ -523,10 +539,15 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
 
+            
+
             char* names = getEventMembersName(current_event);
             printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names);
             fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names); 
-            free(names);
+            if(getMemberQueueSize(current_event) != 0) {
+                free(names);
+            }
+            
     }
 
 

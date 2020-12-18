@@ -43,6 +43,7 @@ char* getMemberName(Member member);
 void setMemberName(Member member, char* member_name);
 
 int getMemberNumOfEvents(Member member);
+int* getMemberNumOfEventsPointer(Member member);
 
 void setMemberNumOfEvents(Member member, int new_num_of_events);
 

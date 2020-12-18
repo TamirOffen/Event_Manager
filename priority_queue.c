@@ -403,11 +403,14 @@ PriorityQueueResult pqChangePriority(PriorityQueue queue, PQElement element,
     for(int i = 0; i < queue->size; i++) {
         if(queue->compare_elements(queue->list_of_elements[i].element, element)) {
             if(queue->compare_priorities(queue->list_of_elements[i].priority, old_priority) == 0) {
+                
                 element_found = true;
 
                 // free element and priority in Element
                 queue->free_element(queue->list_of_elements[i].element); //ERRORS HERE
                 queue->free_priority(queue->list_of_elements[i].priority);
+
+                
 
                 // TODO: move elements back into the "i" index
                 moveElementsLeft(queue, i);
@@ -423,6 +426,8 @@ PriorityQueueResult pqChangePriority(PriorityQueue queue, PQElement element,
     }
 
     pqInsert(queue, element, new_priority);
+
+
 
     clearIterator(queue);
     return PQ_SUCCESS;
