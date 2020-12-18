@@ -68,13 +68,12 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     if(em == NULL || event_name == NULL || date == NULL) {
         return EM_NULL_ARGUMENT;
     }
-    if(event_id < 0) {
-        return EM_INVALID_EVENT_ID;
-    }
-
     // if dateCompare returns a pos num, that means that current date comes after date.
     if(dateCompare(em->current_date, date) > 0) {
         return EM_INVALID_DATE;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
     }
 
     Event new_event = eventCreate(event_name, event_id, date);
@@ -82,11 +81,6 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
         return EM_OUT_OF_MEMORY;
     }
 
-    // the comparison func of PQ events is comparing the ids of the events
-    if(pqContains(em->events, new_event) == true) {
-        free_event(new_event);
-        return EM_EVENT_ID_ALREADY_EXISTS;
-    }
 
     PriorityQueue eventsCopy = pqCopy(em->events);
     // checking that there isn't another event_name on the same date 
@@ -101,6 +95,12 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     }
     pqDestroy(eventsCopy);
 
+    // the comparison func of PQ events is comparing the ids of the events
+    if(pqContains(em->events, new_event) == true) {
+        free_event(new_event);
+        return EM_EVENT_ID_ALREADY_EXISTS;
+    }
+
     pqInsert(em->events, new_event, date);
     free_event(new_event);
 
@@ -109,6 +109,13 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
 }
 
 EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id){
+    if(em == NULL || event_name == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+
+    if(days < 0) {
+        return EM_INVALID_DATE;
+    }
 
     Date date = dateCopy(em->current_date);
     if(date == NULL){
@@ -169,8 +176,8 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         if(equal_events(current_event, event) == true) {
             free_event(event);
             dateDestroy(temp_date); 
-            // event = copy_event(current_event);
-            event = current_event;
+            event = copy_event(current_event);
+            // event = current_event; //change
             found_event = true;
         }
     }
@@ -197,8 +204,8 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     }
     pqDestroy(copy_of_events);
 
-    Event copy_of_event = copy_event(event);
-    setEventDate(event, new_date);
+    // Event copy_of_event = copy_event(event); change
+    // setEventDate(event, new_date);
 
 
     //change the date of the event in pq events
@@ -206,21 +213,23 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     
     // pqDestroy(copy_of_events);
 
-    if(pqChangePriority(em->events, copy_of_event, getEventDate(copy_of_event), new_date) == PQ_OUT_OF_MEMORY) {
+    if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
         // free_event(event);
         // dateDestroy(temp_date);
-        free_event(copy_of_event);
+        // free_event(copy_of_event); change
         return EM_OUT_OF_MEMORY;
     }
-    free_event(copy_of_event);
+    // free_event(copy_of_event); change
+    // setEventDate(event, new_date); change
     
+    //finds the event in em->events pq and changes its date to new_date
     PQ_FOREACH(Event, current_event, em->events) {
         if(equal_events(current_event, event) == true) {
             setEventDate(current_event, new_date);
         }
     }
 
-    // free_event(event);
+    free_event(event);
     // dateDestroy(temp_date);
 
     return EM_SUCCESS;
@@ -296,10 +305,10 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     }
 
     // get the member with member_id
-    //PriorityQueue membersPQ = pqCopy(em->total_members); 
+    PriorityQueue membersPQ = pqCopy(em->total_members);
     Member member = createMember("temp member", member_id);
     bool found_member = false;
-    PQ_FOREACH(Member, current_member, em->total_members) {
+    PQ_FOREACH(Member, current_member, membersPQ) {
         if(equal_members(current_member, member) == true) {
             free_member(member);
             member = copy_member(current_member);
@@ -309,7 +318,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
             break;
         }
     }
-    //pqDestroy(membersPQ);
+    pqDestroy(membersPQ);
     if(found_member == false) {
         free_member(member);
         // free_event(event);
@@ -453,7 +462,12 @@ int emGetEventsAmount(EventManager em) {
 }
 
 
-
+void emPrintAllEvents(EventManager em, const char* file_name) {
+    //TODO
+}
+void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
+    //TODO
+}
 
 
 //FOR TESTING:

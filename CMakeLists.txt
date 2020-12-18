@@ -6,17 +6,18 @@ set(CMAKE_C_FLAGS ${MATAM_FLAGS_DEBUG})
 
 project(app VERSION 0.1 LANGUAGES C)
 
-link_directories(.)
+# link_directories(.)
 
 add_executable(
     # add source c files here
     app
-    main.c
+    tests.c
     member.c
     event.c
     date.c
     event_manager.c
+    priority_queue.c
 )
 
 #target_link_libraries(app libpriority_queue.a) //we can only use this on the technion servers
-target_link_libraries(app priority_queue.o)   #NOTE: this library only works on mac
+# target_link_libraries(app priority_queue.o)   #NOTE: this library only works on mac
