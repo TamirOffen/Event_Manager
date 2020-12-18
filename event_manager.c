@@ -172,7 +172,7 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
     bool found_event = false;
     PriorityQueue eventsCopy = pqCopy(em->events);
-    PQ_FOREACH(Event, current_event, em->events) {
+    PQ_FOREACH(Event, current_event, eventsCopy) {
         if(equal_events(current_event, event) == true) {
             free_event(event);
             dateDestroy(temp_date); 
@@ -193,9 +193,9 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     PQ_FOREACH(Event, current_event, copy_of_events) {
         if(strcmp(getEventName(current_event), getEventName(event)) == 0) {
             if(dateCompare(getEventDate(current_event), new_date) == 0) {
-                printf("same\n");
-                printEvent(event);
-                // free_event(event);
+                // printf("same\n");
+                // printEvent(event);
+                free_event(event);
                 // dateDestroy(temp_date);
                 pqDestroy(copy_of_events);
                 return EM_EVENT_ALREADY_EXISTS; //same event_name on the same date
@@ -214,7 +214,7 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     // pqDestroy(copy_of_events);
 
     if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
-        // free_event(event);
+        free_event(event);
         // dateDestroy(temp_date);
         // free_event(copy_of_event); change
         return EM_OUT_OF_MEMORY;

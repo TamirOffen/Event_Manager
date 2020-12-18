@@ -223,6 +223,33 @@ event_manager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event_manager.c.s
 .PHONY : event_manager.c.s
 
+main.o: main.c.o
+
+.PHONY : main.o
+
+# target to build an object file
+main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.o
+.PHONY : main.c.o
+
+main.i: main.c.i
+
+.PHONY : main.i
+
+# target to preprocess a source file
+main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.i
+.PHONY : main.c.i
+
+main.s: main.c.s
+
+.PHONY : main.s
+
+# target to generate assembly for a file
+main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.s
+.PHONY : main.c.s
+
 member.o: member.c.o
 
 .PHONY : member.o
@@ -277,33 +304,6 @@ priority_queue.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/priority_queue.c.s
 .PHONY : priority_queue.c.s
 
-tests.o: tests.c.o
-
-.PHONY : tests.o
-
-# target to build an object file
-tests.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.o
-.PHONY : tests.c.o
-
-tests.i: tests.c.i
-
-.PHONY : tests.i
-
-# target to preprocess a source file
-tests.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.i
-.PHONY : tests.c.i
-
-tests.s: tests.c.s
-
-.PHONY : tests.s
-
-# target to generate assembly for a file
-tests.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.s
-.PHONY : tests.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -322,15 +322,15 @@ help:
 	@echo "... event_manager.o"
 	@echo "... event_manager.i"
 	@echo "... event_manager.s"
+	@echo "... main.o"
+	@echo "... main.i"
+	@echo "... main.s"
 	@echo "... member.o"
 	@echo "... member.i"
 	@echo "... member.s"
 	@echo "... priority_queue.o"
 	@echo "... priority_queue.i"
 	@echo "... priority_queue.s"
-	@echo "... tests.o"
-	@echo "... tests.i"
-	@echo "... tests.s"
 .PHONY : help
 
 
