@@ -424,7 +424,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
 
     removeMemberFromEvent(event, member);
 
-    int new_num_of_events = getMemberNumOfEvents(member);
+    int new_num_of_events = getMemberNumOfEvents(member)-1;
     Member mC = copy_member(member);
     pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
     free_member(mC);
@@ -538,8 +538,6 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
-
-            
 
             char* names = getEventMembersName(current_event);
             printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names);
