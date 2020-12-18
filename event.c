@@ -227,6 +227,23 @@ int getMemberQueueSize(Event event) {
 }
 
 
+void updateTotalMembersQueue(PriorityQueue pq, Event event) {
+    
+    // Member m = createMember("yan1", 1);
+    // pqChangePriority(pq, m, )
+
+}
+
+PriorityQueue getPQEventMembers(Event event) {
+    PriorityQueue copyQueue = pqCopy(event->members_queue);
+    if(copyQueue == NULL) {
+        return NULL;
+    }
+    return copyQueue;
+}
+
+
+
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);

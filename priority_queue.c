@@ -357,23 +357,29 @@ PriorityQueueResult pqInsert(PriorityQueue queue, PQElement element, PQElementPr
             return PQ_OUT_OF_MEMORY;
         }
     }
+    
 
     // the index of the element that wants to be inserted into the queue
     int current_element_index = queue->size;
+    // if(queue->list_of_elements[current_element_index].element == NULL) printf("NULL\n");
 
     // allocated the memory for the Element in list_of_elements in queue
     // also copies the inputted element and priority into the Element in list_of_elements
     queue->list_of_elements[current_element_index].element = queue->copy_element(element);
+    // printf("4\n");
     if(queue->list_of_elements[current_element_index].element == NULL) {
         queue->free_element(queue->list_of_elements[current_element_index].element);
         return PQ_OUT_OF_MEMORY;
     }
+    
     queue->list_of_elements[current_element_index].priority = queue->copy_priority(priority);
     if(queue->list_of_elements[current_element_index].priority == NULL) {
         queue->free_element(queue->list_of_elements[current_element_index].element);
         queue->free_priority(queue->list_of_elements[current_element_index].priority);
         return PQ_OUT_OF_MEMORY;
     }
+
+    
 
     queue->list_of_elements[current_element_index].used = false;
 
@@ -402,18 +408,21 @@ PriorityQueueResult pqChangePriority(PriorityQueue queue, PQElement element,
     bool element_found = false;
     for(int i = 0; i < queue->size; i++) {
         if(queue->compare_elements(queue->list_of_elements[i].element, element)) {
+            
             if(queue->compare_priorities(queue->list_of_elements[i].priority, old_priority) == 0) {
-                
+                // printf("found1: %d\t", *(int*)new_priority);
                 element_found = true;
 
                 // free element and priority in Element
                 queue->free_element(queue->list_of_elements[i].element); //ERRORS HERE
                 queue->free_priority(queue->list_of_elements[i].priority);
 
-                
+                // printf("1\n");
 
                 // TODO: move elements back into the "i" index
                 moveElementsLeft(queue, i);
+
+                // printf("2\n");
 
                 queue->size--;
                 break;
@@ -424,10 +433,13 @@ PriorityQueueResult pqChangePriority(PriorityQueue queue, PQElement element,
     if(!element_found) {
         return PQ_ELEMENT_DOES_NOT_EXISTS;
     }
-
+// printf("3\n");
+    if(queue == NULL ) printf("Queue NULL\n");
+    if(element == NULL ) printf("Element NULL\n");
+    if(new_priority == NULL ) printf("new_priority NULL\n");
     pqInsert(queue, element, new_priority);
 
-
+    
 
     clearIterator(queue);
     return PQ_SUCCESS;

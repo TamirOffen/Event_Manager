@@ -17,16 +17,16 @@ CMakeFiles/app.dir/event_manager.c.o
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event_manager.h
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.h
-CMakeFiles/app.dir/main.c.o
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/date.h
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event.h
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event_manager.h
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/main.c
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
- /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.h
 CMakeFiles/app.dir/member.c.o
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.c
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.h
+CMakeFiles/app.dir/miniTest.c.o
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/date.h
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event.h
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/event_manager.h
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/member.h
+ /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/miniTest.c
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.h
 CMakeFiles/app.dir/priority_queue.c.o
  /Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/priority_queue.c

@@ -138,7 +138,7 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     if(event_id < 0) {
         return EM_INVALID_EVENT_ID;
     }
-    
+
     Date temp_date = dateCreate(1,1,1);
     Event temp_event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL
     if(pqContains(em->events, temp_event) == false) {
@@ -424,7 +424,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
 
     removeMemberFromEvent(event, member);
 
-    int new_num_of_events = getMemberNumOfEvents(member)-1;
+    int new_num_of_events = getMemberNumOfEvents(member);
     Member mC = copy_member(member);
     pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
     free_member(mC);

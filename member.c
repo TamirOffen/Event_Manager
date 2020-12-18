@@ -121,7 +121,7 @@ int compare_members_id(PQElementPriority member_priority1, PQElementPriority mem
 
 // These are the funcs for the total_members PQ
 PQElementPriority copyInt(PQElementPriority n) {
-    if (!n) {
+    if (n == NULL) {
         return NULL;
     }
     int *copy = malloc(sizeof(*copy));
@@ -133,14 +133,13 @@ PQElementPriority copyInt(PQElementPriority n) {
 }
 
 void freeInt(PQElementPriority n) {
- if (n != NULL) {
-      free(n);
+    if (n != NULL) {
+        free(n);
     }
     n = NULL;
 }
 
 int compareInts(PQElementPriority n1, PQElementPriority n2) {
-    // printf("%d, %d\n", *(int *) n1 ,*(int *) n2 );
     return (*(int *) n1 - *(int *) n2);
 }
 

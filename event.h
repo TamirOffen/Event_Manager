@@ -69,10 +69,10 @@ char* getEventMembersName (Event event);
 
 int getMemberQueueSize(Event event);
 
+void updateTotalMembersQueue(PriorityQueue pq, Event event);
 
 
-
-
+PriorityQueue getPQEventMembers(Event event);
 
 #endif
 

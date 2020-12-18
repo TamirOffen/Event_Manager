@@ -223,33 +223,6 @@ event_manager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/event_manager.c.s
 .PHONY : event_manager.c.s
 
-main.o: main.c.o
-
-.PHONY : main.o
-
-# target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.o
-.PHONY : main.c.o
-
-main.i: main.c.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.i
-.PHONY : main.c.i
-
-main.s: main.c.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/main.c.s
-.PHONY : main.c.s
-
 member.o: member.c.o
 
 .PHONY : member.o
@@ -276,6 +249,33 @@ member.s: member.c.s
 member.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.s
 .PHONY : member.c.s
+
+miniTest.o: miniTest.c.o
+
+.PHONY : miniTest.o
+
+# target to build an object file
+miniTest.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.o
+.PHONY : miniTest.c.o
+
+miniTest.i: miniTest.c.i
+
+.PHONY : miniTest.i
+
+# target to preprocess a source file
+miniTest.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.i
+.PHONY : miniTest.c.i
+
+miniTest.s: miniTest.c.s
+
+.PHONY : miniTest.s
+
+# target to generate assembly for a file
+miniTest.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.s
+.PHONY : miniTest.c.s
 
 priority_queue.o: priority_queue.c.o
 
@@ -322,12 +322,12 @@ help:
 	@echo "... event_manager.o"
 	@echo "... event_manager.i"
 	@echo "... event_manager.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
 	@echo "... member.o"
 	@echo "... member.i"
 	@echo "... member.s"
+	@echo "... miniTest.o"
+	@echo "... miniTest.i"
+	@echo "... miniTest.s"
 	@echo "... priority_queue.o"
 	@echo "... priority_queue.i"
 	@echo "... priority_queue.s"
