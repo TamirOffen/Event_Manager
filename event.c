@@ -257,7 +257,8 @@ char* getEventMembersName (Event event){
     PriorityQueue copied_members = pqCopy(event->members_queue);
     
     char* members_string = malloc(sizeof(char));//Need to know the size, or just allocate a big number and don't care about complexity.
-    
+    // members_string = "";
+
     int total_len = 0;
     PQ_FOREACH(Member, current_member, copied_members){
         total_len += (strlen(getMemberName(current_member)) + 1);

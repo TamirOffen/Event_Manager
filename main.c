@@ -35,7 +35,7 @@ int main() {
     emAddMemberToEvent(em, 5, 3);
 
     emRemoveMemberFromEvent(em, 5, 3); //todo --
-    // emRemoveMemberFromEvent(em, 5, 3);
+    emRemoveMemberFromEvent(em, 5, 2);
     // printf("%d\n", emRemoveMemberFromEvent(em, 2, 1));
     // printf("%d\n", emRemoveMemberFromEvent(em, 2, 2));
 

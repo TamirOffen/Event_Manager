@@ -319,7 +319,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     }
     pqDestroy(membersPQ);
     if(found_member == false) {
-        // free_member(member); change
+        free_member(member); 
         // free_event(event);
         return EM_MEMBER_ID_NOT_EXISTS;
     }
@@ -383,7 +383,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     }
     pqDestroy(em_members_queue);
     if(member_found == false) {
-        // free_member(member); changed
+        free_member(member); 
         return EM_MEMBER_ID_NOT_EXISTS;
     }
     // printMember(member);
