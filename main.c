@@ -13,6 +13,13 @@ int main() {
     Date date4 = dateCreate(9, 2, 2011);
     EventManager em = createEventManager(date1);
 
+    char name[] = "event_name";
+    printf("%d\n", emAddEventByDate(em, name, date1, 5));
+    strcpy(name, "hello");
+    printf("%d\n", emAddEventByDate(em, "event_name", date1, 6));
+
+
+    /*
     //emAddEventByDate() Test:
     if(emAddEventByDate(em, "event 1", date1, 1) == EM_SUCCESS) {
         printf("Test1\n");
@@ -79,12 +86,14 @@ int main() {
 
 
     printEM(em);
+    */
 
     destroyEventManager(em);
     dateDestroy(date1);
     dateDestroy(date2);
     dateDestroy(date3);
     dateDestroy(date4);
+    
 
     return 0;
 }

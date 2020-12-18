@@ -11,7 +11,7 @@ project(app VERSION 0.1 LANGUAGES C)
 add_executable(
     # add source c files here
     app
-    main.c
+    tests.c
     member.c
     event.c
     date.c

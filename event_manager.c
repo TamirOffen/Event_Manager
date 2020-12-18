@@ -68,13 +68,12 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     if(em == NULL || event_name == NULL || date == NULL) {
         return EM_NULL_ARGUMENT;
     }
-    if(event_id < 0) {
-        return EM_INVALID_EVENT_ID;
-    }
-
     // if dateCompare returns a pos num, that means that current date comes after date.
     if(dateCompare(em->current_date, date) > 0) {
         return EM_INVALID_DATE;
+    }
+    if(event_id < 0) {
+        return EM_INVALID_EVENT_ID;
     }
 
     Event new_event = eventCreate(event_name, event_id, date);
@@ -82,11 +81,6 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
         return EM_OUT_OF_MEMORY;
     }
 
-    // the comparison func of PQ events is comparing the ids of the events
-    if(pqContains(em->events, new_event) == true) {
-        free_event(new_event);
-        return EM_EVENT_ID_ALREADY_EXISTS;
-    }
 
     PriorityQueue eventsCopy = pqCopy(em->events);
     // checking that there isn't another event_name on the same date 
@@ -100,6 +94,12 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
         }
     }
     pqDestroy(eventsCopy);
+
+    // the comparison func of PQ events is comparing the ids of the events
+    if(pqContains(em->events, new_event) == true) {
+        free_event(new_event);
+        return EM_EVENT_ID_ALREADY_EXISTS;
+    }
 
     pqInsert(em->events, new_event, date);
     free_event(new_event);
