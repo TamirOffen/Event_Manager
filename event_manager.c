@@ -577,4 +577,32 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
     pqDestroy(total_members_copy);
 }
 
+void emPrintAllResponsibleMembersTEST(EventManager em) {
+    PriorityQueue emMembers = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
+
+    PriorityQueue eventPQCopy = pqCopy(em->events);
+    PQ_FOREACH(Event, e, eventPQCopy) {
+        PriorityQueue eventMembers = getPQEventMembers(e);
+        PQ_FOREACH(Member, m, eventMembers) {
+            if(pqContains(emMembers, m) == true) {
+                int num = getMemberNumOfEvents(m) + 1;
+                pqRemoveElement(emMembers, m);
+                tickMemberNumOfEvents(m);
+                pqInsert(emMembers, m, &num);
+            } else {
+                setMemberNumOfEvents(m, 1);
+                int num = 1;
+                pqInsert(emMembers, m, &num);
+            }
+        }
+    }
+
+    PQ_FOREACH(Member, m, emMembers) {
+        printf("%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
+    }
+
+    pqDestroy(emMembers);
+
+}
+
 

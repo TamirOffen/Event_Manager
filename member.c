@@ -28,7 +28,7 @@ Member createMember(char* member_name, int member_id) {
     strcpy(member->member_name, member_name);
 
     member->member_id = member_id;
-    member->num_of_events = 0; //each member starts off managing 0 events
+    member->num_of_events = 1; //each member starts off managing 0 events
 
     return member;
 }
@@ -175,7 +175,9 @@ int* getMemberNumOfEventsPointer(Member member) {
     return &(member->num_of_events);
 }
 
-void setMemberNumOfEvents(Member member, int new_num_of_events);
+void setMemberNumOfEvents(Member member, int new_num_of_events) {
+    member->num_of_events = new_num_of_events;
+}
 
 void tickMemberNumOfEvents(Member member){
     member->num_of_events++;

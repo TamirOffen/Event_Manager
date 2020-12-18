@@ -240,4 +240,7 @@ void getFirstMember(EventManager em);
 void getNextMember(EventManager em);
 void printEM(EventManager em);
 
+
+void emPrintAllResponsibleMembersTEST(EventManager em);
+
 #endif //EVENT_MANAGER_H

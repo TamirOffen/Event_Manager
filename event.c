@@ -153,7 +153,7 @@ PriorityQueueResult linkMemberToEvent(Event event, Member member) {
         return PQ_NULL_ARGUMENT;
     }
 
-    tickMemberNumOfEvents(member);
+    // tickMemberNumOfEvents(member);
 
     return pqInsert(event->members_queue, member, getMemberIdPointer(member));
     

@@ -79,12 +79,17 @@ int main() {
     printf("x: %d\n", emRemoveMemberFromEvent(em, 8, 1) == EM_MEMBER_ID_NOT_EXISTS);
     printf("x: %d\n", emRemoveMemberFromEvent(em, 2, 1) == EM_EVENT_AND_MEMBER_NOT_LINKED);
 
-    printf("x1: %d\n", emTick(em, 4) == EM_SUCCESS);
 
+    // printEM(em);
 
+    // printf("x1: %d\n", emTick(em, 4) == EM_SUCCESS);
+    printEM(em);
+    printf("\n");
+    emPrintAllResponsibleMembersTEST(em);
+    // printEM(em);
 
-    emPrintAllEvents(em, "emPrintAllEvents.txt");
-    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
+    // emPrintAllEvents(em, "emPrintAllEvents.txt");
+    // emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
 
     return 0;
 }
