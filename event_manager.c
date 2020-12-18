@@ -555,27 +555,6 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     // free_event(event);
 }
 
-// void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
-//     FILE* output_file = fopen(file_name, "w");
-//     if(output_file == NULL){
-//        return;
-//     }
-
-//     PriorityQueue total_members_copy = pqCopy(em->total_members);
-//     if(total_members_copy == NULL){
-//         return;
-//     }
-//     PQ_FOREACH(Member, current_member, total_members_copy){
-//         if(getMemberNumOfEvents(current_member) == 0) {
-//             continue;
-//         }
-//         fprintf(output_file, "%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));
-//         printf("%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));    
-//     }
-
-//     fclose(output_file);
-//     pqDestroy(total_members_copy);
-// }
 
 void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
     PriorityQueue emMembers = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
@@ -585,7 +564,6 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
         PriorityQueue eventMembers = getPQEventMembers(e);
         PQ_FOREACH(Member, m, eventMembers) {
             if(pqContains(emMembers, m) == true) {
-                // printf("")
                 PriorityQueue emMemCopy = pqCopy(emMembers);
                 PQ_FOREACH(Member, m2, emMemCopy) {
                     if(equal_members(m, m2) == true) {
@@ -593,9 +571,11 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
                         pqRemoveElement(emMembers, m);
                         tickMemberNumOfEvents(m2);
                         pqInsert(emMembers, m2, &num);
+                        pqDestroy(emMemCopy);
                         break;
                     }
                 }
+                // pqDestroy(emMemCopy);
             }
             else {
                 setMemberNumOfEvents(m, 1);
@@ -603,9 +583,10 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
                 pqInsert(emMembers, m, &num);
             }
         }
-            
-        
+
+        pqDestroy(eventMembers);
     }
+    pqDestroy(eventPQCopy);
 
     FILE* output_file = fopen(file_name, "w");
     if(output_file == NULL){
