@@ -506,7 +506,7 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     Event event = malloc(sizeof(event));
     
     if(event == NULL){
-        return NULL;
+        return;
     }
     PriorityQueue events_copy = pqCopy(em->events);
         if(events_copy == NULL){
