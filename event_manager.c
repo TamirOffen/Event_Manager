@@ -499,32 +499,35 @@ void printAllMembers(EventManager em) {
 
 
 void emPrintAllEvents(EventManager em, const char* file_name){
+    if(em == NULL || file_name) {
+        return;
+    }
     FILE* output_file = fopen(file_name, "w");
     if(output_file == NULL){
        return;
     }
-    Event event = malloc(sizeof(event));
+    // Event event = malloc(sizeof(event));
     
-    if(event == NULL){
-        return;
-    }
+    // if(event == NULL){
+    //     return;
+    // }
     PriorityQueue events_copy = pqCopy(em->events);
-        if(events_copy == NULL){
+    if(events_copy == NULL){
        return;
     }
 
-    int day, month, year;
+    int day = 0, month = 0, year = 0;
 
-   PQ_FOREACH(Event, current_event, events_copy){
-        dateGet(getEventDate(current_event), &day, &month, &year);
-    
-        fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year,getEventMembersName(current_event)); 
-        printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, getEventMembersName(current_event));
-   }
+    PQ_FOREACH(Event, current_event, events_copy){
+            dateGet(getEventDate(current_event), &day, &month, &year);
+        
+            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year,getEventMembersName(current_event)); 
+            printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, getEventMembersName(current_event));
+    }
 
     fclose(output_file);
     pqDestroy(events_copy);
-    free_event(event);
+    // free_event(event);
 }
 
 void emPrintAllResponsibleMembers(EventManager em, const char* file_name){

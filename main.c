@@ -31,9 +31,10 @@ int main() {
     emAddMemberToEvent(em,123,4);
     
     
+    /*
 
     //emAddEventByDate() Test:
-    /*if(emAddEventByDate(em, "event 1", date1, 1) == EM_SUCCESS) {
+    if(emAddEventByDate(em, "event 1", date1, 1) == EM_SUCCESS) {
         printf("Test1\n");
     }
     if(emAddEventByDate(em, "event BAD DATE", date2, 2) == EM_INVALID_DATE) {
@@ -61,10 +62,10 @@ int main() {
     }
     if(emAddEventByDiff(em, "event 2", 4, 5) == EM_EVENT_ALREADY_EXISTS) {
         printf("Test9\n");
-    }*/
+    }
 
     //emRemoveEvent() Tests:
-    /*if(emRemoveEvent(em, 3) == EM_SUCCESS) {
+    if(emRemoveEvent(em, 3) == EM_SUCCESS) {
         printf("Test10\n");
     }
     if(emRemoveEvent(em, 3) == EM_EVENT_NOT_EXISTS) {
@@ -85,11 +86,12 @@ int main() {
     //DOESN"T WORK
     if(emChangeEventDate(em, 5, date3) == EM_SUCCESS) {
         printf("Test15\n");
-    }*/
+    }
 
 
     printEM(em);
     printf("%d\n", emGetEventsAmount(em));
+    */
 
     //emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
 
@@ -103,3 +105,6 @@ int main() {
 
     return 0;
 }
+
+
+

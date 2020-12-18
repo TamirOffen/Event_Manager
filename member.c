@@ -191,3 +191,5 @@ int* getMemberIdPointer(Member member) {
 void printMember(Member member) {
     printf("\tMember Name: %s,\tMember ID: %d\n", member->member_name, member->member_id);
 }
+
+
