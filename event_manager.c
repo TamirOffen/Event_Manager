@@ -109,6 +109,13 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
 }
 
 EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id){
+    if(em == NULL || event_name == NULL) {
+        return EM_NULL_ARGUMENT;
+    }
+
+    if(days < 0) {
+        return EM_INVALID_DATE;
+    }
 
     Date date = dateCopy(em->current_date);
     if(date == NULL){
@@ -148,7 +155,6 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
     return EM_SUCCESS;
 }
 
-//DOESN"T WORK
 EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
     if(em == NULL || new_date == NULL) {
         return EM_NULL_ARGUMENT;

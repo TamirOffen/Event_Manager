@@ -1413,7 +1413,7 @@ const char *testNames[] = {
 
 int main() {
 
-    if(testEMAddEventByDateCopiesEventName() == true) printf("good\n");
+    if(testEMAddEventByDiffBasicParameterErrors() == true) printf("good\n");
 
     return 0;
 }

@@ -13,10 +13,9 @@ int main() {
     Date date4 = dateCreate(9, 2, 2011);
     EventManager em = createEventManager(date1);
 
-    char name[] = "event_name";
-    printf("%d\n", emAddEventByDate(em, name, date1, 5));
-    strcpy(name, "hello");
-    printf("%d\n", emAddEventByDate(em, "event_name", date1, 6));
+    printf("%d\n", emAddEventByDiff(em, NULL, 1, 5));
+
+
 
 
     /*
