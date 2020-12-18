@@ -167,9 +167,15 @@ void setMemberName(Member member, char* member_name) {
 }
 
 
-int getMemberNumOfEvents(Member member);
+int getMemberNumOfEvents(Member member){
+    return member->num_of_events;
+}
 
 void setMemberNumOfEvents(Member member, int new_num_of_events);
+
+void tickMemberNumOfEvents(Member member){
+    member->num_of_events++;
+}
 
 
 int* getMemberIdPointer(Member member) {

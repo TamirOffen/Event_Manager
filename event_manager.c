@@ -259,6 +259,7 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
     return EM_SUCCESS;
 }
 
+//Maybe causing problems because the is no copy in FOREACH.
 EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id){
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
@@ -295,18 +296,20 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     }
 
     // get the member with member_id
-    PriorityQueue membersPQ = pqCopy(em->total_members);
+    //PriorityQueue membersPQ = pqCopy(em->total_members); 
     Member member = createMember("temp member", member_id);
     bool found_member = false;
-    PQ_FOREACH(Member, current_member, membersPQ) {
+    PQ_FOREACH(Member, current_member, em->total_members) {
         if(equal_members(current_member, member) == true) {
             free_member(member);
             member = copy_member(current_member);
+            tickMemberNumOfEvents(current_member);           ////////////////
             found_member = true;
+            pqGetFirst(em->total_members);//To reset the pointer to the first element 
             break;
         }
     }
-    pqDestroy(membersPQ);
+    //pqDestroy(membersPQ);
     if(found_member == false) {
         free_member(member);
         // free_event(event);
@@ -500,6 +503,9 @@ void emPrintAllEvents(EventManager em, const char* file_name){
         return NULL;
     }
     PriorityQueue events_copy = pqCopy(em->events);
+        if(events_copy == NULL){
+       return;
+    }
 
     int day, month, year;
 
@@ -512,6 +518,26 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 
     fclose(output_file);
     pqDestroy(events_copy);
+    free_event(event);
+}
+
+void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
+    FILE* output_file = fopen(file_name, "w");
+    if(output_file == NULL){
+       return;
+    }
+
+    PriorityQueue total_members_copy = pqCopy(em->total_members);
+    if(total_members_copy == NULL){
+        return;
+    }
+    PQ_FOREACH(Member, current_member, total_members_copy){
+        fprintf(output_file, "%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));
+        printf("%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));    
+    }
+
+    fclose(output_file);
+    pqDestroy(total_members_copy);
 }
 
 

@@ -25,9 +25,10 @@ int main() {
     emAddMemberToEvent(em,123,1);
     emAddMemberToEvent(em,345,1);
     emAddMemberToEvent(em,666,2);
+    emAddMemberToEvent(em,345,2);
     emAddMemberToEvent(em,345,4);
     emAddMemberToEvent(em,666,4);
-    emAddMemberToEvent(em,123,4);
+    
     
 
     //emAddEventByDate() Test:
@@ -88,7 +89,10 @@ int main() {
 
     printEM(em);
     printf("%d\n", emGetEventsAmount(em));
-    emPrintAllEvents(em, "output_file.txt");
+
+    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
+
+    emPrintAllEvents(em, "emPrintAllEvents.txt");
 
     destroyEventManager(em);
     dateDestroy(date1);

@@ -52,7 +52,7 @@ int* getMemberIdPointer(Member member);
 
 void printMember(Member member);
 
-
+void tickMemberNumOfEvents(Member member);
 
 
 
