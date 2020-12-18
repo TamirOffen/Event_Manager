@@ -249,10 +249,12 @@ char* getEventMembersName (Event event){
     }
     PriorityQueue copied_members = pqCopy(event->members_queue);
     
-    char* members_string = malloc(sizeof(20));//Need to know the size, or just allocate a big number and don't care about complexity.
-    
+    char* members_string = malloc(sizeof(char));//Need to know the size, or just allocate a big number and don't care about complexity.
+    int total = 1;
     
     PQ_FOREACH(Member, current_member, copied_members){
+        total += strlen(getMemberName(current_member)) + 2;
+        members_string = realloc(members_string,  total + 1);
         strcat(members_string, ",");
         strcat(members_string, getMemberName(current_member));
     }
