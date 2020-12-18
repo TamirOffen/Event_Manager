@@ -241,6 +241,6 @@ void getNextMember(EventManager em);
 void printEM(EventManager em);
 
 
-void emPrintAllResponsibleMembersTEST(EventManager em);
+// void emPrintAllResponsibleMembersTEST(EventManager em, const char* file_name);
 
 #endif //EVENT_MANAGER_H

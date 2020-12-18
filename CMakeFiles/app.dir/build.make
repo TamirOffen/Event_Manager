@@ -76,18 +76,18 @@ include CMakeFiles/app.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/app.dir/flags.make
 
-CMakeFiles/app.dir/miniTest.c.o: CMakeFiles/app.dir/flags.make
-CMakeFiles/app.dir/miniTest.c.o: miniTest.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/app.dir/miniTest.c.o"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/app.dir/miniTest.c.o -c "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/miniTest.c"
+CMakeFiles/app.dir/tests.c.o: CMakeFiles/app.dir/flags.make
+CMakeFiles/app.dir/tests.c.o: tests.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/app.dir/tests.c.o"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/app.dir/tests.c.o -c "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/tests.c"
 
-CMakeFiles/app.dir/miniTest.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/app.dir/miniTest.c.i"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/miniTest.c" > CMakeFiles/app.dir/miniTest.c.i
+CMakeFiles/app.dir/tests.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/app.dir/tests.c.i"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/tests.c" > CMakeFiles/app.dir/tests.c.i
 
-CMakeFiles/app.dir/miniTest.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/app.dir/miniTest.c.s"
-	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/miniTest.c" -o CMakeFiles/app.dir/miniTest.c.s
+CMakeFiles/app.dir/tests.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/app.dir/tests.c.s"
+	/Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/Users/tamiroffen/Documents/Winter 2020 - Sem 2/Matam/HW/hw1/Event_Manager/tests.c" -o CMakeFiles/app.dir/tests.c.s
 
 CMakeFiles/app.dir/member.c.o: CMakeFiles/app.dir/flags.make
 CMakeFiles/app.dir/member.c.o: member.c
@@ -156,7 +156,7 @@ CMakeFiles/app.dir/priority_queue.c.s: cmake_force
 
 # Object files for target app
 app_OBJECTS = \
-"CMakeFiles/app.dir/miniTest.c.o" \
+"CMakeFiles/app.dir/tests.c.o" \
 "CMakeFiles/app.dir/member.c.o" \
 "CMakeFiles/app.dir/event.c.o" \
 "CMakeFiles/app.dir/date.c.o" \
@@ -166,7 +166,7 @@ app_OBJECTS = \
 # External object files for target app
 app_EXTERNAL_OBJECTS =
 
-app: CMakeFiles/app.dir/miniTest.c.o
+app: CMakeFiles/app.dir/tests.c.o
 app: CMakeFiles/app.dir/member.c.o
 app: CMakeFiles/app.dir/event.c.o
 app: CMakeFiles/app.dir/date.c.o

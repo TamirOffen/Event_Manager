@@ -250,33 +250,6 @@ member.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/member.c.s
 .PHONY : member.c.s
 
-miniTest.o: miniTest.c.o
-
-.PHONY : miniTest.o
-
-# target to build an object file
-miniTest.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.o
-.PHONY : miniTest.c.o
-
-miniTest.i: miniTest.c.i
-
-.PHONY : miniTest.i
-
-# target to preprocess a source file
-miniTest.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.i
-.PHONY : miniTest.c.i
-
-miniTest.s: miniTest.c.s
-
-.PHONY : miniTest.s
-
-# target to generate assembly for a file
-miniTest.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/miniTest.c.s
-.PHONY : miniTest.c.s
-
 priority_queue.o: priority_queue.c.o
 
 .PHONY : priority_queue.o
@@ -304,6 +277,33 @@ priority_queue.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/priority_queue.c.s
 .PHONY : priority_queue.c.s
 
+tests.o: tests.c.o
+
+.PHONY : tests.o
+
+# target to build an object file
+tests.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.o
+.PHONY : tests.c.o
+
+tests.i: tests.c.i
+
+.PHONY : tests.i
+
+# target to preprocess a source file
+tests.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.i
+.PHONY : tests.c.i
+
+tests.s: tests.c.s
+
+.PHONY : tests.s
+
+# target to generate assembly for a file
+tests.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/app.dir/build.make CMakeFiles/app.dir/tests.c.s
+.PHONY : tests.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -325,12 +325,12 @@ help:
 	@echo "... member.o"
 	@echo "... member.i"
 	@echo "... member.s"
-	@echo "... miniTest.o"
-	@echo "... miniTest.i"
-	@echo "... miniTest.s"
 	@echo "... priority_queue.o"
 	@echo "... priority_queue.i"
 	@echo "... priority_queue.s"
+	@echo "... tests.o"
+	@echo "... tests.i"
+	@echo "... tests.s"
 .PHONY : help
 
 

@@ -21,13 +21,10 @@ CMakeFiles/app.dir/member.c.o: member.c
 CMakeFiles/app.dir/member.c.o: member.h
 CMakeFiles/app.dir/member.c.o: priority_queue.h
 
-CMakeFiles/app.dir/miniTest.c.o: date.h
-CMakeFiles/app.dir/miniTest.c.o: event.h
-CMakeFiles/app.dir/miniTest.c.o: event_manager.h
-CMakeFiles/app.dir/miniTest.c.o: member.h
-CMakeFiles/app.dir/miniTest.c.o: miniTest.c
-CMakeFiles/app.dir/miniTest.c.o: priority_queue.h
-
 CMakeFiles/app.dir/priority_queue.c.o: priority_queue.c
 CMakeFiles/app.dir/priority_queue.c.o: priority_queue.h
+
+CMakeFiles/app.dir/tests.c.o: date.h
+CMakeFiles/app.dir/tests.c.o: event_manager.h
+CMakeFiles/app.dir/tests.c.o: tests.c
 

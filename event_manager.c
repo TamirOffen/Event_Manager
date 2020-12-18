@@ -555,29 +555,29 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     // free_event(event);
 }
 
-void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
-    FILE* output_file = fopen(file_name, "w");
-    if(output_file == NULL){
-       return;
-    }
+// void emPrintAllResponsibleMembers(EventManager em, const char* file_name){
+//     FILE* output_file = fopen(file_name, "w");
+//     if(output_file == NULL){
+//        return;
+//     }
 
-    PriorityQueue total_members_copy = pqCopy(em->total_members);
-    if(total_members_copy == NULL){
-        return;
-    }
-    PQ_FOREACH(Member, current_member, total_members_copy){
-        if(getMemberNumOfEvents(current_member) == 0) {
-            continue;
-        }
-        fprintf(output_file, "%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));
-        printf("%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));    
-    }
+//     PriorityQueue total_members_copy = pqCopy(em->total_members);
+//     if(total_members_copy == NULL){
+//         return;
+//     }
+//     PQ_FOREACH(Member, current_member, total_members_copy){
+//         if(getMemberNumOfEvents(current_member) == 0) {
+//             continue;
+//         }
+//         fprintf(output_file, "%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));
+//         printf("%s,%d\n",getMemberName(current_member), getMemberNumOfEvents(current_member));    
+//     }
 
-    fclose(output_file);
-    pqDestroy(total_members_copy);
-}
+//     fclose(output_file);
+//     pqDestroy(total_members_copy);
+// }
 
-void emPrintAllResponsibleMembersTEST(EventManager em) {
+void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
     PriorityQueue emMembers = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
 
     PriorityQueue eventPQCopy = pqCopy(em->events);
@@ -585,19 +585,35 @@ void emPrintAllResponsibleMembersTEST(EventManager em) {
         PriorityQueue eventMembers = getPQEventMembers(e);
         PQ_FOREACH(Member, m, eventMembers) {
             if(pqContains(emMembers, m) == true) {
-                int num = getMemberNumOfEvents(m) + 1;
-                pqRemoveElement(emMembers, m);
-                tickMemberNumOfEvents(m);
-                pqInsert(emMembers, m, &num);
-            } else {
+                // printf("")
+                PriorityQueue emMemCopy = pqCopy(emMembers);
+                PQ_FOREACH(Member, m2, emMemCopy) {
+                    if(equal_members(m, m2) == true) {
+                        int num = getMemberNumOfEvents(m2) + 1;
+                        pqRemoveElement(emMembers, m);
+                        tickMemberNumOfEvents(m2);
+                        pqInsert(emMembers, m2, &num);
+                        break;
+                    }
+                }
+            }
+            else {
                 setMemberNumOfEvents(m, 1);
                 int num = 1;
                 pqInsert(emMembers, m, &num);
             }
         }
+            
+        
+    }
+
+    FILE* output_file = fopen(file_name, "w");
+    if(output_file == NULL){
+       return;
     }
 
     PQ_FOREACH(Member, m, emMembers) {
+        fprintf(output_file, "%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
         printf("%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
     }
 

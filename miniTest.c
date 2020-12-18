@@ -82,10 +82,10 @@ int main() {
 
     // printEM(em);
 
-    // printf("x1: %d\n", emTick(em, 4) == EM_SUCCESS);
+    printf("x1: %d\n", emTick(em, 4) == EM_SUCCESS);
     printEM(em);
     printf("\n");
-    emPrintAllResponsibleMembersTEST(em);
+    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
     // printEM(em);
 
     // emPrintAllEvents(em, "emPrintAllEvents.txt");

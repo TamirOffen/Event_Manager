@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/app.dir/event.c.o"
   "CMakeFiles/app.dir/event_manager.c.o"
   "CMakeFiles/app.dir/member.c.o"
-  "CMakeFiles/app.dir/miniTest.c.o"
   "CMakeFiles/app.dir/priority_queue.c.o"
+  "CMakeFiles/app.dir/tests.c.o"
   "app"
   "app.pdb"
 )
