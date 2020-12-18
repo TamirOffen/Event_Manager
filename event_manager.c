@@ -617,6 +617,8 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
         printf("%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
     }
 
+    fclose(output_file);
+
     pqDestroy(emMembers);
 
 }
