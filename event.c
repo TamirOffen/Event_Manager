@@ -208,9 +208,9 @@ void setEventDate(Event event, Date date) {
     if(event == NULL || date == NULL) {
         return;
     }
-    // if(event->date != NULL) {
-    //     dateDestroy(event->date);
-    // }
+    if(event->date != NULL) {
+        dateDestroy(event->date);
+    }
     event->date = dateCopy(date); //TODO: maybe doesn't work
 }
 
