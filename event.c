@@ -172,6 +172,8 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
         return PQ_NULL_ARGUMENT;
     }
 
+    memberMinusOneEventCount(member);
+
     return pqRemoveElement(event->members_queue, member);
 }
 

@@ -363,17 +363,18 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     PriorityQueue em_members_queue = pqCopy(em->total_members); //TODO: add NULL check
     Member member = createMember("temp member", member_id); //TODO: add NULL check
     bool member_found = false;
-    PQ_FOREACH(Member, m, em_members_queue) {
+    PQ_FOREACH(Member, m, em->total_members) {
         if(equal_members(m, member) == true) {
             free_member(member);
-            member = copy_member(m);
+            // member = copy_member(m); changed
+            member = m;
             member_found = true;
             break;
         }
     }
     pqDestroy(em_members_queue);
     if(member_found == false) {
-        free_member(member);
+        // free_member(member); changed
         return EM_MEMBER_ID_NOT_EXISTS;
     }
     // printMember(member);
@@ -396,7 +397,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     if(event_found == false) {
         free_event(event);
         dateDestroy(temp_date);
-        free_member(member);
+        // free_member(member);
         return EM_EVENT_ID_NOT_EXISTS;
     }
     // printEvent(event);
@@ -404,7 +405,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     if(isMemberLinkedToEvent(event, member) == false) {
         // printf("not linked\n");
         // free_event(event);
-        free_member(member);
+        // free_member(member);
         return EM_EVENT_AND_MEMBER_NOT_LINKED;
     }
 
@@ -413,7 +414,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     removeMemberFromEvent(event, member);
 
     // free_event(event);
-    free_member(member);
+    // free_member(member);
     return EM_SUCCESS;
 }
 
