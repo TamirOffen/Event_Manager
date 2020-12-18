@@ -169,8 +169,8 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         if(equal_events(current_event, event) == true) {
             free_event(event);
             dateDestroy(temp_date); 
-            // event = copy_event(current_event);
-            event = current_event;
+            event = copy_event(current_event);
+            // event = current_event; //change
             found_event = true;
         }
     }
@@ -197,8 +197,8 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     }
     pqDestroy(copy_of_events);
 
-    Event copy_of_event = copy_event(event);
-    setEventDate(event, new_date);
+    // Event copy_of_event = copy_event(event); change
+    // setEventDate(event, new_date);
 
 
     //change the date of the event in pq events
@@ -206,14 +206,16 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     
     // pqDestroy(copy_of_events);
 
-    if(pqChangePriority(em->events, copy_of_event, getEventDate(copy_of_event), new_date) == PQ_OUT_OF_MEMORY) {
+    if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
         // free_event(event);
         // dateDestroy(temp_date);
-        free_event(copy_of_event);
+        // free_event(copy_of_event); change
         return EM_OUT_OF_MEMORY;
     }
-    free_event(copy_of_event);
+    // free_event(copy_of_event); change
+    // setEventDate(event, new_date); change
     
+    //finds the event in em->events pq and changes its date to new_date
     PQ_FOREACH(Event, current_event, em->events) {
         if(equal_events(current_event, event) == true) {
             setEventDate(current_event, new_date);

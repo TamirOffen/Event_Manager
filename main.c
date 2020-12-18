@@ -64,13 +64,11 @@ int main() {
     }
     emAddEventByDate(em, "event 10", date1, 5);
     //DOESN"T WORK
-    if(emChangeEventDate(em, 5, date3) == EM_SUCCESS) {
+    if(emChangeEventDate(em, 2, date4) == EM_SUCCESS) {
         printf("Test15\n");
     }
 
-
     printEM(em);
-    printf("%d\n", emGetEventsAmount(em));
 
     destroyEventManager(em);
     dateDestroy(date1);
