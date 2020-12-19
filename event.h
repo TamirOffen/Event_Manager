@@ -120,7 +120,7 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member);
 
 
 /**
- * @brief Gets the name of the given event.
+ * @brief Returns the name of the given event.
  * 
  * @param event - The event which we want it's name.
  * @return 
@@ -139,7 +139,7 @@ void setEventName(Event event, char* event_name);
 
 
 /**
- * @brief Gets the given event's date.
+ * @brief Returns the given event's date.
  * 
  * @param event - The event which we want to receive it's date.
  * @return 
@@ -158,7 +158,7 @@ Date getEventDate(Event event);
 void setEventDate(Event event, Date date);
 
 /**
- * @brief Gets the given event's ID.
+ * @brief Returns the given event's ID.
  * 
  * @param event - The event which we want to receive it's ID.
  * @return 
@@ -184,7 +184,7 @@ void printEvent(Event event);
 void getEventMembersName (Event event, FILE* output_file);
 
 /**
- * @brief Gets the number of members linked with the given event (the number of members in the members_queue in event).
+ * @brief Returns the number of members linked with the given event (the number of members in the members_queue in event).
  * 
  * @param event - The event which we want to get it's number of linked members.
  * @return 

@@ -10,6 +10,7 @@ struct Member_t {
     int num_of_events;
 };
 
+//Creates a new Member.
 Member createMember(char* member_name, int member_id) {
     if(member_name == NULL || member_id < 0) {
         return NULL;
@@ -33,6 +34,7 @@ Member createMember(char* member_name, int member_id) {
     return member;
 }
 
+//Copies the given member to a new one and returns it.
 PQElement copyMember(PQElement member) {
     if(member == NULL) {
         return NULL;
@@ -61,6 +63,7 @@ PQElement copyMember(PQElement member) {
 
 }
 
+//Frees the member contents (his name in this case), and then frees the member.
 void freeMember(PQElement member) {
     if(member == NULL) {
         return;
@@ -73,6 +76,7 @@ void freeMember(PQElement member) {
     member = NULL; 
 }
 
+//Checks whether member1 and member2 are the same member by comparing their IDs.
 bool equalMembers(PQElement member1, PQElement member2) {
     if(((Member)member1)->member_id == ((Member)member2)->member_id) {
         return true;
@@ -82,6 +86,8 @@ bool equalMembers(PQElement member1, PQElement member2) {
 
 
 /*     Priority funcs for the id of the member     */
+
+//Gets a member ID, copies it to a new ID and returns it.
 PQElementPriority copyMemberID(PQElementPriority member_priority){
     if(member_priority == NULL) {
         return NULL;
@@ -95,6 +101,7 @@ PQElementPriority copyMemberID(PQElementPriority member_priority){
     return member_priority_copy;
 }
 
+//Gets a member ID and frees it.
 void freeMemberID(PQElementPriority member_priority) {
     if(member_priority != NULL) {
         free(member_priority);
@@ -102,6 +109,7 @@ void freeMemberID(PQElementPriority member_priority) {
     member_priority = NULL;
 }
 
+//Compares between two members' IDs according to their priority.
 int compareMembersID(PQElementPriority member_priority1, PQElementPriority member_priority2) {
     //Converting them to int before checking.
     int priority1 = *(int *)member_priority1;
@@ -116,7 +124,9 @@ int compareMembersID(PQElementPriority member_priority1, PQElementPriority membe
 }
 
 
-//Funcs for the total_members PQ
+/*     Funcs for the total_members PQ    */
+
+//Gets a PQElementPriority, copies it into an int variable and returns it.
 PQElementPriority copyInt(PQElementPriority n) {
     if (n == NULL) {
         return NULL;
@@ -130,6 +140,7 @@ PQElementPriority copyInt(PQElementPriority n) {
     return copy;
 }
 
+//Frees a PQElementPriority as an int.
 void freeInt(PQElementPriority n) {
     if (n != NULL) {
         free(n);
@@ -137,12 +148,15 @@ void freeInt(PQElementPriority n) {
     n = NULL;
 }
 
+//Compares between two ints.
 int compareInts(PQElementPriority n1, PQElementPriority n2) {
     return (*(int *) n1 - *(int *) n2);
 }
 
 
-// GETTERS AND SETTES:
+/*       GETTERS AND SETTES:     */
+
+//Gets a Member and returns it's name.
 char* getMemberName(Member member) {
     if(member == NULL) {
         return NULL;
@@ -150,6 +164,7 @@ char* getMemberName(Member member) {
     return member->member_name;
 }
 
+//Sets the given member's name to a new name (member_name).
 void setMemberName(Member member, char* member_name) {
     if(member == NULL || member_name == NULL) {
         return;
@@ -162,26 +177,32 @@ void setMemberName(Member member, char* member_name) {
     strcpy(member->member_name, member_name);
 }
 
+//Returns the number of events which the given member is linked to.
 int getMemberNumOfEvents(Member member){
     return member->num_of_events;
 }
 
+//Returns a pointer to the number of events which the given member is linked to.
 int* getMemberNumOfEventsPointer(Member member) {
     return &(member->num_of_events);
 }
 
+//Sets the number of events which the given member is linked to, to a new value.
 void setMemberNumOfEvents(Member member, int new_num_of_events) {
     member->num_of_events = new_num_of_events;
 }
 
+//Increases the given member's number of linked events (num_of_events) by 1.
 void tickMemberNumOfEvents(Member member){
     member->num_of_events++;
 }
 
+//Decreases the given member's number of linked events (num_of_events) by 1.
 void subtractOneFromNumOfEvents(Member member) {
     member->num_of_events--;
 }
 
+//Returns a pointer to the ID of the given member (member_id);
 int* getMemberIdPointer(Member member) {
     if(member == NULL) {
         return NULL;
