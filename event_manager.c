@@ -7,22 +7,33 @@
 #include "event_manager.h"
 #include "string.h"
 
+#define TEMP_DATE dateCreate(1,1,1)
 
 struct EventManager_t {
-    PriorityQueue events; //the event is the element, and the priority is the date.
+    // the event is the element, and the priority is the date.
+    PriorityQueue events; 
+
+    // the current date of the em
     Date current_date;
 
-    //the member is the element, the number of events that they manage is the priority (by most events to least events)
+    // the member is the element, 
+    // the num of events that they manage is their priority (by most events to least events)
     PriorityQueue total_members; 
 };
 
-
+// Create an Event Manager object.
 EventManager createEventManager(Date date) {
+    if(date == NULL) {
+        return NULL;
+    }
+
+    // allocates space for an EventManager struct
     EventManager em = malloc(sizeof(*em));
     if(em == NULL) {
         return NULL;
     }
 
+    // creates an events pq, whose elements are Event, and priority is Date
     PriorityQueue events = pqCreate(copyEvent, freeEvent, equalEvents, copyDate, freeDate, compareDate);
     if(events == NULL) {
         free(em);
@@ -30,6 +41,7 @@ EventManager createEventManager(Date date) {
     }
     em->events = events;
 
+    // sets (copies) the em's current date to the date from the user
     em->current_date = dateCopy(date); 
 
     // the priority represents how many events the member manages
@@ -45,15 +57,13 @@ EventManager createEventManager(Date date) {
     return em;
 }
 
-void destroyEventManager(EventManager em){
+// frees the event manager, including anything that was used by it.
+void destroyEventManager(EventManager em) {
     if (em == NULL){
         return;
     }
 
-    // PQ_FOREACH(Event, current_event, em->events) {
-    //     free_event(current_event);
-    // }
-
+    // frees the priority queues inside em, and its date
     pqDestroy(em->events);
     pqDestroy(em->total_members);
     dateDestroy(em->current_date);
@@ -62,9 +72,8 @@ void destroyEventManager(EventManager em){
     em = NULL;
 }
 
-//TODO: Memory issues here
-//NOTE: pqInsert seems to be the problem, the free funcs for event work
-EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id){
+// adds an event into the em on date "date".
+EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id) {
     if(em == NULL || event_name == NULL || date == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -72,21 +81,23 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
     if(dateCompare(em->current_date, date) > 0) {
         return EM_INVALID_DATE;
     }
+    // user can enter an event_id >= 0
     if(event_id < 0) {
         return EM_INVALID_EVENT_ID;
     }
 
+    // creates a new event with the name, date, and event_id given by the user
     Event new_event = eventCreate(event_name, event_id, date);
     if(new_event == NULL) {
         return EM_OUT_OF_MEMORY;
     }
 
-
-    PriorityQueue eventsCopy = pqCopy(em->events);
     // checking that there isn't another event_name on the same date 
+    PriorityQueue eventsCopy = pqCopy(em->events);
     PQ_FOREACH(Event, current_event, eventsCopy) {
         if(strcmp(getEventName(current_event), event_name) == 0) {
             if(dateCompare(getEventDate(current_event), date) == 0) {
+                // if there is, we free new_event and pq we use for iterating
                 freeEvent(new_event);
                 pqDestroy(eventsCopy);
                 return EM_EVENT_ALREADY_EXISTS;
@@ -101,6 +112,7 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
         return EM_EVENT_ID_ALREADY_EXISTS;
     }
 
+    // if we got to this point, that means that we can add the event on the date into the em
     pqInsert(em->events, new_event, date);
     freeEvent(new_event);
 
@@ -108,30 +120,35 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
 
 }
 
-EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id){
+// adds a new event into the em in a number of days.
+EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id) {
     if(em == NULL || event_name == NULL) {
         return EM_NULL_ARGUMENT;
     }
-
+    // days passed by the user have to be >= 0
     if(days < 0) {
         return EM_INVALID_DATE;
     }
 
+    // creates a copy of the date passed in to be used when adding a new event into the em
     Date date = dateCopy(em->current_date);
     if(date == NULL){
         return EM_OUT_OF_MEMORY;
     }
 
-    for (int i = 0 ; i < days ; i++){ // Increase the current time by (date) days using Tick function
+    // increase the current date of the em by days using the dateTick function
+    for (int i = 0 ; i < days ; i++){ 
         dateTick(date);
     }
 
-    EventManagerResult result = emAddEventByDate(em, event_name, date, event_id); // Used the previous function.
+    // adds the event using emAddEventByName func and returns its return value
+    EventManagerResult result = emAddEventByDate(em, event_name, date, event_id);
     dateDestroy(date);
     return result;
 }
 
-EventManagerResult emRemoveEvent(EventManager em, int event_id){
+// removes the event with event_id from em.
+EventManagerResult emRemoveEvent(EventManager em, int event_id) {
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -139,23 +156,25 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id){
         return EM_INVALID_EVENT_ID;
     }
 
-    Date temp_date = dateCreate(1,1,1);
-    Event temp_event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL
+    // checks if the event is not in the em
+    Date temp_date = TEMP_DATE;
+    Event temp_event = eventCreate("", event_id, temp_date); 
     if(pqContains(em->events, temp_event) == false) {
         freeEvent(temp_event);
         dateDestroy(temp_date);
         return EM_EVENT_NOT_EXISTS;
     }
 
+    // if it got here, then it means the event is in the em, and it will remove it
     pqRemoveElement(em->events, temp_event);
-
     freeEvent(temp_event);
     dateDestroy(temp_date);
 
     return EM_SUCCESS;
 }
 
-EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date){
+// changes the date of event with event_id from its previous date to "new_date".
+EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date) {
     if(em == NULL || new_date == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -166,21 +185,25 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
         return EM_INVALID_DATE;
     }
     
-    // get the event with event_id
-    Date temp_date = dateCreate(1,1,1); //TODO add NULL check
-    Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
+    // finds the event with event_id inside of the em. (events pq in em)
+    Date temp_date = TEMP_DATE;
+    Event event = eventCreate("", event_id, temp_date); 
     bool found_event = false;
     PriorityQueue eventsCopy = pqCopy(em->events);
+    if(eventsCopy == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
     PQ_FOREACH(Event, current_event, eventsCopy) {
         if(equalEvents(current_event, event) == true) {
             freeEvent(event);
             dateDestroy(temp_date); 
             event = copyEvent(current_event);
-            // event = current_event; //change
             found_event = true;
         }
     }
     pqDestroy(eventsCopy);
+
+    // if the event is not in the em, free and exit the func
     if(found_event == false) {
         freeEvent(event);
         dateDestroy(temp_date);
@@ -189,37 +212,26 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     
     // checking that there isn't another event_name on the same date 
     PriorityQueue copy_of_events = pqCopy(em->events);
+    if(copy_of_events == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
     PQ_FOREACH(Event, current_event, copy_of_events) {
         if(strcmp(getEventName(current_event), getEventName(event)) == 0) {
             if(dateCompare(getEventDate(current_event), new_date) == 0) {
-                // printf("same\n");
-                // printEvent(event);
+                //same event_name on the same date, free and exit the func
                 freeEvent(event);
-                // dateDestroy(temp_date);
                 pqDestroy(copy_of_events);
-                return EM_EVENT_ALREADY_EXISTS; //same event_name on the same date
+                return EM_EVENT_ALREADY_EXISTS; 
             }
         }
     }
     pqDestroy(copy_of_events);
 
-    // Event copy_of_event = copy_event(event); change
-    // setEventDate(event, new_date);
-
-
-    //change the date of the event in pq events
-    // PriorityQueue copy_of_events = pqCopy(em->events);
-    
-    // pqDestroy(copy_of_events);
-
+    // changes the date of the event in the events pq in the em
     if(pqChangePriority(em->events, event, getEventDate(event), new_date) == PQ_OUT_OF_MEMORY) {
         freeEvent(event);
-        // dateDestroy(temp_date);
-        // free_event(copy_of_event); change
         return EM_OUT_OF_MEMORY;
     }
-    // free_event(copy_of_event); change
-    // setEventDate(event, new_date); change
     
     //finds the event in em->events pq and changes its date to new_date
     PQ_FOREACH(Event, current_event, em->events) {
@@ -229,14 +241,14 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
     }
 
     freeEvent(event);
-    // dateDestroy(temp_date);
 
     return EM_SUCCESS;
 
 }
 
-
-EventManagerResult emAddMember(EventManager em, char* member_name, int member_id){
+// adds a new memeber by the name "member_name" with "member_id" into the em.
+// NOTE: this new member is in the em for life, i.e. he/she cannot be removed.
+EventManagerResult emAddMember(EventManager em, char* member_name, int member_id) {
     if(em == NULL || member_name == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -244,6 +256,7 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
         return EM_INVALID_MEMBER_ID;
     }
 
+    // creates the new member that will be in the em
     Member new_member = createMember(member_name, member_id);
     if(new_member == NULL) {
         return EM_OUT_OF_MEMORY;
@@ -260,16 +273,11 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
 
     freeMember(new_member);
 
-    // PQ_FOREACH(Member, m, em->total_members) {
-    //     printMember(m);
-    // }
-
     return EM_SUCCESS;
 }
 
-//might be memory issues here
-//Maybe causing problems because the is no copy in FOREACH.
-EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id){
+// adds the member with "member_id" to the list of students that are in charge of event with "event_id".
+EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id) {
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -280,23 +288,26 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
         return EM_INVALID_EVENT_ID;
     }
 
-    //TODO: Code Duplication! here and getDateID bellow
     // get the event with event_id
-    Date temp_date = dateCreate(1,1,1); //TODO add NULL check
-    Event event = eventCreate("temp event", event_id, temp_date); //TODO: terrible programming, Maybe replace with NULL- DOESN'T WORK
+    Date temp_date = TEMP_DATE;
+    Event event = eventCreate("", event_id, temp_date); 
     bool found_event = false;
-    PriorityQueue eventsPQ = pqCopy(em->events);  //TODO: kinda weird, if errors than come back here
+    PriorityQueue eventsPQ = pqCopy(em->events);
+    if(eventsPQ == NULL) {
+        return EM_OUT_OF_MEMORY;
+    } 
     PQ_FOREACH(Event, current_event, em->events) {
         if(equalEvents(current_event, event) == true) {
             freeEvent(event);
             dateDestroy(temp_date);
-            // event = copy_event(current_event);
-            event = current_event; //TODO: kinda weird, if errors than come back here
+            event = current_event;
             found_event = true;
             break;
         }
     }
     pqDestroy(eventsPQ);
+
+    // if event was not found in the em, than free and exit the func
     if(found_event == false) {
         freeEvent(event);
         dateDestroy(temp_date);
@@ -310,55 +321,41 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     PQ_FOREACH(Member, current_member, em->total_members) {
         if(equalMembers(current_member, member) == true) {
             freeMember(member);
-            // member = copy_member(current_member); change
             member = current_member;
             found_member = true;
-            // pqGetFirst(em->total_members);//To reset the pointer to the first element 
             break;
         }
     }
     pqDestroy(membersPQ);
     if(found_member == false) {
         freeMember(member); 
-        // free_event(event);
         return EM_MEMBER_ID_NOT_EXISTS;
     }
-    //tests get member and get event here:
-    // printEvent(event);
-    // printMember(member);
 
     // check if member_id is already linked with event_id
     if(isMemberLinkedToEvent(event, member) == true) {
-        // free_member(member); changed
         return EM_EVENT_AND_MEMBER_ALREADY_LINKED;
     }
 
-    // int* old_num_of_events = getMemberNumOfEventsPointer(member);
+    // stores the old priority of member before changing it
     int old_num_of_events = getMemberNumOfEvents(member) ;
     
-    // printf("%d\n", linkMemberToEvent(event, member));
+    // links the member to event
     if(linkMemberToEvent(event, member) == PQ_OUT_OF_MEMORY) {
         return EM_OUT_OF_MEMORY;
     }
 
-    // printf("#num: %d\n", *getMemberNumOfEventsPointer(member));
-
+    // updates the member's number of events in charge of
     int new_num_of_events = getMemberNumOfEvents(member);
-    Member mC = copyMember(member);
-    pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
-    freeMember(mC);
-
-    //TODO: in total_members pq, increase by one the number of events managed by the member
-
-    // printEvent(event);
-
-    // free_event(event);
-    // free_member(member);
+    Member member_copy = copyMember(member);
+    pqChangePriority(em->total_members, member_copy, &old_num_of_events, &new_num_of_events);
+    freeMember(member_copy);
 
     return EM_SUCCESS;
 }
 
-EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id){  
+// removes the member with "member_id" from the students in charge of event with "event_id".
+EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id) {  
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -369,85 +366,91 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
         return EM_INVALID_EVENT_ID;
     }
 
-    PriorityQueue em_members_queue = pqCopy(em->total_members); //TODO: add NULL check
-    Member member = createMember("temp member", member_id); //TODO: add NULL check
+    // looks for the member in the members pq in the em.
+    PriorityQueue em_members_queue = pqCopy(em->total_members);
+    if(em_members_queue == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
+    Member member = createMember("temp member", member_id); 
     bool member_found = false;
     PQ_FOREACH(Member, m, em->total_members) {
         if(equalMembers(m, member) == true) {
             freeMember(member);
-            // member = copy_member(m); changed
             member = m;
             member_found = true;
             break;
         }
     }
     pqDestroy(em_members_queue);
+
+    // if it doesn't exist in the members pq, than free and exit
     if(member_found == false) {
         freeMember(member); 
         return EM_MEMBER_ID_NOT_EXISTS;
     }
-    // printMember(member);
 
+    // looks for the event with event_id from the user
     PriorityQueue em_events = pqCopy(em->events);
-    Date temp_date = dateCreate(1,1,1); //TODO bad programming
-    Event event = eventCreate("temp event", event_id, temp_date); //TODO bad programming
+    Date temp_date = TEMP_DATE;
+    Event event = eventCreate("temp event", event_id, temp_date);
     bool event_found = false;
     PQ_FOREACH(Event, e, em->events) {
         if(equalEvents(e, event) == true) {
             freeEvent(event);
             dateDestroy(temp_date);
-            // event = copy_event(e);
             event = e;
             event_found = true;
             break;
         }
     }
     pqDestroy(em_events);
+
+    // if the event with event_id doesnt exist in the em, free and exit
     if(event_found == false) {
         freeEvent(event);
         dateDestroy(temp_date);
-        // free_member(member);
         return EM_EVENT_ID_NOT_EXISTS;
     }
-    // printEvent(event);
 
+    // checks if the member and event are linked
     if(isMemberLinkedToEvent(event, member) == false) {
-        // printf("not linked\n");
-        // free_event(event);
-        // free_member(member);
         return EM_EVENT_AND_MEMBER_NOT_LINKED;
     }
 
-    // printf("linked\n");
-
     int old_num_of_events = getMemberNumOfEvents(member) ;
 
+    // remove the member from the event 
     removeMemberFromEvent(event, member);
 
+    // update the num of events the member is in charge of
     int new_num_of_events = getMemberNumOfEvents(member);
     Member mC = copyMember(member);
     pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
     freeMember(mC);
 
-    // free_event(event);
-    // free_member(member);
     return EM_SUCCESS;
 }
 
-EventManagerResult emTick(EventManager em, int days){
+// advances the em's current date by "days" amount of days
+// NOTE: removes the events that were supposed to have happened
+EventManagerResult emTick(EventManager em, int days) {
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
-
     if(days <= 0) {
         return EM_INVALID_DATE;
     }
 
+    // forward the current date of the em using dateTick
     for (int i = 0 ; i < days ; i++){
-        dateTick(em->current_date); //TODO: doesn't take into account different #days in each month
+        dateTick(em->current_date);
     }
 
+    // look for the events that are after the new current date and remove them
     PriorityQueue pq_events = pqCopy(em->events);
+    if(pq_events == NULL) {
+        return EM_OUT_OF_MEMORY;
+    }
     PQ_FOREACH(Event, e, pq_events) {
         if(dateCompare(getEventDate(e), em->current_date) < 0) {
             if(emRemoveEvent(em, getEventID(e)) == EM_OUT_OF_MEMORY) {
@@ -461,69 +464,43 @@ EventManagerResult emTick(EventManager em, int days){
     return EM_SUCCESS;
 }
 
+// returns the name of the event that's supposed to occur next
+// NOTE: if there are multiple events that will happen next on the same date,
+//       than return the one entered first into the em. 
 char* emGetNextEvent(EventManager em){
     if(em == NULL) {
         return NULL;
     }
 
-    //TODO: might need to create a copy of pq events
+    // returns the event that is first in the events pq
     return getEventName(pqGetFirst(em->events));
 }
 
+// returns the number of future events in the em
 int emGetEventsAmount(EventManager em) {
     if(em == NULL) {
         return -1;
     }
 
+    // returns the size of the events pq, which represent the events in the em
     return pqGetSize(em->events);
 }
 
-
-//FOR TESTING:
-void printEM(EventManager em) {
-    int day = -1, month = -1, year = -1;
-    dateGet(em->current_date, &day, &month, &year);
-    printf("Current Day of the EM:\t%d.%d.%d\n", day, month, year);
-    PriorityQueue copyPQ = pqCopy(em->events);
-    PQ_FOREACH(Event, e, copyPQ) {
-        printEvent(e);
-    }
-    pqDestroy(copyPQ);
-}
-void printAllEventsAndTheirMembers(EventManager em) {
-    PriorityQueue copyPQ = pqCopy(em->events);
-    PQ_FOREACH(Event, e, copyPQ) {
-        printEvent(e);
-    }
-    pqDestroy(copyPQ);
-}
-void getFirstMember(EventManager em) {
-    Member m = (Member)pqGetFirst(em->total_members);
-    printMember(m);
-}
-void getNextMember(EventManager em) {
-    Member m = (Member)pqGetNext(em->total_members);
-    printMember(m);
-}
-
-void printAllMembers(EventManager em) {
-    PriorityQueue copyPQ = pqCopy(em->total_members);
-    PQ_FOREACH(Member, m, copyPQ) {
-        printMember(m);
-    }
-    pqDestroy(copyPQ);
-}
-
-
-
+// prints to "file_name" in order the list of events, their dates, and the members in charge of them
+// NOTE: "in order" means by their dates order
+// NOTE: if multiple events are on the same date, than print by the ones entered first
+// NOTE: members are printed by increasing order of their id's
 void emPrintAllEvents(EventManager em, const char* file_name){
     if(em == NULL || file_name == NULL) {
         return;
     }
+
+    // opens the file with name "file_name"
     FILE* output_file = fopen(file_name, "w");
     if(output_file == NULL){
        return;
     }
+
     PriorityQueue events_copy = pqCopy(em->events);
     if(events_copy == NULL){
        return;
@@ -531,26 +508,33 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 
     int day = 0, month = 0, year = 0;
 
+    // writes into the file each event from the events pq in the em 
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
-
-            printf("%s,%d.%d.%d",getEventName(current_event), day, month, year);
             fprintf(output_file, "%s,%d.%d.%d",getEventName(current_event), day, month, year); 
             getEventMembersName (current_event, output_file);
             
     }
 
-
-
+    // closes the file after writing to it
     fclose(output_file);
     pqDestroy(events_copy);
-    // free_event(event);
 }
 
-
+// writes into "file_name" the names of all of the members in em, and how many events they are in charge of
+// NOTE: the member in charge of the most events is printed first, etc.
+// NOTE: if multiple members have the same amount of events, than print by *lowest* member_id
+// NOTE: if a member is in charge of 0 events, he/she will not be printed
 void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
+    if(em == NULL || file_name == NULL) {
+        return;
+    }
+
+    // this queue will be built in according to the events queue of the em.
+    // it will then be used to write to the file
     PriorityQueue emMembers = pqCreate(copyMember, freeMember, equalMembers, copyInt, freeInt, compareInts);
 
+    // builds the emMembers queue
     PriorityQueue eventPQCopy = pqCopy(em->events);
     PQ_FOREACH(Event, e, eventPQCopy) {
         PriorityQueue eventMembers = getPQEventMembers(e);
@@ -567,7 +551,6 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
                         break;
                     }
                 }
-                // pqDestroy(emMemCopy);
             }
             else {
                 setMemberNumOfEvents(m, 1);
@@ -575,21 +558,22 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
                 pqInsert(emMembers, m, &num);
             }
         }
-
         pqDestroy(eventMembers);
     }
     pqDestroy(eventPQCopy);
 
+    // opens file with "file_name"
     FILE* output_file = fopen(file_name, "w");
     if(output_file == NULL){
        return;
     }
 
+    // write using the pq we created into the file
     PQ_FOREACH(Member, m, emMembers) {
         fprintf(output_file, "%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
-        printf("%s,%d\n", getMemberName(m), getMemberNumOfEvents(m));
     }
 
+    // close the file
     fclose(output_file);
 
     pqDestroy(emMembers);

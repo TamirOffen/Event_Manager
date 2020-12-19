@@ -234,11 +234,11 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name);
 
 
 //FOR TESTING:
-void printAllEventsAndTheirMembers(EventManager em);
-void printAllMembers(EventManager em);
-void getFirstMember(EventManager em);
-void getNextMember(EventManager em);
-void printEM(EventManager em);
+// void printAllEventsAndTheirMembers(EventManager em);
+// void printAllMembers(EventManager em);
+// void getFirstMember(EventManager em);
+// void getNextMember(EventManager em);
+// void printEM(EventManager em);
 
 
 // void emPrintAllResponsibleMembersTEST(EventManager em, const char* file_name);
