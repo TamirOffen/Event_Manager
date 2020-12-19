@@ -65,7 +65,7 @@ void printEvent(Event event);
 void printEventMembers(Event event);
 
 
-char* getEventMembersName (Event event);
+void getEventMembersName (Event event, FILE* output_file);
 
 int getMemberQueueSize(Event event);
 

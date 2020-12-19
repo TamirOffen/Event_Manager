@@ -267,24 +267,21 @@ void printEventMembers(Event event) {
 
 
 
-char* getEventMembersName (Event event){
+void getEventMembersName (Event event, FILE* output_file){
     if(pqGetSize(event->members_queue) == 0){
-        return "";
+        fprintf(output_file, "\n");
+        printf("\n");
+        return;
     }
     PriorityQueue copied_members = pqCopy(event->members_queue);
-    
-    char* members_string = malloc(sizeof(char));//Need to know the size, or just allocate a big number and don't care about complexity.
-    // members_string = "";
 
-    int total_len = 0;
+    
     PQ_FOREACH(Member, current_member, copied_members){
-        total_len += (strlen(getMemberName(current_member)) + 1);
-        members_string = realloc(members_string, total_len + 1); // Added one for comma.
-        strcat(members_string, ",");
-        strcat(members_string, getMemberName(current_member));
+        fprintf(output_file, ",%s", getMemberName(current_member));
+        printf(",%s", getMemberName(current_member));
     }
+    fprintf(output_file, "\n");
+    printf("\n");
 
     pqDestroy(copied_members);
-    
-    return members_string;
 }

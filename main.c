@@ -62,7 +62,7 @@ int main() {
     // emAddMemberToEvent(em,666,4);
     
     emPrintAllEvents(em, "emPrintAllEvents.txt");
-    emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
+    //emPrintAllResponsibleMembers(em, "emPrintAllResponsibleMembers.txt");
     
     /*
 

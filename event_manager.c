@@ -524,11 +524,6 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     if(output_file == NULL){
        return;
     }
-    // Event event = malloc(sizeof(event));
-    
-    // if(event == NULL){
-    //     return;
-    // }
     PriorityQueue events_copy = pqCopy(em->events);
     if(events_copy == NULL){
        return;
@@ -539,12 +534,9 @@ void emPrintAllEvents(EventManager em, const char* file_name){
     PQ_FOREACH(Event, current_event, events_copy){
             dateGet(getEventDate(current_event), &day, &month, &year);
 
-            char* names = getEventMembersName(current_event);
-            printf("%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names);
-            fprintf(output_file, "%s,%d.%d.%d%s\n",getEventName(current_event), day, month, year, names); 
-            if(getMemberQueueSize(current_event) != 0) {
-                free(names);
-            }
+            printf("%s,%d.%d.%d",getEventName(current_event), day, month, year);
+            fprintf(output_file, "%s,%d.%d.%d",getEventName(current_event), day, month, year); 
+            getEventMembersName (current_event, output_file);
             
     }
 
