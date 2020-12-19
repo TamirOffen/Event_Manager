@@ -67,7 +67,7 @@ void freeMember(PQElement member) {
     free(((Member)member)->member_name);
     free(((Member)member));
 
-    member = NULL; //TODO: CHECK THIS!
+    member = NULL; 
 }
 
 // return true if the members have the same id //TODO: maybe wrong
@@ -93,7 +93,6 @@ PQElementPriority copyMemberID(PQElementPriority member_priority){
     return member_priority_copy;
 }
 
-//TODO: code duplication with bottom funcs
 void freeMemberID(PQElementPriority member_priority) {
     if(member_priority != NULL) {
         free(member_priority);
@@ -161,7 +160,6 @@ void setMemberName(Member member, char* member_name) {
         free(member->member_name);
     }
 
-    //TODO: might case memory issues here
     member->member_name = malloc(strlen(member_name) + 1);
     strcpy(member->member_name, member_name);
 }
@@ -196,7 +194,7 @@ int* getMemberIdPointer(Member member) {
 }
 
 
-
+// for testing only
 void printMember(Member member) {
     printf("\tMember Name: %s,\tMember ID: %d\t#Events: %d\n", member->member_name, member->member_id, member->num_of_events);
 }
