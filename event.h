@@ -154,13 +154,6 @@ int getEventID(Event event);
 void printEvent(Event event);
 
 /**
- * @brief 
- * 
- * @param event 
- */
-void printEventMembers(Event event);
-
-/**
  * @brief Get the Event Members Name object
  * 
  * @param event 
@@ -176,13 +169,6 @@ void getEventMembersName (Event event, FILE* output_file);
  */
 int getMemberQueueSize(Event event);
 
-/**
- * @brief 
- * 
- * @param pq 
- * @param event 
- */
-void updateTotalMembersQueue(PriorityQueue pq, Event event);
 
 /**
  * @brief 

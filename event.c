@@ -32,7 +32,8 @@ Event eventCreate(char* event_name, int event_id, Date date) {
 
     event->date = event_date;
 
-    PriorityQueue members_queue = pqCreate(copyMember, freeMember, equalMembers, copyMemberID, freeMemberID, compareMembersID);
+    PriorityQueue members_queue = pqCreate(copyMember, freeMember, equalMembers, 
+                                           copyMemberID, freeMemberID, compareMembersID);
     if(members_queue == NULL) {
         dateDestroy(event_date);
         free(event);
@@ -83,7 +84,6 @@ PQElement copyEvent(PQElement event) {
     copy_of_event->members_queue = members_queue_copy;
 
     copy_of_event->event_id = event_paramater->event_id;
-    // copy_of_event->event_id = ((Event)event)->event_id;   Maybe this also works????
 
     copy_of_event->event_name = malloc(sizeof(char) * strlen(event_paramater->event_name) + 1);
     if(copy_of_event->event_name == NULL) {
@@ -110,7 +110,7 @@ void freeEvent(PQElement event) {
     event = NULL;
 }
 
-// return true if the event have the same id //TODO: maybe wrong
+// return true if the event have the same id
 bool equalEvents(PQElement event1, PQElement event2){
     if(((Event)event1)->event_id == ((Event)event2)->event_id) {
         return true;
@@ -129,7 +129,7 @@ PQElementPriority copyDate(PQElementPriority date){
 
 void freeDate(PQElementPriority date) {
     dateDestroy((Date)date);
-    date = NULL; //TODO: might be an error
+    date = NULL;
 }
 
 /**
@@ -141,7 +141,7 @@ void freeDate(PQElementPriority date) {
 *		A positive integer if date1 arrives after date2.
 */
 int compareDate(PQElementPriority date1, PQElementPriority date2) {
-    return -dateCompare((Date)date1, (Date)date2); //TODO: Added - so test if correct
+    return -dateCompare((Date)date1, (Date)date2); 
 }
 
 
@@ -152,8 +152,6 @@ PriorityQueueResult linkMemberToEvent(Event event, Member member) {
     if(event == NULL || member == NULL) {
         return PQ_NULL_ARGUMENT;
     }
-
-    // tickMemberNumOfEvents(member);
 
     return pqInsert(event->members_queue, member, getMemberIdPointer(member));
     
@@ -177,7 +175,7 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
     return pqRemoveElement(event->members_queue, member);
 }
 
-// TODO: useless, should delete
+
 char* getEventName(Event event) {
     if(event == NULL) {
         return NULL;
@@ -193,7 +191,6 @@ void setEventName(Event event, char* event_name) {
         free(event->event_name);
     }
     
-    //TODO: might case memory issues here
     event->event_name = malloc(strlen(event_name) + 1);
     strcpy(event->event_name, event_name);
 }
@@ -212,7 +209,7 @@ void setEventDate(Event event, Date date) {
     if(event->date != NULL) {
         dateDestroy(event->date);
     }
-    event->date = dateCopy(date); //TODO: maybe doesn't work
+    event->date = dateCopy(date); 
 }
 
 int getEventID(Event event) {
@@ -227,13 +224,6 @@ int getMemberQueueSize(Event event) {
 }
 
 
-void updateTotalMembersQueue(PriorityQueue pq, Event event) {
-    
-    // Member m = createMember("yan1", 1);
-    // pqChangePriority(pq, m, )
-
-}
-
 PriorityQueue getPQEventMembers(Event event) {
     PriorityQueue copyQueue = pqCopy(event->members_queue);
     if(copyQueue == NULL) {
@@ -243,7 +233,7 @@ PriorityQueue getPQEventMembers(Event event) {
 }
 
 
-
+// used for testing
 void printEvent(Event event) {
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);
@@ -254,15 +244,6 @@ void printEvent(Event event) {
         printMember(m);
     }
     pqDestroy(membersQueue);
-}
-void printEventMembers(Event event) {
-    if(event == NULL) {
-        return;
-    }
-
-    // PQ_FOREACH(Member, m, event->members_queue) {
-    //     printMember(m);
-    // }
 }
 
 
@@ -285,3 +266,5 @@ void getEventMembersName (Event event, FILE* output_file){
 
     pqDestroy(copied_members);
 }
+
+
