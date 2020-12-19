@@ -19,11 +19,12 @@ Event eventCreate(char* event_name, int event_id, Date date) {
         return NULL;
     }
 
+    //Copies the date which we want to assign to the event.
     Date event_date = dateCopy(date);
     if(event_date == NULL) {
         return NULL;
     }
-
+    //Allocate memory for event
     Event event = malloc(sizeof(*event));
     if(event == NULL) {
         dateDestroy(event_date);
@@ -32,6 +33,7 @@ Event eventCreate(char* event_name, int event_id, Date date) {
 
     event->date = event_date;
 
+    //Creates a linked members queue which we want to put in the event.
     PriorityQueue members_queue = pqCreate(copyMember, freeMember, equalMembers, 
                                            copyMemberID, freeMemberID, compareMembersID);
     if(members_queue == NULL) {
@@ -41,6 +43,7 @@ Event eventCreate(char* event_name, int event_id, Date date) {
     }
     event->members_queue = members_queue;
 
+    //Assign the name and id for the event.
     event->event_name = malloc(sizeof(char) * strlen(event_name) + 1);
     if(event->event_name == NULL) {
         pqDestroy(members_queue);
@@ -55,19 +58,20 @@ Event eventCreate(char* event_name, int event_id, Date date) {
     return event;
 }
 
-
 PQElement copyEvent(PQElement event) {
     if(event == NULL) {
-        return NULL; //event that was passed in is NULL
+        return NULL; 
     }
 
     Event copy_of_event = malloc(sizeof(*copy_of_event));
     if(copy_of_event == NULL) {
-        return NULL; //memory allocation of copy_of_event failed
+        return NULL; 
     }
 
+    //Converts PQElement event to Event.
     Event event_paramater = (Event)event; 
 
+    //Copies the date of the event and assigns it to the copy.
     Date new_date = dateCopy(event_paramater->date);
     if(new_date == NULL) {
         free(copy_of_event);
@@ -75,17 +79,20 @@ PQElement copyEvent(PQElement event) {
     }
     copy_of_event->date = new_date;
 
+    //Copies the members queue of the event and puts it in the copy.
     PriorityQueue members_queue_copy = pqCopy(event_paramater->members_queue);
     if(members_queue_copy == NULL) {
         dateDestroy(copy_of_event->date);
-        free(copy_of_event); //allocation of the new pq failed
+        free(copy_of_event); 
         return NULL;
     }
     copy_of_event->members_queue = members_queue_copy;
 
+    //Copies event's ID and name and assigns them to the copy.
     copy_of_event->event_id = event_paramater->event_id;
 
     copy_of_event->event_name = malloc(sizeof(char) * strlen(event_paramater->event_name) + 1);
+    //In case of memory allocation failure for the name, destroys the copied event.
     if(copy_of_event->event_name == NULL) {
         dateDestroy(copy_of_event->date);
         pqDestroy(members_queue_copy);
@@ -101,7 +108,7 @@ void freeEvent(PQElement event) {
     if(event == NULL) {
         return;
     }
-
+    //Frees event's contents and then frees it.
     free(((Event)event)->event_name);
     pqDestroy(((Event)event)->members_queue);
     dateDestroy(((Event)event)->date);
@@ -110,13 +117,14 @@ void freeEvent(PQElement event) {
     event = NULL;
 }
 
-// return true if the event have the same id
 bool equalEvents(PQElement event1, PQElement event2){
+    //Compares their IDs.
     if(((Event)event1)->event_id == ((Event)event2)->event_id) {
         return true;
     }
     return false;
 }
+
 
 /*      priority funcs for date     */
 PQElementPriority copyDate(PQElementPriority date){
@@ -132,27 +140,16 @@ void freeDate(PQElementPriority date) {
     date = NULL;
 }
 
-/**
-* compareDate: compares to dates and return which comes first
-* TODO: this might be code duplication
-* @return
-* 		A negative integer if date1 occurs first;
-* 		0 if they're equal or one of the given dates is NULL;
-*		A positive integer if date1 arrives after date2.
-*/
 int compareDate(PQElementPriority date1, PQElementPriority date2) {
     return -dateCompare((Date)date1, (Date)date2); 
 }
 
-
-
-
-// basically just pqInserts member into event->members_queue
 PriorityQueueResult linkMemberToEvent(Event event, Member member) {
     if(event == NULL || member == NULL) {
         return PQ_NULL_ARGUMENT;
     }
 
+    //Links the member to the event by inserting the member into the members_queue in the event.
     return pqInsert(event->members_queue, member, getMemberIdPointer(member));
     
 }
@@ -161,7 +158,7 @@ bool isMemberLinkedToEvent(Event event, Member member) {
     if(event == NULL || member == NULL) {
         return false;
     }
-
+    //Checks if member is in members_queue in event (which means they are linked).
     return pqContains(event->members_queue, member);
 }
 
@@ -169,12 +166,11 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
     if(event == NULL || member == NULL) {
         return PQ_NULL_ARGUMENT;
     }
-
+    //Reduces the number of events which the member is linked to by 1.
     subtractOneFromNumOfEvents(member);
-
+    //Removes the member from members_queue (meaning he is no longer linked with the event).
     return pqRemoveElement(event->members_queue, member);
 }
-
 
 char* getEventName(Event event) {
     if(event == NULL) {
@@ -223,12 +219,12 @@ int getMemberQueueSize(Event event) {
     return pqGetSize(event->members_queue);
 }
 
-
 PriorityQueue getPQEventMembers(Event event) {
     PriorityQueue copyQueue = pqCopy(event->members_queue);
     if(copyQueue == NULL) {
         return NULL;
     }
+    //Returns a copy of members_queue in the given event.
     return copyQueue;
 }
 
@@ -247,22 +243,20 @@ void printEvent(Event event) {
 }
 
 
-
 void getEventMembersName (Event event, FILE* output_file){
+    //If an event doesn't have members, then it just moves to a new line in the file.
     if(pqGetSize(event->members_queue) == 0){
         fprintf(output_file, "\n");
-        printf("\n");
         return;
     }
     PriorityQueue copied_members = pqCopy(event->members_queue);
 
-    
+    //Iterate over the members in a copy of members_queue and prints to the file the name of each member.
     PQ_FOREACH(Member, current_member, copied_members){
         fprintf(output_file, ",%s", getMemberName(current_member));
-        printf(",%s", getMemberName(current_member));
     }
+    //Prints to the file a new line because everything was printed for this event.
     fprintf(output_file, "\n");
-    printf("\n");
 
     pqDestroy(copied_members);
 }

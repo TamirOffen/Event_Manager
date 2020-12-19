@@ -28,7 +28,7 @@ Member createMember(char* member_name, int member_id) {
     strcpy(member->member_name, member_name);
 
     member->member_id = member_id;
-    member->num_of_events = 1; //each member starts off managing 0 events
+    member->num_of_events = 1; 
 
     return member;
 }
@@ -43,8 +43,10 @@ PQElement copyMember(PQElement member) {
         return NULL;
     }
 
+    //Converting PQElement member to Member.
     Member member_parameter = (Member)member;
     
+    //Copy the contents of the member.
     member_copy->member_name = malloc(sizeof(char) * strlen(member_parameter->member_name) + 1);
     if(member_copy->member_name == NULL) {
         free(member_copy);
@@ -64,13 +66,13 @@ void freeMember(PQElement member) {
         return;
     }
 
+    //Free the member with it's contents.
     free(((Member)member)->member_name);
     free(((Member)member));
 
     member = NULL; 
 }
 
-// return true if the members have the same id //TODO: maybe wrong
 bool equalMembers(PQElement member1, PQElement member2) {
     if(((Member)member1)->member_id == ((Member)member2)->member_id) {
         return true;
@@ -100,11 +102,8 @@ void freeMemberID(PQElementPriority member_priority) {
     member_priority = NULL;
 }
 
-// compares the members' ids
-// returns 0 if the members have the same id
-// returns 1 if member1.id < member2.id
-// return -1 if member1.id > member2.id
 int compareMembersID(PQElementPriority member_priority1, PQElementPriority member_priority2) {
+    //Converting them to int before checking.
     int priority1 = *(int *)member_priority1;
     int priority2 = *(int *)member_priority2;
     if(priority1 < priority2) {
@@ -117,8 +116,7 @@ int compareMembersID(PQElementPriority member_priority1, PQElementPriority membe
 }
 
 
-
-// These are the funcs for the total_members PQ
+//Funcs for the total_members PQ
 PQElementPriority copyInt(PQElementPriority n) {
     if (n == NULL) {
         return NULL;
@@ -127,6 +125,7 @@ PQElementPriority copyInt(PQElementPriority n) {
     if (!copy) {
         return NULL;
     }
+    //Convert n to int before returning.
     *copy = *(int *) n;
     return copy;
 }
@@ -141,7 +140,6 @@ void freeInt(PQElementPriority n) {
 int compareInts(PQElementPriority n1, PQElementPriority n2) {
     return (*(int *) n1 - *(int *) n2);
 }
-
 
 
 // GETTERS AND SETTES:
@@ -164,7 +162,6 @@ void setMemberName(Member member, char* member_name) {
     strcpy(member->member_name, member_name);
 }
 
-
 int getMemberNumOfEvents(Member member){
     return member->num_of_events;
 }
@@ -180,10 +177,10 @@ void setMemberNumOfEvents(Member member, int new_num_of_events) {
 void tickMemberNumOfEvents(Member member){
     member->num_of_events++;
 }
+
 void subtractOneFromNumOfEvents(Member member) {
     member->num_of_events--;
 }
-
 
 int* getMemberIdPointer(Member member) {
     if(member == NULL) {
