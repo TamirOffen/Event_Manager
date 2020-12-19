@@ -55,7 +55,7 @@ Event eventCreate(char* event_name, int event_id, Date date) {
 }
 
 
-PQElement copy_event(PQElement event) {
+PQElement copyEvent(PQElement event) {
     if(event == NULL) {
         return NULL; //event that was passed in is NULL
     }
@@ -97,7 +97,7 @@ PQElement copy_event(PQElement event) {
     return copy_of_event;
 }
 
-void free_event(PQElement event) {
+void freeEvent(PQElement event) {
     if(event == NULL) {
         return;
     }
@@ -111,7 +111,7 @@ void free_event(PQElement event) {
 }
 
 // return true if the event have the same id //TODO: maybe wrong
-bool equal_events(PQElement event1, PQElement event2){
+bool equalEvents(PQElement event1, PQElement event2){
     if(((Event)event1)->event_id == ((Event)event2)->event_id) {
         return true;
     }
