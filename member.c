@@ -33,7 +33,7 @@ Member createMember(char* member_name, int member_id) {
     return member;
 }
 
-PQElement copy_member(PQElement member) {
+PQElement copyMember(PQElement member) {
     if(member == NULL) {
         return NULL;
     }
@@ -59,7 +59,7 @@ PQElement copy_member(PQElement member) {
 
 }
 
-void free_member(PQElement member) {
+void freeMember(PQElement member) {
     if(member == NULL) {
         return;
     }
@@ -71,7 +71,7 @@ void free_member(PQElement member) {
 }
 
 // return true if the members have the same id //TODO: maybe wrong
-bool equal_members(PQElement member1, PQElement member2) {
+bool equalMembers(PQElement member1, PQElement member2) {
     if(((Member)member1)->member_id == ((Member)member2)->member_id) {
         return true;
     }
@@ -80,7 +80,7 @@ bool equal_members(PQElement member1, PQElement member2) {
 
 
 /*     Priority funcs for the id of the member     */
-PQElementPriority copy_member_id(PQElementPriority member_priority){
+PQElementPriority copyMemberID(PQElementPriority member_priority){
     if(member_priority == NULL) {
         return NULL;
     }
@@ -94,7 +94,7 @@ PQElementPriority copy_member_id(PQElementPriority member_priority){
 }
 
 //TODO: code duplication with bottom funcs
-void free_member_id(PQElementPriority member_priority) {
+void freeMemberID(PQElementPriority member_priority) {
     if(member_priority != NULL) {
         free(member_priority);
     }
@@ -105,7 +105,7 @@ void free_member_id(PQElementPriority member_priority) {
 // returns 0 if the members have the same id
 // returns 1 if member1.id < member2.id
 // return -1 if member1.id > member2.id
-int compare_members_id(PQElementPriority member_priority1, PQElementPriority member_priority2) {
+int compareMembersID(PQElementPriority member_priority1, PQElementPriority member_priority2) {
     int priority1 = *(int *)member_priority1;
     int priority2 = *(int *)member_priority2;
     if(priority1 < priority2) {
@@ -182,7 +182,7 @@ void setMemberNumOfEvents(Member member, int new_num_of_events) {
 void tickMemberNumOfEvents(Member member){
     member->num_of_events++;
 }
-void memberMinusOneEventCount(Member member) {
+void subtractOneFromNumOfEvents(Member member) {
     member->num_of_events--;
 }
 

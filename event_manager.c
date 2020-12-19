@@ -33,7 +33,7 @@ EventManager createEventManager(Date date) {
     em->current_date = dateCopy(date); 
 
     // the priority represents how many events the member manages
-    PriorityQueue total_members = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
+    PriorityQueue total_members = pqCreate(copyMember, freeMember, equalMembers, copyInt, freeInt, compareInts);
     if(total_members == NULL) {
         pqDestroy(events);
         dateDestroy(em->current_date);
@@ -251,14 +251,14 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
 
     // checking for if the id already exists in the em
     if(pqContains(em->total_members, new_member) == true) {
-        free_member(new_member);
+        freeMember(new_member);
         return EM_MEMBER_ID_ALREADY_EXISTS;
     }
 
     int starting_priority_of_member = 0; //i.e. how many events the member is in charge of at first
     pqInsert(em->total_members, new_member, &starting_priority_of_member);
 
-    free_member(new_member);
+    freeMember(new_member);
 
     // PQ_FOREACH(Member, m, em->total_members) {
     //     printMember(m);
@@ -308,8 +308,8 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     Member member = createMember("temp member", member_id);
     bool found_member = false;
     PQ_FOREACH(Member, current_member, em->total_members) {
-        if(equal_members(current_member, member) == true) {
-            free_member(member);
+        if(equalMembers(current_member, member) == true) {
+            freeMember(member);
             // member = copy_member(current_member); change
             member = current_member;
             found_member = true;
@@ -319,7 +319,7 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     }
     pqDestroy(membersPQ);
     if(found_member == false) {
-        free_member(member); 
+        freeMember(member); 
         // free_event(event);
         return EM_MEMBER_ID_NOT_EXISTS;
     }
@@ -344,9 +344,9 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
     // printf("#num: %d\n", *getMemberNumOfEventsPointer(member));
 
     int new_num_of_events = getMemberNumOfEvents(member);
-    Member mC = copy_member(member);
+    Member mC = copyMember(member);
     pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
-    free_member(mC);
+    freeMember(mC);
 
     //TODO: in total_members pq, increase by one the number of events managed by the member
 
@@ -373,8 +373,8 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     Member member = createMember("temp member", member_id); //TODO: add NULL check
     bool member_found = false;
     PQ_FOREACH(Member, m, em->total_members) {
-        if(equal_members(m, member) == true) {
-            free_member(member);
+        if(equalMembers(m, member) == true) {
+            freeMember(member);
             // member = copy_member(m); changed
             member = m;
             member_found = true;
@@ -383,7 +383,7 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     }
     pqDestroy(em_members_queue);
     if(member_found == false) {
-        free_member(member); 
+        freeMember(member); 
         return EM_MEMBER_ID_NOT_EXISTS;
     }
     // printMember(member);
@@ -425,9 +425,9 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
     removeMemberFromEvent(event, member);
 
     int new_num_of_events = getMemberNumOfEvents(member);
-    Member mC = copy_member(member);
+    Member mC = copyMember(member);
     pqChangePriority(em->total_members, mC, &old_num_of_events, &new_num_of_events);
-    free_member(mC);
+    freeMember(mC);
 
     // free_event(event);
     // free_member(member);
@@ -549,7 +549,7 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 
 
 void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
-    PriorityQueue emMembers = pqCreate(copy_member, free_member, equal_members, copyInt, freeInt, compareInts);
+    PriorityQueue emMembers = pqCreate(copyMember, freeMember, equalMembers, copyInt, freeInt, compareInts);
 
     PriorityQueue eventPQCopy = pqCopy(em->events);
     PQ_FOREACH(Event, e, eventPQCopy) {
@@ -558,7 +558,7 @@ void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
             if(pqContains(emMembers, m) == true) {
                 PriorityQueue emMemCopy = pqCopy(emMembers);
                 PQ_FOREACH(Member, m2, emMemCopy) {
-                    if(equal_members(m, m2) == true) {
+                    if(equalMembers(m, m2) == true) {
                         int num = getMemberNumOfEvents(m2) + 1;
                         pqRemoveElement(emMembers, m);
                         tickMemberNumOfEvents(m2);

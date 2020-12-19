@@ -1413,7 +1413,7 @@ const char *testNames[] = {
 
 int main() {
 
-    if(testNegativeYearTwo_CreatorAdam() == true) printf("good\n");
+    if(testNegativeYearTwo_CreatorAdam() == true) printf("\nGOOD!\n");
 
     return 0;
 }

@@ -32,7 +32,7 @@ Event eventCreate(char* event_name, int event_id, Date date) {
 
     event->date = event_date;
 
-    PriorityQueue members_queue = pqCreate(copy_member, free_member, equal_members, copy_member_id, free_member_id, compare_members_id);
+    PriorityQueue members_queue = pqCreate(copyMember, freeMember, equalMembers, copyMemberID, freeMemberID, compareMembersID);
     if(members_queue == NULL) {
         dateDestroy(event_date);
         free(event);
@@ -172,7 +172,7 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
         return PQ_NULL_ARGUMENT;
     }
 
-    memberMinusOneEventCount(member);
+    subtractOneFromNumOfEvents(member);
 
     return pqRemoveElement(event->members_queue, member);
 }
