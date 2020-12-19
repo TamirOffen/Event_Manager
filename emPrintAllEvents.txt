@@ -1,4 +1,0 @@
-event 1,1.3.2000,Tamir,Nabeeh
-event 2,1.3.2000,Nabeeh
-event 3,5.3.2000
-event 4,9.2.2011,Julie,Mark
