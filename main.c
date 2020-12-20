@@ -42,7 +42,7 @@ int main() {
 
     // printEM(em);
 
-    printAllMembers(em);
+    
 
 
 

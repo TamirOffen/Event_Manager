@@ -7,7 +7,8 @@
 #include "date.h"
 
 
-struct Event_t {
+struct Event_t
+{
     char* event_name;
     int event_id;
     Date date; //the date that the event will take place on
@@ -15,7 +16,8 @@ struct Event_t {
 };
 
 //Creates a new event and returns it.
-Event eventCreate(char* event_name, int event_id, Date date) {
+Event eventCreate(char* event_name, int event_id, Date date)
+{
     if(event_name == NULL || date == NULL || event_id < 0) {
         return NULL;
     }
@@ -60,7 +62,8 @@ Event eventCreate(char* event_name, int event_id, Date date) {
 }
 
 //Copies the given event to a new event and return the copy.
-PQElement copyEvent(PQElement event) {
+PQElement copyEvent(PQElement event)
+{
     if(event == NULL) {
         return NULL; 
     }
@@ -107,7 +110,8 @@ PQElement copyEvent(PQElement event) {
 }
 
 //Destroys an event by freeing all of its contents and then freeing it.
-void freeEvent(PQElement event) {
+void freeEvent(PQElement event)
+{
     if(event == NULL) {
         return;
     }
@@ -121,7 +125,8 @@ void freeEvent(PQElement event) {
 }
 
 //Compares between two events by their IDs.
-bool equalEvents(PQElement event1, PQElement event2){
+bool equalEvents(PQElement event1, PQElement event2)
+{
     //Compares their IDs.
     if(((Event)event1)->event_id == ((Event)event2)->event_id) {
         return true;
@@ -133,7 +138,8 @@ bool equalEvents(PQElement event1, PQElement event2){
 /*      priority funcs for date     */
 
 //Copies the given Date to a new one and returns the copy.
-PQElementPriority copyDate(PQElementPriority date){
+PQElementPriority copyDate(PQElementPriority date)
+{
     Date copy_of_date = dateCopy((Date)date);
     if(copy_of_date == NULL) {
         return NULL;
@@ -142,18 +148,21 @@ PQElementPriority copyDate(PQElementPriority date){
 }
 
 //Frees a date using dateDestroy function.
-void freeDate(PQElementPriority date) {
+void freeDate(PQElementPriority date)
+{
     dateDestroy((Date)date);
     date = NULL;
 }
 
 //Compares between two dates.
-int compareDate(PQElementPriority date1, PQElementPriority date2) {
+int compareDate(PQElementPriority date1, PQElementPriority date2)
+{
     return -dateCompare((Date)date1, (Date)date2); 
 }
 
 //Adds the given member to the queue of linked members to the given event (members_queue).
-PriorityQueueResult linkMemberToEvent(Event event, Member member) {
+PriorityQueueResult linkMemberToEvent(Event event, Member member)
+{
     if(event == NULL || member == NULL) {
         return PQ_NULL_ARGUMENT;
     }
@@ -164,7 +173,8 @@ PriorityQueueResult linkMemberToEvent(Event event, Member member) {
 }
 
 //Checks whether the given member is linked with the given event.
-bool isMemberLinkedToEvent(Event event, Member member) {
+bool isMemberLinkedToEvent(Event event, Member member)
+{
     if(event == NULL || member == NULL) {
         return false;
     }
@@ -173,7 +183,8 @@ bool isMemberLinkedToEvent(Event event, Member member) {
 }
 
 //Removes the given Member from the given Event.
-PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
+PriorityQueueResult removeMemberFromEvent(Event event, Member member)
+{
     if(event == NULL || member == NULL) {
         return PQ_NULL_ARGUMENT;
     }
@@ -184,7 +195,8 @@ PriorityQueueResult removeMemberFromEvent(Event event, Member member) {
 }
 
 //Returns the name of the given event.
-char* getEventName(Event event) {
+char* getEventName(Event event)
+{
     if(event == NULL) {
         return NULL;
     }
@@ -192,7 +204,8 @@ char* getEventName(Event event) {
 }
 
 //Sets the given event's name to event_name.
-void setEventName(Event event, char* event_name) {
+void setEventName(Event event, char* event_name)
+{
     if(event == NULL || event_name == NULL) {
         return;
     }
@@ -205,7 +218,8 @@ void setEventName(Event event, char* event_name) {
 }
 
 //Returns the given event's date.
-Date getEventDate(Event event) {
+Date getEventDate(Event event)
+{
     if(event == NULL) {
         return NULL;
     }
@@ -213,7 +227,8 @@ Date getEventDate(Event event) {
 }
 
 //Sets the given event's date to the given date.
-void setEventDate(Event event, Date date) {
+void setEventDate(Event event, Date date)
+{
     if(event == NULL || date == NULL) {
         return;
     }
@@ -224,7 +239,8 @@ void setEventDate(Event event, Date date) {
 }
 
 //Returns the given event's ID.
-int getEventID(Event event) {
+int getEventID(Event event)
+{
     if(event == NULL) {
         return -1;
     }
@@ -232,12 +248,14 @@ int getEventID(Event event) {
 }
 
 //Returns the number of members linked with the given event (the number of members in the members_queue in event).
-int getMemberQueueSize(Event event) {
+int getMemberQueueSize(Event event)
+{
     return pqGetSize(event->members_queue);
 }
 
 //Returns a copy of the members_queue in the given event (which is the members linked with the event).
-PriorityQueue getPQEventMembers(Event event) {
+PriorityQueue getPQEventMembers(Event event)
+{
     PriorityQueue copyQueue = pqCopy(event->members_queue);
     if(copyQueue == NULL) {
         return NULL;
@@ -248,7 +266,8 @@ PriorityQueue getPQEventMembers(Event event) {
 
 //This function is used in emPrintAllEvents in event_manager which prints out to the given file the names of the members
 //for each event after printing the event's details.
-void getEventMembersName (Event event, FILE* output_file){
+void getEventMembersName (Event event, FILE* output_file)
+{
     //If an event doesn't have members, then it just moves to a new line in the file.
     if(pqGetSize(event->members_queue) == 0){
         fprintf(output_file, "\n");
@@ -269,7 +288,8 @@ void getEventMembersName (Event event, FILE* output_file){
 
 
 // used for testing
-void printEvent(Event event) {
+void printEvent(Event event)
+{
     int day = -1, month = -1, year = -1;
     dateGet(event->date, &day, &month, &year);
     printf("Event Name: %s\tEvent ID: %d\tDate: %d.%d.%d\n", event->event_name, event->event_id, day, month, year);

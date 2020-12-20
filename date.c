@@ -7,14 +7,16 @@
 #define DATE_VALIDATION ((day >= 1 && day <= 30) && (month >= 1 && month <= 12))
 
 //Date structure.
-struct Date_t{
+struct Date_t
+{
     int day;
     int month;
     int year;
 };
 
 //Converts the given date to the total number of days in it and return that, it is useful in dateCompare function.
-int convertDateToDays (Date date){
+int convertDateToDays (Date date)
+{
     int total_days = 0;
     total_days = total_days + date->day;
     total_days = total_days + (date->month * 30);
@@ -24,7 +26,8 @@ int convertDateToDays (Date date){
 }
 
 //creates a new Date and returns it.
-Date dateCreate(int day, int month, int year){
+Date dateCreate(int day, int month, int year)
+{
     if(!DATE_VALIDATION){
         return NULL;
     }
@@ -42,12 +45,14 @@ Date dateCreate(int day, int month, int year){
 }
 
 //Destroys a Date.
-void dateDestroy(Date date){
+void dateDestroy(Date date)
+{
     free(date);
 }
 
 //Copies the given date into another one and returns it.
-Date dateCopy(Date date){
+Date dateCopy(Date date)
+{
     if(date == NULL){
         return NULL;
     }
@@ -65,7 +70,8 @@ Date dateCopy(Date date){
 }
 
 //Takes the day, month and year from the given date and puts them into a pointer for each one.
-bool dateGet(Date date, int* day, int* month, int* year){
+bool dateGet(Date date, int* day, int* month, int* year)
+{
     if (date == NULL || day == NULL || month == NULL || year == NULL){
         return false;
     }
@@ -78,7 +84,8 @@ bool dateGet(Date date, int* day, int* month, int* year){
 }
 
 //Compares between two dates and returns 1 if date2 is before date1 or -1 if date1 is before date2 or 0 if they are the same date
-int dateCompare(Date date1, Date date2){
+int dateCompare(Date date1, Date date2)
+{
     if (date1 == NULL || date2 == NULL){
         return 0;
     }
@@ -98,7 +105,8 @@ int dateCompare(Date date1, Date date2){
 }
 
 //Increases the date by 1 day.
-void dateTick(Date date){
+void dateTick(Date date)
+{
     if(date != NULL){
         if(date->day < 30){
             date->day++;

@@ -9,7 +9,8 @@
 
 #define TEMP_DATE dateCreate(1,1,1)
 
-struct EventManager_t {
+struct EventManager_t
+{
     // the event is the element, and the priority is the date.
     PriorityQueue events; 
 
@@ -22,7 +23,8 @@ struct EventManager_t {
 };
 
 // Create an Event Manager object.
-EventManager createEventManager(Date date) {
+EventManager createEventManager(Date date)
+{
     if(date == NULL) {
         return NULL;
     }
@@ -58,7 +60,8 @@ EventManager createEventManager(Date date) {
 }
 
 // frees the event manager, including anything that was used by it.
-void destroyEventManager(EventManager em) {
+void destroyEventManager(EventManager em)
+{
     if (em == NULL){
         return;
     }
@@ -73,7 +76,8 @@ void destroyEventManager(EventManager em) {
 }
 
 // adds an event into the em on date "date".
-EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id) {
+EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date, int event_id)
+{
     if(em == NULL || event_name == NULL || date == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -121,7 +125,8 @@ EventManagerResult emAddEventByDate(EventManager em, char* event_name, Date date
 }
 
 // adds a new event into the em in a number of days.
-EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id) {
+EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days, int event_id)
+{
     if(em == NULL || event_name == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -148,7 +153,8 @@ EventManagerResult emAddEventByDiff(EventManager em, char* event_name, int days,
 }
 
 // removes the event with event_id from em.
-EventManagerResult emRemoveEvent(EventManager em, int event_id) {
+EventManagerResult emRemoveEvent(EventManager em, int event_id)
+{
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -174,7 +180,8 @@ EventManagerResult emRemoveEvent(EventManager em, int event_id) {
 }
 
 // changes the date of event with event_id from its previous date to "new_date".
-EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date) {
+EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_date)
+{
     if(em == NULL || new_date == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -248,7 +255,8 @@ EventManagerResult emChangeEventDate(EventManager em, int event_id, Date new_dat
 
 // adds a new memeber by the name "member_name" with "member_id" into the em.
 // NOTE: this new member is in the em for life, i.e. he/she cannot be removed.
-EventManagerResult emAddMember(EventManager em, char* member_name, int member_id) {
+EventManagerResult emAddMember(EventManager em, char* member_name, int member_id)
+{
     if(em == NULL || member_name == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -277,7 +285,8 @@ EventManagerResult emAddMember(EventManager em, char* member_name, int member_id
 }
 
 // adds the member with "member_id" to the list of students that are in charge of event with "event_id".
-EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id) {
+EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_id)
+{
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -355,7 +364,8 @@ EventManagerResult emAddMemberToEvent(EventManager em, int member_id, int event_
 }
 
 // removes the member with "member_id" from the students in charge of event with "event_id".
-EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id) {  
+EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int event_id)
+{  
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -433,7 +443,8 @@ EventManagerResult emRemoveMemberFromEvent (EventManager em, int member_id, int 
 
 // advances the em's current date by "days" amount of days
 // NOTE: removes the events that were supposed to have happened
-EventManagerResult emTick(EventManager em, int days) {
+EventManagerResult emTick(EventManager em, int days)
+{
     if(em == NULL) {
         return EM_NULL_ARGUMENT;
     }
@@ -467,7 +478,8 @@ EventManagerResult emTick(EventManager em, int days) {
 // returns the name of the event that's supposed to occur next
 // NOTE: if there are multiple events that will happen next on the same date,
 //       than return the one entered first into the em. 
-char* emGetNextEvent(EventManager em){
+char* emGetNextEvent(EventManager em)
+{
     if(em == NULL) {
         return NULL;
     }
@@ -477,7 +489,8 @@ char* emGetNextEvent(EventManager em){
 }
 
 // returns the number of future events in the em
-int emGetEventsAmount(EventManager em) {
+int emGetEventsAmount(EventManager em)
+{
     if(em == NULL) {
         return -1;
     }
@@ -490,7 +503,8 @@ int emGetEventsAmount(EventManager em) {
 // NOTE: "in order" means by their dates order
 // NOTE: if multiple events are on the same date, than print by the ones entered first
 // NOTE: members are printed by increasing order of their id's
-void emPrintAllEvents(EventManager em, const char* file_name){
+void emPrintAllEvents(EventManager em, const char* file_name)
+{
     if(em == NULL || file_name == NULL) {
         return;
     }
@@ -525,7 +539,8 @@ void emPrintAllEvents(EventManager em, const char* file_name){
 // NOTE: the member in charge of the most events is printed first, etc.
 // NOTE: if multiple members have the same amount of events, than print by *lowest* member_id
 // NOTE: if a member is in charge of 0 events, he/she will not be printed
-void emPrintAllResponsibleMembers(EventManager em, const char* file_name) {
+void emPrintAllResponsibleMembers(EventManager em, const char* file_name)
+{
     if(em == NULL || file_name == NULL) {
         return;
     }
